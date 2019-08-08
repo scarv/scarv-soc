@@ -9,7 +9,7 @@ SCARV-SoC is a technology demonstrator for several outputs of the SCARV Project.
 The SoC consists of a set of common peripherals,
 controlled by a custom
 [RISC-V CPU](https://github.com:/scarv/scarv-cpu),
-agumented with the
+augmented with the
 [XCrypto](https://github.com/scarv/xcrypto)
 instruction set extensions.
 Together,

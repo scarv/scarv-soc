@@ -39,7 +39,7 @@ and how to build applications targeting it.*
 ## Directory structure
 
 All Zephyr related integration code in this repository lives under the
-`zephry` subdirectory.
+`zephyr` subdirectory.
 
 The directory structures here are based on those detailed in the
 [Zephyr documentation](https://docs.zephyrproject.org/latest/application/index.html#custom-board-devicetree-and-soc-definitions)
