@@ -6,6 +6,10 @@ of features and target performance characteristics.*
 
 ---
 
+## SoC Block Diagram
+
+![SoC Block Diagram](img/soc-block-diagram.png)
+
 ## Requirements Overview
 
 - The SoC will be implementable primarily on an FPGA.
