@@ -20,6 +20,6 @@ capable of efficient and secure cryptographic code execution.*
 
 ## Documentation
 
-- [SoC Design Requirements](soc-requirements.md)
-- [Zephyr Integration Details](zephyr-integration.md)
+- [SoC Design Requirements](doc/soc-requirements.md)
+- [Zephyr Integration Details](doc/zephyr-integration.md)
 
