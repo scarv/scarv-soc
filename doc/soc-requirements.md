@@ -29,7 +29,7 @@ of features and target performance characteristics.*
   - The CPU core will be capable of running the [Zephyr](https://zephyrproject.org)
     RTOS.
 
-- The SoC will have access to 16Kb of on-chip SRAM.
+- The SoC will have access to 64Kb of on-chip SRAM.
 
 - The SoC will support several common peripherals:
 
