@@ -2,6 +2,7 @@
 //
 // Interconnect sources
 $SOC_HOME/rtl/ic/ic_addr_decode.v
+$SOC_HOME/rtl/ic/ic_cpu_bus_bram_bridge.v
 $SOC_HOME/rtl/ic/ic_top.v
 
 
@@ -41,6 +42,12 @@ $SOC_HOME/extern/scarv-cpu/rtl/core/frv_pipeline_memory.v
 $SOC_HOME/extern/scarv-cpu/rtl/core/frv_pipeline_register.v
 $SOC_HOME/extern/scarv-cpu/rtl/core/frv_pipeline_writeback.v
 $SOC_HOME/extern/scarv-cpu/rtl/core/frv_rngif.v
+
+
+//
+// Memories
+$SOC_HOME/rtl/mem/scarv_soc_bram_single.v
+
 
 //
 // SCARV SoC top level sources.

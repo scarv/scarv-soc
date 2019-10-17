@@ -1,21 +1,23 @@
 [*]
 [*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
-[*] Thu Oct 17 11:09:49 2019
+[*] Thu Oct 17 13:52:09 2019
 [*]
 [dumpfile] "/home/ben/scarv/repos/scarv-soc/work/verilator/waves.vcd"
-[dumpfile_mtime] "Thu Oct 17 11:07:21 2019"
-[dumpfile_size] 460782
+[dumpfile_mtime] "Thu Oct 17 13:50:05 2019"
+[dumpfile_size] 468688
 [savefile] "/home/ben/scarv/repos/scarv-soc/flow/gtkwave/scarv-soc.gtkw"
 [timestart] 1
 [size] 1920 1025
 [pos] -1 -1
-*-8.000000 66 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-6.529512 67 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] TOP.
 [treeopen] TOP.scarv_soc.
+[treeopen] TOP.scarv_soc.i_ic_top.
+[treeopen] TOP.scarv_soc.i_scarv_cpu.
 [sst_width] 325
-[signals_width] 271
+[signals_width] 300
 [sst_expanded] 1
-[sst_vpaned_height] 301
+[sst_vpaned_height] 223
 @28
 TOP.g_clk
 TOP.g_resetn
@@ -57,11 +59,78 @@ TOP.scarv_soc.cpu_dmem_wen
 @28
 TOP.scarv_soc.cpu_dmem_recv
 TOP.scarv_soc.cpu_dmem_ack
-@29
 TOP.scarv_soc.cpu_dmem_error
 @22
 TOP.scarv_soc.cpu_dmem_rdata[31:0]
 @1000200
 -CPU Data Memory
+@800200
+-Interconnect
+-Routing
+@28
+TOP.scarv_soc.i_ic_top.ic_dmem_route_axi
+TOP.scarv_soc.i_ic_top.ic_dmem_route_ram
+TOP.scarv_soc.i_ic_top.ic_dmem_route_rom
+TOP.scarv_soc.i_ic_top.ic_imem_route_axi
+TOP.scarv_soc.i_ic_top.ic_imem_route_ram
+TOP.scarv_soc.i_ic_top.ic_imem_route_rom
+TOP.scarv_soc.i_ic_top.ic_dmem_error
+TOP.scarv_soc.i_ic_top.ic_imem_error
+TOP.scarv_soc.i_ic_top.route_rsp_imem_ram
+TOP.scarv_soc.i_ic_top.route_rsp_imem_rom
+TOP.scarv_soc.i_ic_top.n_route_rsp_imem_ram
+TOP.scarv_soc.i_ic_top.n_route_rsp_imem_rom
+@1000200
+-Routing
+@800200
+-ROM
+@28
+TOP.scarv_soc.i_ic_top.rom_imem_ack
+@22
+TOP.scarv_soc.i_ic_top.rom_imem_addr[31:0]
+@28
+TOP.scarv_soc.i_ic_top.rom_imem_error
+TOP.scarv_soc.i_ic_top.rom_imem_gnt
+@22
+TOP.scarv_soc.i_ic_top.rom_imem_rdata[31:0]
+@28
+TOP.scarv_soc.i_ic_top.rom_imem_recv
+TOP.scarv_soc.i_ic_top.rom_imem_req
+@22
+TOP.scarv_soc.i_ic_top.rom_imem_strb[3:0]
+TOP.scarv_soc.i_ic_top.rom_imem_wdata[31:0]
+@28
+TOP.scarv_soc.i_ic_top.rom_imem_wen
+TOP.scarv_soc.i_ic_top.route_rsp_imem_rom
+@1000200
+-ROM
+-Interconnect
+@800200
+-ROM Instance
+@28
+TOP.scarv_soc.i_rom.clka
+@29
+TOP.scarv_soc.i_rom.rsta
+@22
+TOP.scarv_soc.i_rom.DEPTH[31:0]
+TOP.scarv_soc.i_rom.LW[31:0]
+@820
+TOP.scarv_soc.i_rom.MEMH_FILE[2040:0]
+@22
+TOP.scarv_soc.i_rom.addra[13:0]
+TOP.scarv_soc.i_rom.dina[31:0]
+@28
+TOP.scarv_soc.i_rom.ena
+@22
+TOP.scarv_soc.i_rom.idx_a[9:0]
+@28
+TOP.scarv_soc.i_rom.is_write
+TOP.scarv_soc.i_rom.p_ena
+@22
+TOP.scarv_soc.i_rom.read_data[31:0]
+TOP.scarv_soc.i_rom.douta[31:0]
+TOP.scarv_soc.i_rom.wea[3:0]
+@1000200
+-ROM Instance
 [pattern_trace] 1
 [pattern_trace] 0

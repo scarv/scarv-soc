@@ -17,6 +17,14 @@ input  wire        g_resetn
 parameter SCARV_CPU_PC_RESET_VALUE = 32'h1000_0000;
 
 //
+// BRAM Parameters
+// ------------------------------------------------------------
+
+/* verilator lint_off WIDTH */
+parameter [255*8:0] BRAM_ROM_MEMH_FILE = "";
+/* verilator lint_on WIDTH */
+
+//
 // SCARV CPU Interface Wires
 // ------------------------------------------------------------
 
@@ -189,5 +197,52 @@ ic_top i_ic_top (
 .ram_imem_error   (ram_imem_error   ), // Error
 .ram_imem_rdata   (ram_imem_rdata   )  // Read data
 );
+
+//
+// ROM / RAM instances
+// ------------------------------------------------------------
+
+wire         bram_reset = !g_resetn;
+
+wire         rom_bram_cen    ;
+wire  [31:0] rom_bram_addr   ;
+wire  [31:0] rom_bram_wdata  ;
+wire  [ 3:0] rom_bram_wstrb  ;
+wire  [31:0] rom_bram_rdata  ;
+
+ic_cpu_bus_bram_bridge i_rom_bus_bridge(
+.g_clk       (g_clk             ),
+.g_resetn    (g_resetn          ),
+.bram_cen    (rom_bram_cen      ),
+.bram_addr   (rom_bram_addr     ),
+.bram_wdata  (rom_bram_wdata    ),
+.bram_wstrb  (rom_bram_wstrb    ),
+.bram_stall  (1'b0              ),
+.bram_rdata  (rom_bram_rdata    ),
+.enable      (rom_imem_req      ), // Enable requests / does addr map?
+.mem_req     (rom_imem_req      ), // Start memory request
+.mem_gnt     (rom_imem_gnt      ), // request accepted
+.mem_wen     (rom_imem_wen      ), // Write enable
+.mem_strb    (rom_imem_strb     ), // Write strobe
+.mem_wdata   (rom_imem_wdata    ), // Write data
+.mem_addr    (rom_imem_addr     ), // Read/Write address
+.mem_recv    (rom_imem_recv     ), // Instruction memory recieve response.
+.mem_ack     (rom_imem_ack      ), // Instruction memory ack response.
+.mem_error   (rom_imem_error    ), // Error
+.mem_rdata   (rom_imem_rdata    )  // Read data
+);
+
+scarv_soc_bram_single #(
+.MEMH_FILE(BRAM_ROM_MEMH_FILE)
+) i_rom (
+.clka (g_clk                ),
+.rsta (bram_reset           ),
+.ena  (rom_bram_cen         ),
+.wea  (rom_bram_wstrb       ),
+.addra(rom_bram_addr[13:0]  ),
+.dina (rom_bram_wdata       ),
+.douta(rom_bram_rdata       ) 
+);
+
 
 endmodule

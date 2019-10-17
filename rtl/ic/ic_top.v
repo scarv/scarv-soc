@@ -107,14 +107,14 @@ always @(*) begin
             n_route_rsp_imem_ram = 1'b1;
         end else if(ram_imem_recv && ram_imem_ack) begin
             // Response accepted by the core, check for new request.
-            n_route_rsp_imem_ram = ram_imem_recv && ram_imem_ack;
+            n_route_rsp_imem_ram = ram_imem_req && ram_imem_gnt;
         end else begin
             // No response yet seen but it's still outstanding.
             n_route_rsp_imem_ram = 1'b1;
         end
     end else begin
         // Check for new requests mapping to this interface.
-        n_route_rsp_imem_ram =  ram_imem_recv && ram_imem_ack;
+        n_route_rsp_imem_ram =  ram_imem_req && ram_imem_gnt;
     end
 end
 
@@ -133,13 +133,15 @@ end
 assign rom_imem_req   = ic_imem_route_rom && cpu_imem_req;
 assign cpu_imem_gnt   = ic_imem_route_rom && rom_imem_gnt;
 
-assign ram_imem_wen   = cpu_imem_wen  ; // Write enable
-assign ram_imem_strb  = cpu_imem_strb ; // Write strobe
-assign ram_imem_wdata = cpu_imem_wdata; // Write data
-assign ram_imem_addr  = cpu_imem_addr ; // Read/Write address
+assign rom_imem_wen   = cpu_imem_wen  ; // Write enable
+assign rom_imem_strb  = cpu_imem_strb ; // Write strobe
+assign rom_imem_wdata = cpu_imem_wdata; // Write data
+assign rom_imem_addr  = cpu_imem_addr ; // Read/Write address
 
 reg    route_rsp_imem_rom   ;
 reg    n_route_rsp_imem_rom ;
+
+assign rom_imem_ack   = cpu_imem_ack && route_rsp_imem_rom;
 
 always @(*) begin
     if(route_rsp_imem_rom) begin
@@ -148,14 +150,14 @@ always @(*) begin
             n_route_rsp_imem_rom = 1'b1;
         end else if(rom_imem_recv && rom_imem_ack) begin
             // Response accepted by the core, check for new request.
-            n_route_rsp_imem_rom = rom_imem_recv && rom_imem_ack;
+            n_route_rsp_imem_rom = rom_imem_req && rom_imem_gnt;
         end else begin
             // No response yet seen but it's still outstanding.
             n_route_rsp_imem_rom = 1'b1;
         end
     end else begin
         // Check for new requests mapping to this interface.
-        n_route_rsp_imem_rom =  rom_imem_recv && rom_imem_ack;
+        n_route_rsp_imem_rom =  rom_imem_req && rom_imem_gnt;
     end
 end
 
@@ -167,6 +169,21 @@ always @(posedge g_clk) begin
     end
 end
 
+//
+// Response Routing
+// ------------------------------------------------------------
+
+assign cpu_imem_recv =
+    route_rsp_imem_rom  && rom_imem_recv    ||
+    route_rsp_imem_ram  && ram_imem_recv    ;
+
+assign cpu_imem_error=
+    route_rsp_imem_rom  && rom_imem_error   ||
+    route_rsp_imem_ram  && ram_imem_error   ;
+
+assign cpu_imem_rdata=
+    {32{route_rsp_imem_rom}} & rom_imem_rdata   |
+    {32{route_rsp_imem_ram}} & ram_imem_rdata   ;
 
 //
 // Submodule instances
