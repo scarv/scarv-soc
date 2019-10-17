@@ -90,7 +90,6 @@ wire ic_dmem_route_axi; // Route to the AXI bridge.
 // ------------------------------------------------------------
 
 assign ram_imem_req   = ic_imem_route_ram && cpu_imem_req;
-assign cpu_imem_gnt   = ic_imem_route_ram && ram_imem_gnt;
 
 assign ram_imem_wen   = cpu_imem_wen  ; // Write enable
 assign ram_imem_strb  = cpu_imem_strb ; // Write strobe
@@ -99,6 +98,8 @@ assign ram_imem_addr  = cpu_imem_addr ; // Read/Write address
 
 reg    route_rsp_imem_ram   ;
 reg    n_route_rsp_imem_ram ;
+
+assign ram_imem_ack   = cpu_imem_ack && route_rsp_imem_ram;
 
 always @(*) begin
     if(route_rsp_imem_ram) begin
@@ -131,7 +132,6 @@ end
 // ------------------------------------------------------------
 
 assign rom_imem_req   = ic_imem_route_rom && cpu_imem_req;
-assign cpu_imem_gnt   = ic_imem_route_rom && rom_imem_gnt;
 
 assign rom_imem_wen   = cpu_imem_wen  ; // Write enable
 assign rom_imem_strb  = cpu_imem_strb ; // Write strobe
@@ -184,6 +184,9 @@ assign cpu_imem_error=
 assign cpu_imem_rdata=
     {32{route_rsp_imem_rom}} & rom_imem_rdata   |
     {32{route_rsp_imem_ram}} & ram_imem_rdata   ;
+
+assign cpu_imem_gnt   = ic_imem_route_ram && ram_imem_gnt ||
+                        ic_imem_route_rom && rom_imem_gnt ;
 
 //
 // Submodule instances

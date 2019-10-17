@@ -204,6 +204,9 @@ ic_top i_ic_top (
 
 wire         bram_reset = !g_resetn;
 
+//
+// ROM
+
 wire         rom_bram_cen    ;
 wire  [31:0] rom_bram_addr   ;
 wire  [31:0] rom_bram_wdata  ;
@@ -244,5 +247,47 @@ scarv_soc_bram_single #(
 .douta(rom_bram_rdata       ) 
 );
 
+//
+// RAM
+
+wire         ram_bram_cen    ;
+wire  [31:0] ram_bram_addr   ;
+wire  [31:0] ram_bram_wdata  ;
+wire  [ 3:0] ram_bram_wstrb  ;
+wire  [31:0] ram_bram_rdata  ;
+
+ic_cpu_bus_bram_bridge i_ram_bus_bridge(
+.g_clk       (g_clk             ),
+.g_resetn    (g_resetn          ),
+.bram_cen    (ram_bram_cen      ),
+.bram_addr   (ram_bram_addr     ),
+.bram_wdata  (ram_bram_wdata    ),
+.bram_wstrb  (ram_bram_wstrb    ),
+.bram_stall  (1'b0              ),
+.bram_rdata  (ram_bram_rdata    ),
+.enable      (ram_imem_req      ), // Enable requests / does addr map?
+.mem_req     (ram_imem_req      ), // Start memory request
+.mem_gnt     (ram_imem_gnt      ), // request accepted
+.mem_wen     (ram_imem_wen      ), // Write enable
+.mem_strb    (ram_imem_strb     ), // Write strobe
+.mem_wdata   (ram_imem_wdata    ), // Write data
+.mem_addr    (ram_imem_addr     ), // Read/Write address
+.mem_recv    (ram_imem_recv     ), // Instruction memory recieve response.
+.mem_ack     (ram_imem_ack      ), // Instruction memory ack response.
+.mem_error   (ram_imem_error    ), // Error
+.mem_rdata   (ram_imem_rdata    )  // Read data
+);
+
+scarv_soc_bram_single #(
+.MEMH_FILE(BRAM_ROM_MEMH_FILE)
+) i_ram (
+.clka (g_clk                ),
+.rsta (bram_reset           ),
+.ena  (ram_bram_cen         ),
+.wea  (ram_bram_wstrb       ),
+.addra(ram_bram_addr[13:0]  ),
+.dina (ram_bram_wdata       ),
+.douta(ram_bram_rdata       ) 
+);
 
 endmodule
