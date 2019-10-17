@@ -42,6 +42,14 @@ wire [31:0] read_data = {
 
 wire is_write = |wea;
 
+`ifdef BLACKBOX_SCARV_SOC_BRAM_SINGLE
+
+reg [31:0] blackbox_read_value = $anyseq;
+
+always @(*) douta = blackbox_read_value;
+
+`else
+
 // Reads
 always @(posedge clka) begin
     if(rsta) begin
@@ -50,6 +58,7 @@ always @(posedge clka) begin
         douta <= read_data;
     end
 end
+`endif
 
 //
 // Port a writes

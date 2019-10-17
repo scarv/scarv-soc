@@ -68,6 +68,8 @@ assign req_dec_err  = !(match_rom || match_ram || match_axi) && req_valid;
 
 `ifdef FORMAL_IC_ADDR_DECODE
 
+initial assume(!g_resetn);
+
 always @(posedge g_clk) if(g_resetn && $stable(g_resetn)) begin
 
     assert(!(route_rom && route_ram));
@@ -75,6 +77,12 @@ always @(posedge g_clk) if(g_resetn && $stable(g_resetn)) begin
     assert(!(route_rom && route_axi));
     
     assert(!(route_ram && route_axi));
+
+    cover(route_rom);
+
+    cover(route_ram);
+    
+    cover(route_axi);
 
 end
 

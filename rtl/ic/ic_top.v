@@ -181,5 +181,16 @@ ic_addr_decode ic_addr_decode_cpu_dmem (
 .route_axi    (ic_dmem_route_axi)    // Route to the AXI bridge.
 );
 
+`ifdef FORMAL_IC_TOP
+
+initial assume(!g_resetn);
+
+always @(posedge g_clk) if(g_resetn && $past(g_resetn)) begin
+
+    assert(!(route_rsp_imem_ram && route_rsp_imem_rom));
+
+end
+
+`endif
 
 endmodule
