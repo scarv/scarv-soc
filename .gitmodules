@@ -1,0 +1,3 @@
+[submodule "extern/scarv-cpu"]
+	path = extern/scarv-cpu
+	url = git@github.com:scarv/scarv-cpu.git
