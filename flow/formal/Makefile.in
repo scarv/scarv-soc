@@ -16,7 +16,6 @@ $(SOC_WORK)/formal/%/logfile.txt : $(SOC_WORK)/formal/%.sby
 define add_target_proof
 
 prove-${1} : $(SOC_WORK)/formal/${1}/logfile.txt
-	echo $<
 
 ALL_PROOFS += prove-${1}
 
