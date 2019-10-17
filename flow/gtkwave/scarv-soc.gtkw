@@ -1,6 +1,6 @@
 [*]
 [*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
-[*] Thu Oct 17 14:41:35 2019
+[*] Thu Oct 17 15:21:23 2019
 [*]
 [dumpfile] "/home/ben/scarv/repos/scarv-soc/work/verilator/waves.vcd"
 [dumpfile_mtime] "Thu Oct 17 14:41:25 2019"
@@ -9,7 +9,7 @@
 [timestart] 1
 [size] 1920 1025
 [pos] -1 -1
-*-10.650798 4316 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-6.846901 95 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] TOP.
 [treeopen] TOP.scarv_soc.
 [treeopen] TOP.scarv_soc.i_ic_top.
@@ -18,8 +18,9 @@
 [signals_width] 300
 [sst_expanded] 1
 [sst_vpaned_height] 223
-@28
+@29
 TOP.g_clk
+@28
 TOP.g_resetn
 @800200
 -SCARV CPU
@@ -85,9 +86,7 @@ TOP.scarv_soc.i_ic_top.ic_dmem_route_rom
 TOP.scarv_soc.i_ic_top.ic_imem_route_axi
 TOP.scarv_soc.i_ic_top.ic_imem_route_ram
 TOP.scarv_soc.i_ic_top.ic_imem_route_rom
-@29
 TOP.scarv_soc.i_ic_top.ic_dmem_error
-@28
 TOP.scarv_soc.i_ic_top.ic_imem_error
 TOP.scarv_soc.i_ic_top.route_rsp_imem_ram
 TOP.scarv_soc.i_ic_top.route_rsp_imem_rom
@@ -187,7 +186,7 @@ TOP.scarv_soc.i_ram.rsta
 TOP.scarv_soc.i_ram.wea[3:0]
 @1401200
 -RAM Instance
-@800200
+@c00200
 -RAM Bus Bridge Instance
 @28
 TOP.scarv_soc.i_ram_bus_bridge.g_clk
@@ -226,7 +225,7 @@ TOP.scarv_soc.i_ram_bus_bridge.mem_rdata[31:0]
 @28
 TOP.scarv_soc.i_ram_bus_bridge.mem_error
 TOP.scarv_soc.i_ram_bus_bridge.n_mem_recv
-@1000200
+@1401200
 -RAM Bus Bridge Instance
 [pattern_trace] 1
 [pattern_trace] 0

@@ -1,0 +1,11 @@
+
+SBY_PROOFS = $(wildcard $(SOC_HOME)/verif/formal/*.sby)
+
+$(SOC_WORK)/formal/%.sby : $(SOC_HOME)/verif/formal/%.sby
+	@mkdir -p $(dir $@)
+	cp $< $@
+
+$(SOC_WORK)/formal/%/logfile.txt : $(SOC_WORK)/formal/%.sby
+	sby -f $<
+
+proofs: $(SOC_WORK)/formal/ic_top/logfile.txt
