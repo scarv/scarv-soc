@@ -3,6 +3,7 @@
 // Interconnect sources
 $SOC_HOME/rtl/ic/ic_addr_decode.v
 $SOC_HOME/rtl/ic/ic_cpu_bus_bram_bridge.v
+$SOC_HOME/rtl/ic/ic_rsp_router.v
 $SOC_HOME/rtl/ic/ic_top.v
 
 

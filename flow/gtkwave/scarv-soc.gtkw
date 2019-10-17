@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
-[*] Thu Oct 17 14:25:00 2019
+[*] Thu Oct 17 14:41:35 2019
 [*]
 [dumpfile] "/home/ben/scarv/repos/scarv-soc/work/verilator/waves.vcd"
-[dumpfile_mtime] "Thu Oct 17 14:16:35 2019"
-[dumpfile_size] 687669
+[dumpfile_mtime] "Thu Oct 17 14:41:25 2019"
+[dumpfile_size] 1351224
 [savefile] "/home/ben/scarv/repos/scarv-soc/flow/gtkwave/scarv-soc.gtkw"
-[timestart] 1443
+[timestart] 1
 [size] 1920 1025
 [pos] -1 -1
-*-5.547961 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-10.650798 4316 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] TOP.
 [treeopen] TOP.scarv_soc.
 [treeopen] TOP.scarv_soc.i_ic_top.
@@ -75,9 +75,8 @@ TOP.scarv_soc.cpu_trs_valid
 @1000200
 -CPU Trace
 -SCARV CPU
-@c00200
--Interconnect
 @800200
+-Interconnect
 -Routing
 @28
 TOP.scarv_soc.i_ic_top.ic_dmem_route_axi
@@ -86,12 +85,12 @@ TOP.scarv_soc.i_ic_top.ic_dmem_route_rom
 TOP.scarv_soc.i_ic_top.ic_imem_route_axi
 TOP.scarv_soc.i_ic_top.ic_imem_route_ram
 TOP.scarv_soc.i_ic_top.ic_imem_route_rom
+@29
 TOP.scarv_soc.i_ic_top.ic_dmem_error
+@28
 TOP.scarv_soc.i_ic_top.ic_imem_error
 TOP.scarv_soc.i_ic_top.route_rsp_imem_ram
 TOP.scarv_soc.i_ic_top.route_rsp_imem_rom
-TOP.scarv_soc.i_ic_top.n_route_rsp_imem_ram
-TOP.scarv_soc.i_ic_top.n_route_rsp_imem_rom
 @1000200
 -Routing
 @800200
@@ -116,7 +115,26 @@ TOP.scarv_soc.i_ic_top.rom_imem_wen
 TOP.scarv_soc.i_ic_top.route_rsp_imem_rom
 @1000200
 -ROM
-@1401200
+@800200
+-RAM
+@22
+TOP.scarv_soc.i_ic_top.ram_imem_addr[31:0]
+@28
+TOP.scarv_soc.i_ic_top.ram_imem_error
+TOP.scarv_soc.i_ic_top.ram_imem_gnt
+@22
+TOP.scarv_soc.i_ic_top.ram_imem_rdata[31:0]
+@28
+TOP.scarv_soc.i_ic_top.ram_imem_recv
+TOP.scarv_soc.i_ic_top.ram_imem_req
+TOP.scarv_soc.i_ic_top.ram_imem_ack
+@22
+TOP.scarv_soc.i_ic_top.ram_imem_strb[3:0]
+TOP.scarv_soc.i_ic_top.ram_imem_wdata[31:0]
+@28
+TOP.scarv_soc.i_ic_top.ram_imem_wen
+@1000200
+-RAM
 -Interconnect
 @c00200
 -ROM Instance
@@ -193,7 +211,6 @@ TOP.scarv_soc.i_ram_bus_bridge.bram_wstrb[3:0]
 @28
 TOP.scarv_soc.i_ram_bus_bridge.mem_req
 TOP.scarv_soc.i_ram_bus_bridge.mem_gnt
-@29
 TOP.scarv_soc.i_ram_bus_bridge.mem_wen
 @22
 TOP.scarv_soc.i_ram_bus_bridge.mem_addr[31:0]

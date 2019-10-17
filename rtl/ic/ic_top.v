@@ -96,36 +96,18 @@ assign ram_imem_strb  = cpu_imem_strb ; // Write strobe
 assign ram_imem_wdata = cpu_imem_wdata; // Write data
 assign ram_imem_addr  = cpu_imem_addr ; // Read/Write address
 
-reg    route_rsp_imem_ram   ;
-reg    n_route_rsp_imem_ram ;
+wire   route_rsp_imem_ram;
 
-assign ram_imem_ack   = cpu_imem_ack && route_rsp_imem_ram;
-
-always @(*) begin
-    if(route_rsp_imem_ram) begin
-        if(ram_imem_recv && !ram_imem_ack) begin
-            // Outstanding response not yet accepted by the core.
-            n_route_rsp_imem_ram = 1'b1;
-        end else if(ram_imem_recv && ram_imem_ack) begin
-            // Response accepted by the core, check for new request.
-            n_route_rsp_imem_ram = ram_imem_req && ram_imem_gnt;
-        end else begin
-            // No response yet seen but it's still outstanding.
-            n_route_rsp_imem_ram = 1'b1;
-        end
-    end else begin
-        // Check for new requests mapping to this interface.
-        n_route_rsp_imem_ram =  ram_imem_req && ram_imem_gnt;
-    end
-end
-
-always @(posedge g_clk) begin
-    if(!g_resetn) begin
-        route_rsp_imem_ram <= 1'b0;
-    end else begin
-        route_rsp_imem_ram <= n_route_rsp_imem_ram;
-    end
-end
+ic_rsp_router i_rsp_router_imem_ram (
+.g_clk           (g_clk             ),
+.g_resetn        (g_resetn          ),
+.cpu_ack         (cpu_imem_ack      ),
+.periph_req      (ram_imem_req      ),
+.periph_ack      (ram_imem_ack      ),
+.periph_recv     (ram_imem_recv     ),
+.periph_gnt      (ram_imem_gnt      ),
+.route_periph_rsp(route_rsp_imem_ram)
+);
 
 //
 // Instruction <-> ROM Routing
@@ -138,36 +120,19 @@ assign rom_imem_strb  = cpu_imem_strb ; // Write strobe
 assign rom_imem_wdata = cpu_imem_wdata; // Write data
 assign rom_imem_addr  = cpu_imem_addr ; // Read/Write address
 
-reg    route_rsp_imem_rom   ;
-reg    n_route_rsp_imem_rom ;
+wire   route_rsp_imem_rom   ;
 
-assign rom_imem_ack   = cpu_imem_ack && route_rsp_imem_rom;
+ic_rsp_router i_rsp_router_imem_rom (
+.g_clk           (g_clk             ),
+.g_resetn        (g_resetn          ),
+.cpu_ack         (cpu_imem_ack      ),
+.periph_req      (rom_imem_req      ),
+.periph_ack      (rom_imem_ack      ),
+.periph_recv     (rom_imem_recv     ),
+.periph_gnt      (rom_imem_gnt      ),
+.route_periph_rsp(route_rsp_imem_rom)
+);
 
-always @(*) begin
-    if(route_rsp_imem_rom) begin
-        if(rom_imem_recv && !rom_imem_ack) begin
-            // Outstanding response not yet accepted by the core.
-            n_route_rsp_imem_rom = 1'b1;
-        end else if(rom_imem_recv && rom_imem_ack) begin
-            // Response accepted by the core, check for new request.
-            n_route_rsp_imem_rom = rom_imem_req && rom_imem_gnt;
-        end else begin
-            // No response yet seen but it's still outstanding.
-            n_route_rsp_imem_rom = 1'b1;
-        end
-    end else begin
-        // Check for new requests mapping to this interface.
-        n_route_rsp_imem_rom =  rom_imem_req && rom_imem_gnt;
-    end
-end
-
-always @(posedge g_clk) begin
-    if(!g_resetn) begin
-        route_rsp_imem_rom <= 1'b0;
-    end else begin
-        route_rsp_imem_rom <= n_route_rsp_imem_rom;
-    end
-end
 
 //
 // Response Routing
