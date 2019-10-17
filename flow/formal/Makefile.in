@@ -1,5 +1,12 @@
 
 SBY_PROOFS = $(wildcard $(SOC_HOME)/verif/formal/*.sby)
+PROOF_NAMES = $(notdir $(basename $(SBY_PROOFS)))
+
+ALL_PROOFS =
+
+define map_proof_log
+    $(SOC_WORK)/formal/${1}/logfile.txt
+endef
 
 $(SOC_WORK)/formal/%.sby : $(SOC_HOME)/verif/formal/%.sby
 	@mkdir -p $(dir $@)
@@ -8,4 +15,20 @@ $(SOC_WORK)/formal/%.sby : $(SOC_HOME)/verif/formal/%.sby
 $(SOC_WORK)/formal/%/logfile.txt : $(SOC_WORK)/formal/%.sby
 	sby -f $<
 
-proofs: $(SOC_WORK)/formal/ic_top/logfile.txt
+
+#
+# Targets for a single proof.
+define add_target_proof
+
+prove-${1} : $(call map_proof_log,${1})
+
+ALL_PROOFS += prove-${1}
+
+endef
+
+$(info $(PROOF_NAMES))
+
+$(foreach PROOF,$(PROOF_NAMES),$(call add_target_proof,$(PROOF)))
+
+prove-all: $(ALL_PROOFS)
+
