@@ -1,0 +1,5 @@
+
+$SOC_HOME/verif/scarv-soc/dut_wrapper.cpp
+$SOC_HOME/verif/scarv-soc/testbench.cpp
+$SOC_HOME/verif/scarv-soc/main.cpp
+

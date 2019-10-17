@@ -1,0 +1,67 @@
+[*]
+[*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
+[*] Thu Oct 17 11:09:49 2019
+[*]
+[dumpfile] "/home/ben/scarv/repos/scarv-soc/work/verilator/waves.vcd"
+[dumpfile_mtime] "Thu Oct 17 11:07:21 2019"
+[dumpfile_size] 460782
+[savefile] "/home/ben/scarv/repos/scarv-soc/flow/gtkwave/scarv-soc.gtkw"
+[timestart] 1
+[size] 1920 1025
+[pos] -1 -1
+*-8.000000 66 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] TOP.
+[treeopen] TOP.scarv_soc.
+[sst_width] 325
+[signals_width] 271
+[sst_expanded] 1
+[sst_vpaned_height] 301
+@28
+TOP.g_clk
+TOP.g_resetn
+@800200
+-CPU Instruction Memory
+@28
+TOP.scarv_soc.cpu_imem_req
+TOP.scarv_soc.cpu_imem_gnt
+@22
+TOP.scarv_soc.cpu_imem_addr[31:0]
+TOP.scarv_soc.cpu_imem_strb[3:0]
+@28
+TOP.scarv_soc.cpu_imem_wen
+@22
+TOP.scarv_soc.cpu_imem_wdata[31:0]
+@200
+-
+@28
+TOP.scarv_soc.cpu_imem_recv
+TOP.scarv_soc.cpu_imem_ack
+TOP.scarv_soc.cpu_imem_error
+@22
+TOP.scarv_soc.cpu_imem_rdata[31:0]
+@1000200
+-CPU Instruction Memory
+@800200
+-CPU Data Memory
+@28
+TOP.scarv_soc.cpu_dmem_req
+TOP.scarv_soc.cpu_dmem_gnt
+@22
+TOP.scarv_soc.cpu_dmem_wdata[31:0]
+TOP.scarv_soc.cpu_dmem_addr[31:0]
+TOP.scarv_soc.cpu_dmem_strb[3:0]
+@28
+TOP.scarv_soc.cpu_dmem_wen
+@200
+-
+@28
+TOP.scarv_soc.cpu_dmem_recv
+TOP.scarv_soc.cpu_dmem_ack
+@29
+TOP.scarv_soc.cpu_dmem_error
+@22
+TOP.scarv_soc.cpu_dmem_rdata[31:0]
+@1000200
+-CPU Data Memory
+[pattern_trace] 1
+[pattern_trace] 0

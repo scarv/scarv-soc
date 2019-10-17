@@ -1,0 +1,40 @@
+
+VERILATOR   = $(VERILATOR_ROOT)/bin/verilator
+
+VL_DIR      = $(SOC_WORK)/verilator
+VL_OUT      = $(SOC_WORK)/verilator/verilated
+
+VL_WAVES    = $(VL_DIR)/waves.vcd
+VL_TIMEOUT  = 1000
+VL_ARGS     = 
+
+VL_CSRC_DIR =$(SOC_HOME)/verif/scarv-soc
+
+VL_CSRC     = $(VL_CSRC_DIR)/main.cpp \
+              $(VL_CSRC_DIR)/dut_wrapper.cpp \
+              $(VL_CSRC_DIR)/testbench.cpp
+
+VL_FLAGS    = --cc -CFLAGS "-O2" --Mdir $(VL_DIR) -O3 -CFLAGS -g\
+               -I$(SCARV_CPU_RTL_DIR) \
+               --exe --trace \
+               --top-module scarv_soc $(VL_BUILD_FLAGS)
+
+VL_RTL_MANIFEST = $(SOC_HOME)/flow/verilator/scarv-soc-rtl.manifest
+VL_CPP_MANIFEST = $(SOC_HOME)/flow/verilator/scarv-soc-testbench.manifest
+
+.PHONY: $(VL_CSRC)
+
+$(VL_OUT) : $(VL_CSRC)
+	@mkdir -p $(VL_DIR)
+	$(VERILATOR) $(VL_FLAGS) -o $@ \
+        -f $(VL_RTL_MANIFEST) \
+        -f $(VL_CPP_MANIFEST)
+
+verilator-build: $(VL_OUT)
+	$(MAKE) -C $(VL_DIR) -f Vscarv_soc.mk
+
+verilator-run-waves: $(VL_OUT)
+	$(VL_OUT) $(VL_ARGS) +WAVES=$(VL_WAVES) +TIMEOUT=$(VL_TIMEOUT)
+
+verilator-clean:
+	rm -rf $(VL_DIR)
