@@ -21,8 +21,6 @@ ALL_PROOFS += prove-${1}
 
 endef
 
-$(info $(PROOF_NAMES))
-
 $(foreach PROOF,$(PROOF_NAMES),$(eval $(call add_target_proof,$(PROOF))))
 
 prove-all: $(ALL_PROOFS)

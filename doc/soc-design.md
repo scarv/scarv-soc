@@ -61,7 +61,7 @@ Address      | Range        | Description
 -------------|--------------|-------------------------------------------
 `0x40000000` | `0x4FFFFFFF` | External AXI Bus (tentative)
 `0x20000000` | `0x2000FFFF` | 64K Dual port tightly coupled RAM
-`0x10000000` | `0x10003FFF` | 1K Boot ROM
+`0x10000000` | `0x100003FF` | 1K Boot ROM
 `0x00000000` | `0x00000FFF` | Memory mapped IO devices (CPU Internal)
 
 - The second level is managed by whatever AXI interconnect is on the

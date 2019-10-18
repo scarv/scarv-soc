@@ -383,7 +383,6 @@ ic_cpu_bus_bram_bridge i_ram_dmem_bus_bridge(
 );
 
 scarv_soc_bram_dual #(
-.MEMH_FILE(BRAM_ROM_MEMH_FILE),
 .DEPTH    (65536             )
 ) i_ram (
 .clka (g_clk                ),

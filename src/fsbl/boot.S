@@ -37,6 +37,26 @@ _start:
 
     li sp, 0x2000FFFF
 
+    li t0, 0x10000000
+    li t1, 0x10000400
+    li t2, 0x20000000
+
+    cpy_loop:
+        lw   a0, 0(t0)
+        lw   a1, 4(t0)
+        lw   a2, 8(t0)
+        lw   a3,12(t0)
+        addi t0, t0, 16
+
+        sw   a0, 0(t2)
+        sw   a1, 4(t2)
+        sw   a2, 8(t2)
+        sw   a3,12(t2)
+        addi t2, t2, 16
+
+        bltu t0, t1, cpy_loop
+
+
     j       fsbl                    // Jump to the first stage boot loader.
 
 .global __fsbl_goto_main

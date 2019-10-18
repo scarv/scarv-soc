@@ -5,7 +5,7 @@ VL_DIR      = $(SOC_WORK)/verilator
 VL_OUT      = $(SOC_WORK)/verilator/verilated
 
 VL_WAVES    = $(VL_DIR)/waves.vcd
-VL_TIMEOUT  = 1000
+VL_TIMEOUT  = 10000
 VL_ARGS     = 
 
 VL_CSRC_DIR =$(SOC_HOME)/verif/scarv-soc
@@ -27,7 +27,7 @@ BRAM_ROM_MEMH   = $(FSBL_HEX)
 
 .PHONY: $(VL_CSRC)
 
-$(VL_OUT) : $(VL_CSRC)
+$(VL_OUT) : $(VL_CSRC) fsbl
 	@mkdir -p $(VL_DIR)
 	$(VERILATOR) $(VL_FLAGS) -o $@ \
         -GBRAM_ROM_MEMH_FILE="\"$(BRAM_ROM_MEMH)\"" \
