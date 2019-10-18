@@ -17,37 +17,27 @@ output wire        periph_ack       ,
 input  wire        periph_recv      ,
 input  wire        periph_gnt       ,
 
-output  reg        route_periph_rsp
+output  wire       route_periph_rsp
 
 );
 
-reg    n_route_periph_rsp ;
+reg  [1:0] reqs_outstanding;
 
-assign periph_ack   = cpu_ack && route_periph_rsp;
+wire new_req = periph_req  && periph_gnt;
+wire new_rsp = periph_recv && periph_ack;
 
-always @(*) begin
-    if(route_periph_rsp) begin
-        if(periph_recv && !periph_ack) begin
-            // Outstanding response not yet accepted by the core.
-            n_route_periph_rsp = 1'b1;
-        end else if(periph_recv && periph_ack) begin
-            // Response accepted by the core, check for new request.
-            n_route_periph_rsp = periph_req && periph_gnt;
-        end else begin
-            // No response yet seen but it's still outstanding.
-            n_route_periph_rsp = 1'b1;
-        end
-    end else begin
-        // Check for new requests mapping to this interface.
-        n_route_periph_rsp =  periph_req && periph_gnt;
-    end
-end
+wire [1:0] n_reqs_outstanding = reqs_outstanding + {1'b0, new_req} - 
+                                                   {1'b0, new_rsp} ;
+
+assign route_periph_rsp = |reqs_outstanding;
+
+assign periph_ack       = |reqs_outstanding && cpu_ack;
 
 always @(posedge g_clk) begin
     if(!g_resetn) begin
-        route_periph_rsp <= 1'b0;
+        reqs_outstanding <= 0;
     end else begin
-        route_periph_rsp <= n_route_periph_rsp;
+        reqs_outstanding <= n_reqs_outstanding;
     end
 end
 

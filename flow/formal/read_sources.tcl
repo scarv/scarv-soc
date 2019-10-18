@@ -9,6 +9,7 @@ read_verilog $::env(SOC_HOME)/rtl/ic/ic_addr_decode.v
 read_verilog $::env(SOC_HOME)/rtl/ic/ic_cpu_bus_bram_bridge.v
 read_verilog $::env(SOC_HOME)/rtl/ic/ic_rsp_router.v
 read_verilog $::env(SOC_HOME)/rtl/ic/ic_top.v
+
 read_verilog $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/p_addsub/p_addsub.v
 read_verilog $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/p_shfrot/p_shfrot.v
 read_verilog $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/xc_sha3/xc_sha3.v
@@ -43,6 +44,8 @@ read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_memory.v
 read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_register.v
 read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_writeback.v
 read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_rngif.v
-read_verilog $::env(SOC_HOME)/rtl/mem/scarv_soc_bram_single.v
+
+read_verilog $::env(SOC_HOME)/rtl/mem/scarv_soc_bram_dual.v
+
 read_verilog $::env(SOC_HOME)/rtl/soc/scarv_soc.v
 

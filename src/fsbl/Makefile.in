@@ -5,6 +5,7 @@ FSBL_SRC    = $(SOC_HOME)/src/fsbl/boot.S \
 FSBL_OBJ    = $(SOC_WORK)/fsbl/fsbl.elf
 FSBL_OBJDUMP= $(SOC_WORK)/fsbl/fsbl.objdump
 FSBL_HEX    = $(SOC_WORK)/fsbl/fsbl.mem
+FSBL_GTKWL  = $(SOC_WORK)/fsbl/fsbl.gtkwl
 
 FSBL_CFLAGS = -nostartfiles -Os -O2 -Wall -fpic -fPIC \
               -T$(SOC_HOME)/src/fsbl/link.ld
@@ -22,4 +23,11 @@ $(FSBL_HEX) : $(FSBL_OBJ)
 	@mkdir -p $(dir $@)
 	$(OBJCOPY) --gap-fill 0 -O verilog $< $@
 
-fsbl: $(FSBL_OBJ) $(FSBL_OBJDUMP) $(FSBL_HEX)
+$(FSBL_GTKWL) : $(FSBL_OBJDUMP)
+	grep ".*:	" $(FSBL_OBJDUMP) \
+        | grep -v ">:" | cut -c 6- | sed 's/\t//' \
+        | sort | uniq | sed 's/ +/ /' | sed 's/\t/ /' \
+        | sed 's/\(^....    \)    /0000\1/' \
+        > $@
+
+fsbl: $(FSBL_OBJ) $(FSBL_OBJDUMP) $(FSBL_HEX) $(FSBL_GTKWL)

@@ -126,7 +126,7 @@ wire [31:0] ram_dmem_rdata       ; // Read data
 
 frv_core #(
 .FRV_PC_RESET_VALUE (SCARV_CPU_PC_RESET_VALUE   ),
-.TRACE_INSTR_WORD   (1'b0                       ),
+.TRACE_INSTR_WORD   (1'b1                       ),
 .BRAM_REGFILE       (1'b1                       )
 ) i_scarv_cpu(
 .g_clk          (g_clk              ), // global clock

@@ -31,24 +31,54 @@ output wire         mem_error       , // Error
 output wire [31:0]  mem_rdata         // Read data
 );
 
-assign mem_rdata    = bram_rdata;
+assign mem_rdata    = buffer_req ? buffer_rdata : bram_rdata;
 
 assign mem_error    = 1'b0;
-assign mem_gnt      = !bram_stall;
+assign mem_gnt      = !bram_stall && !buffer_req;
 assign mem_error    = 1'b0;
 
-assign bram_addr    = enable  ? mem_addr : 32'b0    ;
-assign bram_wdata   = mem_wdata;
-assign bram_wstrb   = mem_wen ? mem_strb : 4'b0000  ;
-assign bram_cen     = mem_req && enable;
+assign bram_addr    = buffer_req ? buffer_addr  : mem_addr ;
+assign bram_wdata   = buffer_req ? buffer_wdata : mem_wdata;
+assign bram_wstrb   = !mem_wen   ? 4'b0000      :
+                      buffer_req ? buffer_wstrb :
+                                   mem_strb     ;
+assign bram_cen     = (mem_req && mem_gnt && enable) ||
+                      buffer_req;
 
-wire   n_mem_recv   = (bram_cen && !bram_stall) || (mem_recv && !mem_ack);
+wire   n_mem_recv   = (bram_cen && !bram_stall) || (mem_recv && !mem_ack) ||
+                      buffer_req;
+
+reg    buffer_req   ;
+wire   n_buffer_req = 
+    buffer_req ? mem_recv&& !mem_ack                        :
+                 mem_req && mem_gnt && mem_recv && !mem_ack ;
+
+reg  [31:0] buffer_addr ;
+reg  [31:0] buffer_wdata;
+reg  [31:0] buffer_rdata;
+reg  [ 3:0] buffer_wstrb;
 
 always @(posedge g_clk) begin
     if(!g_resetn) begin
-        mem_recv = 1'b0;
+        mem_recv    <= 1'b0;
+        buffer_req  <= 1'b0;
     end else begin
-        mem_recv = n_mem_recv;
+        mem_recv    <= n_mem_recv   ;
+        buffer_req  <= n_buffer_req ;
+    end
+end
+
+always @(posedge g_clk) begin
+    if(!g_resetn) begin
+        buffer_addr  <= 32'b0;
+        buffer_wdata <= 32'b0;
+        buffer_rdata <= 32'b0;
+        buffer_wstrb <=  4'b0;
+    end else if(n_buffer_req) begin
+        buffer_addr  <= bram_addr ;
+        buffer_wdata <= bram_wdata;
+        buffer_rdata <= bram_rdata;
+        buffer_wstrb <= mem_wen ? bram_wstrb : 4'b0000;
     end
 end
 
