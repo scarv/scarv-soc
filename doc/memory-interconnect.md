@@ -21,9 +21,11 @@
 
     - Writes are non-posted.
 
-- Four output request ports:
+- Five output request ports:
 
-  - Boot ROM
+  - Boot ROM (Instructions)
+  
+  - Boot ROM (Data)
 
   - RAM (Instructions)
 

@@ -10,7 +10,7 @@ input  wire         clka        ,
 input  wire         rsta        ,
 input  wire         ena         ,
 input  wire [ 3:0]  wea         ,
-input  wire [13:0]  addra       ,
+input  wire [LW-1:0]  addra       ,
 input  wire [31:0]  dina        ,
 output reg  [31:0]  douta        
 

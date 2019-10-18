@@ -51,7 +51,29 @@ input  wire        ram_imem_gnt     , // request accepted
 input  wire        ram_imem_recv    , // Instruction memory recieve response.
 output wire        ram_imem_ack     , // Instruction memory ack response.
 input  wire        ram_imem_error   , // Error
-input  wire [31:0] ram_imem_rdata     // Read data
+input  wire [31:0] ram_imem_rdata   , // Read data
+
+output wire        rom_dmem_req     , // Start memory request
+output wire        rom_dmem_wen     , // Write enable
+output wire [ 3:0] rom_dmem_strb    , // Write strobe
+output wire [31:0] rom_dmem_wdata   , // Write data
+output wire [31:0] rom_dmem_addr    , // Read/Write address
+input  wire        rom_dmem_gnt     , // request accepted
+input  wire        rom_dmem_recv    , // Instruction memory recieve response.
+output wire        rom_dmem_ack     , // Instruction memory ack response.
+input  wire        rom_dmem_error   , // Error
+input  wire [31:0] rom_dmem_rdata   , // Read data
+
+output wire        ram_dmem_req     , // Start memory request
+output wire        ram_dmem_wen     , // Write enable
+output wire [ 3:0] ram_dmem_strb    , // Write strobe
+output wire [31:0] ram_dmem_wdata   , // Write data
+output wire [31:0] ram_dmem_addr    , // Read/Write address
+input  wire        ram_dmem_gnt     , // request accepted
+input  wire        ram_dmem_recv    , // Instruction memory recieve response.
+output wire        ram_dmem_ack     , // Instruction memory ack response.
+input  wire        ram_dmem_error   , // Error
+input  wire [31:0] ram_dmem_rdata     // Read data
 
 );
 
@@ -133,9 +155,57 @@ ic_rsp_router i_rsp_router_imem_rom (
 .route_periph_rsp(route_rsp_imem_rom)
 );
 
+//
+// Data <-> RAM Routing
+// ------------------------------------------------------------
+
+assign ram_dmem_req   = ic_dmem_route_ram && cpu_dmem_req;
+
+assign ram_dmem_wen   = cpu_dmem_wen  ; // Write enable
+assign ram_dmem_strb  = cpu_dmem_strb ; // Write strobe
+assign ram_dmem_wdata = cpu_dmem_wdata; // Write data
+assign ram_dmem_addr  = cpu_dmem_addr ; // Read/Write address
+
+wire   route_rsp_dmem_ram;
+
+ic_rsp_router i_rsp_router_dmem_ram (
+.g_clk           (g_clk             ),
+.g_resetn        (g_resetn          ),
+.cpu_ack         (cpu_dmem_ack      ),
+.periph_req      (ram_dmem_req      ),
+.periph_ack      (ram_dmem_ack      ),
+.periph_recv     (ram_dmem_recv     ),
+.periph_gnt      (ram_dmem_gnt      ),
+.route_periph_rsp(route_rsp_dmem_ram)
+);
 
 //
-// Response Routing
+// Data <-> ROM Routing
+// ------------------------------------------------------------
+
+assign rom_dmem_req   = ic_dmem_route_rom && cpu_dmem_req;
+
+assign rom_dmem_wen   = cpu_dmem_wen  ; // Write enable
+assign rom_dmem_strb  = cpu_dmem_strb ; // Write strobe
+assign rom_dmem_wdata = cpu_dmem_wdata; // Write data
+assign rom_dmem_addr  = cpu_dmem_addr ; // Read/Write address
+
+wire   route_rsp_dmem_rom   ;
+
+ic_rsp_router i_rsp_router_dmem_rom (
+.g_clk           (g_clk             ),
+.g_resetn        (g_resetn          ),
+.cpu_ack         (cpu_dmem_ack      ),
+.periph_req      (rom_dmem_req      ),
+.periph_ack      (rom_dmem_ack      ),
+.periph_recv     (rom_dmem_recv     ),
+.periph_gnt      (rom_dmem_gnt      ),
+.route_periph_rsp(route_rsp_dmem_rom)
+);
+
+
+//
+// Instruction Response Routing
 // ------------------------------------------------------------
 
 assign cpu_imem_recv =
@@ -152,6 +222,25 @@ assign cpu_imem_rdata=
 
 assign cpu_imem_gnt   = ic_imem_route_ram && ram_imem_gnt ||
                         ic_imem_route_rom && rom_imem_gnt ;
+
+//
+// Data Response Routing
+// ------------------------------------------------------------
+
+assign cpu_dmem_recv =
+    route_rsp_dmem_rom  && rom_dmem_recv    ||
+    route_rsp_dmem_ram  && ram_dmem_recv    ;
+
+assign cpu_dmem_error=
+    route_rsp_dmem_rom  && rom_dmem_error   ||
+    route_rsp_dmem_ram  && ram_dmem_error   ;
+
+assign cpu_dmem_rdata=
+    {32{route_rsp_dmem_rom}} & rom_dmem_rdata   |
+    {32{route_rsp_dmem_ram}} & ram_dmem_rdata   ;
+
+assign cpu_dmem_gnt   = ic_dmem_route_ram && ram_dmem_gnt ||
+                        ic_dmem_route_rom && rom_dmem_gnt ;
 
 //
 // Submodule instances
@@ -188,6 +277,8 @@ initial assume(!g_resetn);
 always @(posedge g_clk) if(g_resetn && $past(g_resetn)) begin
 
     assert(!(route_rsp_imem_ram && route_rsp_imem_rom));
+    
+    assert(!(route_rsp_dmem_ram && route_rsp_dmem_rom));
 
 end
 

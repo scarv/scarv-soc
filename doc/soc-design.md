@@ -83,10 +83,7 @@ Address      | Range        | Description
 
   - Already baked into the RAM (FPGA targets only).
 
-- This is a single port ROM, with accesses multipliexed between
-  instructions and data.
-
-  - Data accesses get precedence.
+- This is a dual port ROM.
 
 
 ### RAM

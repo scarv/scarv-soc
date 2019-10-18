@@ -47,7 +47,7 @@ $SOC_HOME/extern/scarv-cpu/rtl/core/frv_rngif.v
 
 //
 // Memories
-$SOC_HOME/rtl/mem/scarv_soc_bram_single.v
+$SOC_HOME/rtl/mem/scarv_soc_bram_dual.v
 
 
 //
