@@ -72,6 +72,8 @@ always @(*) begin
             n_fsm = FSM_WAIT;
         end else if(mem_req && mem_gnt && mem_recv && mem_ack) begin
             n_fsm = FSM_RSP;
+        end else if(!mem_req && mem_recv && !mem_ack) begin
+            n_fsm = FSM_RSP;
         end else begin
             n_fsm = FSM_IDLE;
         end
