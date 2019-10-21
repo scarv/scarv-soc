@@ -63,6 +63,15 @@ reg [31:0] blackbox_read_value_b = $anyseq;
 always @(*) douta = blackbox_read_value_a;
 always @(*) doutb = blackbox_read_value_b;
 
+always @(posedge clka) begin
+    if(!$past(ena)) begin
+        assume($stable(douta));
+    end
+    if(!$past(enb)) begin
+        assume($stable(doutb));
+    end
+end
+
 `else
 
 // Reads
