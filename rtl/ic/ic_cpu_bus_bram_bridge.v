@@ -42,11 +42,14 @@ assign bram_wdata   = buffer_req ? buffer_wdata : mem_wdata;
 assign bram_wstrb   = !mem_wen   ? 4'b0000      :
                       buffer_req ? buffer_wstrb :
                                    mem_strb     ;
-assign bram_cen     = (mem_req && mem_gnt && enable) ||
-                      buffer_req;
+assign bram_cen     = (mem_req && mem_gnt && enable);
 
-wire   n_mem_recv   = (bram_cen && !bram_stall) || (mem_recv && !mem_ack) ||
-                      buffer_req;
+wire   mem_stalled  = mem_recv && !mem_ack;
+wire   bram_ready   = bram_cen && !bram_stall;
+
+wire   n_mem_recv   = (mem_stalled                           ) || 
+                      (bram_ready                            ) ||
+                      (buffer_req && !(mem_recv && mem_ack)  );
 
 reg    buffer_req   ;
 wire   n_buffer_req = 
