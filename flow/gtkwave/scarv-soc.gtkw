@@ -1,21 +1,22 @@
 [*]
 [*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
-[*] Fri Oct 18 13:34:48 2019
+[*] Mon Oct 21 09:06:52 2019
 [*]
 [dumpfile] "/home/ben/scarv/repos/scarv-soc/work/verilator/waves.vcd"
-[dumpfile_mtime] "Fri Oct 18 13:24:30 2019"
-[dumpfile_size] 3644066
+[dumpfile_mtime] "Mon Oct 21 09:02:44 2019"
+[dumpfile_size] 20680442
 [savefile] "/home/ben/scarv/repos/scarv-soc/flow/gtkwave/scarv-soc.gtkw"
-[timestart] 3235
+[timestart] 262
 [size] 1920 1025
 [pos] -1 -1
-*-7.413653 3686 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-7.513958 760 26746 886 786 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] TOP.
 [treeopen] TOP.scarv_soc.
 [treeopen] TOP.scarv_soc.i_ic_top.
 [treeopen] TOP.scarv_soc.i_scarv_cpu.
 [treeopen] TOP.scarv_soc.i_scarv_cpu.i_pipeline.
 [treeopen] TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_pipeline_s0_fetch.
+[treeopen] TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_pipeline_s1_decode.
 [sst_width] 325
 [signals_width] 367
 [sst_expanded] 1
@@ -59,6 +60,8 @@ TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_pipeline_s0_fetch.buf_depth[2:0]
 (2)TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_pipeline_s0_fetch.buf_depth[2:0]
 @1401200
 -group_end
+@22
+TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_pipeline_s0_fetch.i_core_fetch_buffer.buffer[63:0]
 @28
 TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_pipeline_s0_fetch.drop_response
 TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_pipeline_s0_fetch.f_ready
@@ -72,8 +75,23 @@ TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_pipeline_s0_fetch.n_imem_req
 @24
 TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_pipeline_s0_fetch.n_reqs_outstanding[2:0]
 TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_pipeline_s0_fetch.reqs_outstanding[2:0]
+TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_pipeline_s0_fetch.reqs_outstanding_add[2:0]
+TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_pipeline_s0_fetch.reqs_outstanding_sub[2:0]
 @1000200
 -CPU Fetch Stage
+@c00200
+-CPU Decode Stage
+@28
+TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_pipeline_s1_decode.s1_busy
+@22
+TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_pipeline_s1_decode.s1_data[31:0]
+@28
+TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_pipeline_s1_decode.s1_valid
+@22
+TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_pipeline_s1_decode.n_s2_instr[31:0]
+TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_pipeline_s1_decode.program_counter[31:0]
+@1401200
+-CPU Decode Stage
 @c00200
 -CPU Data Memory
 @28
@@ -102,7 +120,7 @@ TOP.scarv_soc.cpu_trs_instr[31:0]
 @2022
 ^1 /home/ben/scarv/repos/scarv-soc/work/fsbl/fsbl.gtkwl
 TOP.scarv_soc.cpu_trs_instr[31:0]
-@22
+@23
 TOP.scarv_soc.cpu_trs_pc[31:0]
 @28
 TOP.scarv_soc.cpu_trs_valid
@@ -265,9 +283,12 @@ TOP.scarv_soc.i_rom_imem_bus_bridge.mem_wen
 @28
 TOP.scarv_soc.i_rom_imem_bus_bridge.n_buffer_req
 TOP.scarv_soc.i_rom_imem_bus_bridge.buffer_req
+TOP.scarv_soc.i_rom_imem_bus_bridge.buffer_rsp
+TOP.scarv_soc.i_rom_imem_bus_bridge.n_buffer_rsp
 @22
 TOP.scarv_soc.i_rom_imem_bus_bridge.buffer_addr[31:0]
 TOP.scarv_soc.i_rom_imem_bus_bridge.buffer_wdata[31:0]
+TOP.scarv_soc.i_rom_imem_bus_bridge.buffer_rdata[31:0]
 TOP.scarv_soc.i_rom_imem_bus_bridge.buffer_wstrb[3:0]
 @200
 -
@@ -300,7 +321,6 @@ TOP.scarv_soc.i_rom.dina[31:0]
 TOP.scarv_soc.i_rom.douta[31:0]
 TOP.scarv_soc.i_rom.idx_a[9:0]
 TOP.scarv_soc.i_rom.read_data_a[31:0]
-@23
 TOP.scarv_soc.i_rom.wea[3:0]
 @200
 -
@@ -319,30 +339,83 @@ TOP.scarv_soc.i_rom.rsta
 -ROM Instance
 @c00200
 -RAM Instance
-@22
-TOP.scarv_soc.i_ram.DEPTH[31:0]
-TOP.scarv_soc.i_ram.LW[31:0]
 @820
 TOP.scarv_soc.i_ram.MEMH_FILE[2040:0]
 @28
 TOP.scarv_soc.i_ram.clka
-@22
-TOP.scarv_soc.i_ram.dina[31:0]
-TOP.scarv_soc.i_ram.douta[31:0]
+@200
+-
 @28
 TOP.scarv_soc.i_ram.ena
-TOP.scarv_soc.i_ram.rsta
 @22
+TOP.scarv_soc.i_ram.addra[15:0]
+TOP.scarv_soc.i_ram.dina[31:0]
+TOP.scarv_soc.i_ram.douta[31:0]
+TOP.scarv_soc.i_ram.idx_a[15:0]
+TOP.scarv_soc.i_ram.read_data_a[31:0]
 TOP.scarv_soc.i_ram.wea[3:0]
+@200
+-
+@28
+TOP.scarv_soc.i_ram.enb
+@22
+TOP.scarv_soc.i_ram.addrb[15:0]
+TOP.scarv_soc.i_ram.dinb[31:0]
+TOP.scarv_soc.i_ram.doutb[31:0]
+TOP.scarv_soc.i_ram.idx_b[15:0]
+TOP.scarv_soc.i_ram.read_data_b[31:0]
+TOP.scarv_soc.i_ram.web[3:0]
 @1401200
 -RAM Instance
 @c00200
--RAM Bus Bridge Instance
+-RAM IMEM Bus Bridge
+@28
+TOP.scarv_soc.i_ram_imem_bus_bridge.g_clk
+TOP.scarv_soc.i_ram_imem_bus_bridge.g_resetn
+@22
+TOP.scarv_soc.i_ram_imem_bus_bridge.bram_addr[31:0]
+@28
+TOP.scarv_soc.i_ram_imem_bus_bridge.bram_cen
+@22
+TOP.scarv_soc.i_ram_imem_bus_bridge.bram_rdata[31:0]
+@28
+TOP.scarv_soc.i_ram_imem_bus_bridge.bram_stall
+@22
+TOP.scarv_soc.i_ram_imem_bus_bridge.bram_wdata[31:0]
+TOP.scarv_soc.i_ram_imem_bus_bridge.bram_wstrb[3:0]
 @200
 -
+@22
+TOP.scarv_soc.i_ram_imem_bus_bridge.buffer_addr[31:0]
+TOP.scarv_soc.i_ram_imem_bus_bridge.buffer_rdata[31:0]
+@28
+TOP.scarv_soc.i_ram_imem_bus_bridge.buffer_req
+@22
+TOP.scarv_soc.i_ram_imem_bus_bridge.buffer_wdata[31:0]
+TOP.scarv_soc.i_ram_imem_bus_bridge.buffer_wstrb[3:0]
+@200
 -
--
+@28
+TOP.scarv_soc.i_ram_imem_bus_bridge.enable
+TOP.scarv_soc.i_ram_imem_bus_bridge.mem_ack
+@22
+TOP.scarv_soc.i_ram_imem_bus_bridge.mem_addr[31:0]
+@28
+TOP.scarv_soc.i_ram_imem_bus_bridge.mem_error
+TOP.scarv_soc.i_ram_imem_bus_bridge.mem_gnt
+@22
+TOP.scarv_soc.i_ram_imem_bus_bridge.mem_rdata[31:0]
+@28
+TOP.scarv_soc.i_ram_imem_bus_bridge.mem_recv
+TOP.scarv_soc.i_ram_imem_bus_bridge.mem_req
+@22
+TOP.scarv_soc.i_ram_imem_bus_bridge.mem_strb[3:0]
+TOP.scarv_soc.i_ram_imem_bus_bridge.mem_wdata[31:0]
+@28
+TOP.scarv_soc.i_ram_imem_bus_bridge.mem_wen
+TOP.scarv_soc.i_ram_imem_bus_bridge.n_buffer_req
+TOP.scarv_soc.i_ram_imem_bus_bridge.n_mem_recv
 @1401200
--RAM Bus Bridge Instance
+-RAM IMEM Bus Bridge
 [pattern_trace] 1
 [pattern_trace] 0

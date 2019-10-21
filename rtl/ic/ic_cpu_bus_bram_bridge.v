@@ -49,11 +49,17 @@ wire   bram_ready   = bram_cen && !bram_stall;
 
 wire   n_mem_recv   = (mem_stalled                           ) || 
                       (bram_ready                            ) ||
-                      (buffer_req && !(mem_recv && mem_ack)  );
+                      (buffer_req && !(mem_recv && mem_ack)  ) ||
+                      (n_buffer_rsp                          ) ;
 
 reg    buffer_req   ;
 wire   n_buffer_req = 
     buffer_req ? mem_recv&& !mem_ack                        :
+                 mem_req && mem_gnt && mem_recv && !mem_ack ;
+
+reg    buffer_rsp   ;
+wire   n_buffer_rsp = 
+    buffer_req ? mem_recv&& !mem_ack || buffer_req          :
                  mem_req && mem_gnt && mem_recv && !mem_ack ;
 
 reg  [31:0] buffer_addr ;
@@ -65,9 +71,11 @@ always @(posedge g_clk) begin
     if(!g_resetn) begin
         mem_recv    <= 1'b0;
         buffer_req  <= 1'b0;
+        buffer_rsp  <= 1'b0;
     end else begin
         mem_recv    <= n_mem_recv   ;
         buffer_req  <= n_buffer_req ;
+        buffer_rsp  <= n_buffer_rsp ;
     end
 end
 
