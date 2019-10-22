@@ -35,18 +35,16 @@ _start:
     li x30, 1
     li x31, 1
 
-    li sp, 0x2000FFFF
-
-    li t0, 0x10000000
+    li sp, 0x10000000
     li t1, 0x10000400
     li t2, 0x20000000
 
     cpy_loop:
-        lw   a0, 0(t0)
-        lw   a1, 4(t0)
-        lw   a2, 8(t0)
-        lw   a3,12(t0)
-        addi t0, t0, 16
+        lw   a0, 0(sp)
+        lw   a1, 4(sp)
+        lw   a2, 8(sp)
+        lw   a3,12(sp)
+        addi sp, sp, 16
 
         sw   a0, 0(t2)
         sw   a1, 4(t2)
@@ -54,7 +52,9 @@ _start:
         sw   a3,12(t2)
         addi t2, t2, 16
 
-        bltu t0, t1, cpy_loop
+        bltu sp, t1, cpy_loop
+
+    li sp, 0x2000FFFF
 
 
     j       fsbl                    // Jump to the first stage boot loader.
