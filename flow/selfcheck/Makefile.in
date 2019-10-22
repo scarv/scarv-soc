@@ -1,0 +1,123 @@
+
+SELFCHECK_DIR = $(SOC_WORK)/selfcheck
+SELFCHECK_SRCS= $(SOC_HOME)/verif/selfcheck/
+
+SELFCHECK_SHARED_DIR = $(SOC_HOME)/verif/selfcheck/share
+SELFCHECK_SHARED_SRC = $(wildcard $(SELFCHECK_SHARED_DIR)/*.S) \
+                       $(wildcard $(SELFCHECK_SHARED_DIR)/*.c)
+
+SELFCHECK_BL_DIR = $(SELFCHECK_DIR)/bootloader
+SELFCHECK_BL_SRC = $(SOC_HOME)/verif/selfcheck/bootloader/bootloader.S
+SELFCHECK_BL_OBJ = $(SELFCHECK_DIR)/bootloader/bootloader.obj
+SELFCHECK_BL_HEX = $(SELFCHECK_DIR)/bootloader/bootloader.hex
+SELFCHECK_BL_DIS = $(SELFCHECK_DIR)/bootloader/bootloader.dis
+SELFCHECK_BL_GTKW= $(SELFCHECK_DIR)/bootloader/bootloader.gtkwl
+
+SELFCHECK_LINK_BOOT = $(SOC_HOME)/flow/selfcheck/boot-link.ld
+SELFCHECK_LINK_TEST = $(SOC_HOME)/flow/selfcheck/test-link.ld
+
+SELFCHECK_CFLAGS = -nostartfiles -Os -O2 -Wall
+SELFCHECK_CFLAGS += -march=rv32imc -mabi=ilp32
+SELFCHECK_CFLAGS += -I$(SELFCHECK_SHARED_DIR)
+
+$(SELFCHECK_BL_OBJ) : $(SELFCHECK_BL_SRC)
+	@mkdir -p $(dir $@)
+	$(CC) -T$(SELFCHECK_LINK_BOOT) $(SELFCHECK_CFLAGS) -o $@ $^
+
+$(SELFCHECK_BL_DIS) : $(SELFCHECK_BL_OBJ)
+	@mkdir -p $(dir $@)
+	$(OBJDUMP) -z -D $< > $@
+
+$(SELFCHECK_BL_HEX) : $(SELFCHECK_BL_OBJ)
+	@mkdir -p $(dir $@)
+	$(OBJCOPY) --change-addresses=0xF0000000 --gap-fill 0 -O verilog $< $@
+
+$(SELFCHECK_BL_GTKW) : $(SELFCHECK_BL_DIS)
+	grep ".*:	" $(SELFCHECK_BL_DIS) \
+        | grep -v ">:" | cut -c 6- | sed 's/\t//' \
+        | sort | uniq | sed 's/ +/ /' | sed 's/\t/ /' \
+        | sed 's/\(^....    \)    /0000\1/' \
+        > $@
+
+SELFCHECK_TESTS  = $(wildcard $(SOC_HOME)/verif/selfcheck/test_*)
+SELFCHECK_RUN_TARGETS =
+
+selfcheck-bootloader:   $(SELFCHECK_BL_OBJ)  \
+                        $(SELFCHECK_BL_HEX)  \
+                        $(SELFCHECK_BL_DIS)  \
+                        $(SELFCHECK_BL_GTKW)
+
+define map_selfcheck_test_name
+$(strip $(subst $(SELFCHECK_SRCS),,${1}))
+endef
+
+define map_selfcheck_dir
+$(SELFCHECK_DIR)/$(call map_selfcheck_test_name,${1})
+endef
+
+define map_selfcheck_elf
+$(call map_selfcheck_dir,${1})/$(call map_selfcheck_test_name,${1}).elf
+endef
+
+define map_selfcheck_dis
+$(call map_selfcheck_dir,${1})/$(call map_selfcheck_test_name,${1}).dis
+endef
+
+define map_selfcheck_hex
+$(call map_selfcheck_dir,${1})/$(call map_selfcheck_test_name,${1}).hex
+endef
+
+define map_selfcheck_gtkwl
+$(call map_selfcheck_dir,${1})/$(call map_selfcheck_test_name,${1}).gtkwl
+endef
+
+define map_selfcheck_srcs
+$(wildcard ${1}/*)
+endef
+
+#
+# Add a new set of targets for building and running a selfchecking test.
+#
+# Args:
+# 0 - The folder path of the test sources.
+#
+define add_target_selfcheck_test
+
+$(call map_selfcheck_elf,${1}) : $(call map_selfcheck_srcs,${1})
+	@mkdir -p $(call map_selfcheck_dir,${1})
+	$(CC) -T$(SELFCHECK_LINK_TEST) $(SELFCHECK_CFLAGS) -o $${@} $${^}
+
+$(call map_selfcheck_dis,${1}) : $(call map_selfcheck_elf,${1})
+	@mkdir -p $(call map_selfcheck_dir,${1})
+	$(OBJDUMP) -z -D $${<} > $${@}
+
+$(call map_selfcheck_hex,${1}) : $(call map_selfcheck_elf,${1})
+	@mkdir -p $(dir $${@})
+	$(OBJCOPY) --change-addresses=0xE0000000 --gap-fill 0 -O verilog $${<} $${@}
+
+$(call map_selfcheck_gtkwl,${1})  : $(call map_selfcheck_dis,${1}) 
+	grep ".*:	" $(call map_selfcheck_dis,${1}) \
+        | grep -v ">:" | cut -c 6- | sed 's/\t//' \
+        | sort | uniq | sed 's/ +/ /' | sed 's/\t/ /' \
+        | sed 's/\(^....    \)    /0000\1/' \
+        > $(call map_selfcheck_gtkwl,${1})
+
+selfcheck-build-$(call map_selfcheck_test_name,${1}) : \
+    $(call map_selfcheck_elf,${1}) \
+    $(call map_selfcheck_dis,${1}) \
+    $(call map_selfcheck_hex,${1}) \
+    $(call map_selfcheck_gtkwl,${1})
+
+selfcheck-run-$(call map_selfcheck_test_name,${1}) : selfcheck-build-$(call map_selfcheck_test_name,${1}) $(VL_OUT) selfcheck-bootloader
+	# $(VL_OUT) TODO
+
+SELFCHECK_RUN_TARGETS += selfcheck-run-$(call map_selfcheck_test_name,${1})
+
+endef
+
+$(foreach TEST,$(SELFCHECK_TESTS),\
+    $(eval $(call add_target_selfcheck_test,$(TEST)))\
+)
+
+selfcheck-run-all: $(SELFCHECK_RUN_TARGETS)
+
