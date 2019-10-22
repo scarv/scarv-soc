@@ -25,10 +25,9 @@ output wire [31:0]  mem_rdata         // Read data
 
 assign mem_error    = 1'b0;
 assign mem_gnt      = !fsm_wait && !fsm_buf;
-assign mem_rdata    = 32'b0;
-
-// Always return an error response.
 assign mem_error    = 1'b1;
+
+assign mem_rdata    = 32'b0;
 
 wire   mem_stalled  = mem_recv && !mem_ack;
 

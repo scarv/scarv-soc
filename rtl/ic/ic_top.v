@@ -219,8 +219,8 @@ wire [31:0] err_dmem_rdata  ;
 wire        route_rsp_dmem_err   ;
 
 ic_error_rsp_stub i_error_stub_dmem (
-.g_clk      (),
-.g_resetn   (),
+.g_clk      (g_clk          ),
+.g_resetn   (g_resetn       ),
 .enable     (err_dmem_req   ), // Enable requests / does addr map?
 .mem_req    (err_dmem_req   ), // Start memory request
 .mem_gnt    (err_dmem_gnt   ), // request accepted
