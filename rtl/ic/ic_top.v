@@ -205,6 +205,47 @@ ic_rsp_router i_rsp_router_dmem_rom (
 
 
 //
+// Data <-> Error Response
+// ------------------------------------------------------------
+
+wire        err_dmem_req    = ic_dmem_error && cpu_dmem_req;
+
+wire        err_dmem_gnt    ;
+wire        err_dmem_recv   ;
+wire        err_dmem_ack    ;
+wire        err_dmem_error  ;
+wire [31:0] err_dmem_rdata  ;
+
+wire        route_rsp_dmem_err   ;
+
+ic_error_rsp_stub i_error_stub_dmem (
+.g_clk      (),
+.g_resetn   (),
+.enable     (err_dmem_req   ), // Enable requests / does addr map?
+.mem_req    (err_dmem_req   ), // Start memory request
+.mem_gnt    (err_dmem_gnt   ), // request accepted
+.mem_wen    ( 1'b0          ), // Write enable
+.mem_strb   ( 4'b0          ), // Write strobe
+.mem_wdata  (32'b0          ), // Write data
+.mem_addr   (32'b0          ), // Read/Write address
+.mem_recv   (err_dmem_recv  ), // Instruction memory recieve response.
+.mem_ack    (err_dmem_ack   ), // Instruction memory ack response.
+.mem_error  (err_dmem_error ), // Error
+.mem_rdata  (err_dmem_rdata )  // Read data
+);
+
+ic_rsp_router i_rsp_router_dmem_err (
+.g_clk           (g_clk             ),
+.g_resetn        (g_resetn          ),
+.cpu_ack         (cpu_dmem_ack      ),
+.periph_req      (err_dmem_req      ),
+.periph_ack      (err_dmem_ack      ),
+.periph_recv     (err_dmem_recv     ),
+.periph_gnt      (err_dmem_gnt      ),
+.route_periph_rsp(route_rsp_dmem_err)
+);
+
+//
 // Instruction Response Routing
 // ------------------------------------------------------------
 
@@ -229,18 +270,21 @@ assign cpu_imem_gnt   = ic_imem_route_ram && ram_imem_gnt ||
 
 assign cpu_dmem_recv =
     route_rsp_dmem_rom  && rom_dmem_recv    ||
-    route_rsp_dmem_ram  && ram_dmem_recv    ;
+    route_rsp_dmem_ram  && ram_dmem_recv    ||
+    route_rsp_dmem_err  && err_dmem_recv    ;
 
 assign cpu_dmem_error=
     route_rsp_dmem_rom  && rom_dmem_error   ||
-    route_rsp_dmem_ram  && ram_dmem_error   ;
+    route_rsp_dmem_ram  && ram_dmem_error   ||
+    route_rsp_dmem_err  && err_dmem_error   ;
 
 assign cpu_dmem_rdata=
     {32{route_rsp_dmem_rom}} & rom_dmem_rdata   |
     {32{route_rsp_dmem_ram}} & ram_dmem_rdata   ;
 
 assign cpu_dmem_gnt   = ic_dmem_route_ram && ram_dmem_gnt ||
-                        ic_dmem_route_rom && rom_dmem_gnt ;
+                        ic_dmem_route_rom && rom_dmem_gnt ||
+                        ic_dmem_error     && err_dmem_gnt ;
 
 //
 // Submodule instances

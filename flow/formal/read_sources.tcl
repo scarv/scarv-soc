@@ -8,6 +8,7 @@ yosys -import
 read_verilog $::env(SOC_HOME)/rtl/ic/ic_addr_decode.v
 read_verilog $::env(SOC_HOME)/rtl/ic/ic_cpu_bus_bram_bridge.v
 read_verilog $::env(SOC_HOME)/rtl/ic/ic_rsp_router.v
+read_verilog $::env(SOC_HOME)/rtl/ic/ic_error_rsp_stub.v
 read_verilog $::env(SOC_HOME)/rtl/ic/ic_top.v
 
 read_verilog $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/p_addsub/p_addsub.v
