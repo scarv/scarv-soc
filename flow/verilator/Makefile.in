@@ -27,7 +27,7 @@ BRAM_ROM_MEMH   = $(FSBL_HEX)
 
 .PHONY: $(VL_CSRC)
 
-$(VL_OUT) : $(VL_CSRC) fsbl
+$(VL_OUT) : $(VL_CSRC)
 	@mkdir -p $(VL_DIR)
 	$(VERILATOR) $(VL_FLAGS) -o $@ \
         -GBRAM_ROM_MEMH_FILE="\"$(BRAM_ROM_MEMH)\"" \
@@ -37,7 +37,7 @@ $(VL_OUT) : $(VL_CSRC) fsbl
 
 verilator-build: $(VL_OUT)
 
-verilator-run-waves: $(VL_OUT)
+verilator-run-waves: $(VL_OUT) fsbl
 	$(VL_OUT) $(VL_ARGS) +WAVES=$(VL_WAVES) +TIMEOUT=$(VL_TIMEOUT)
 
 verilator-clean:
