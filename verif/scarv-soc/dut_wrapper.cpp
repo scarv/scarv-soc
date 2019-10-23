@@ -1,5 +1,7 @@
 
 #include <assert.h>
+#include <iostream>
+#include <fstream>
 
 #include "dut_wrapper.hpp"
 
@@ -80,5 +82,16 @@ void dut_wrapper::dut_step_clk() {
 
 
 void dut_wrapper::posedge_gclk () {
+    
+    // Do we need to capture a trace item?
+    if(this -> dut -> scarv_soc -> cpu_trs_valid) {
+        this -> dut_trace.push (
+            {
+                this -> dut -> scarv_soc -> cpu_trs_pc,
+                this -> dut -> scarv_soc -> cpu_trs_instr
+            }
+        );
+    }
 
 }
+

@@ -37,11 +37,37 @@ public:
         return this -> dut -> get_sim_time();
     }
 
-    bool            sim_finished    = false;
+    //! Has the simulation finished running yet?
+    bool     sim_finished    = false;
 
-    bool            sim_passed      = false;
+    //! Did the simulation meet it's pass criterion?
+    bool     sim_passed      = false;
+
+    //! Set the simulation pass address.
+    void     set_pass_address (uint32_t addr) {
+        this -> sim_pass_address     = addr;
+        this -> use_sim_pass_address = true;
+    }
+
+    //! Set the simulation fail address.
+    void     set_fail_address (uint32_t addr) {
+        this -> sim_fail_address     = addr;
+        this -> use_sim_fail_address = true;
+    }
 
 protected:
+
+    //! Address which if hit causes the simulation to pass immediately.
+    uint32_t        sim_pass_address;
+
+    //! Address which if hit causes the simulation to fail immediately.
+    uint32_t        sim_fail_address;
+
+    //! Do we use the pass address?
+    bool            use_sim_pass_address = false;
+
+    //! Do we use the fail address?
+    bool            use_sim_fail_address = false;
     
     //! Construct all of the objects we need inside the testbench.
     void build();
@@ -60,6 +86,9 @@ protected:
     
     //! Whether or not to dump waveforms.
     bool        waves_dump;
+
+    //! Drain the DUT trace queue from the DUT wrapper and process as needed.
+    void        drain_dut_trace();
     
 };
 

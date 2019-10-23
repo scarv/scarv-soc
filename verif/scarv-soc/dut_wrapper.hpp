@@ -2,11 +2,24 @@
 #ifndef DUT_WRAPPER_HPP
 #define DUT_WRAPPER_HPP
 
+#include <queue>
+#include <iostream>
+
 #include "verilated.h"
 #include "verilated_vcd_c.h"
+#include "svdpi.h"
 
 #include "Vscarv_soc.h"
+#include "Vscarv_soc_scarv_soc.h"
+#include "Vscarv_soc__Dpi.h"
 
+//! A trace packet emitted by the core post-writeback.
+typedef struct dut_trace_pkt {
+    uint32_t program_counter;
+    uint32_t instr_word;
+} dut_trace_pkt_t;
+
+//! Class that wraps the verilated DUT and is used to interface with it.
 class dut_wrapper {
 
 public:
@@ -44,8 +57,15 @@ public:
     
     //! Handle to the VCD file for dumping waveforms.
     VerilatedVcdC* trace_fh;
+    
+    //! Trace of post-writeback PC and instructions.
+    std::queue<dut_trace_pkt_t> dut_trace;
+
 
 protected:
+    
+    //! Load a binary file into the RAM or ROM memories.
+    void load_bin_file_to_memory (std::string file_path);
 
     //! Number of model evaluations per clock cycle
     const uint32_t  evals_per_clock = 10;
