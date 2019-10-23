@@ -1,7 +1,7 @@
 
-.global test_data_error
-.func   test_data_error
-test_data_error:
+.global test_data_load_error
+.func   test_data_load_error
+test_data_load_error:
     // a0 = address to test.
     // a1 = error expected?
 
@@ -58,17 +58,17 @@ test_data_error_handler:
     j   handler_pass
 
     handler_fail:
-        li  t2, 0xA
+        li  t2, 0xA                 // Load failure code in t2
         j   handler_finish
 
     handler_pass:
-        li  t2, 0xB
+        li  t2, 0xB                 // Load pass code in t2
 
-    lbu     t4, 0(t5)
+    lbu     t4, 0(t5)               // Size of failing instruction?
     andi    t4, t4, 0b11
     li      t6, 0b11
 
-    beq     t4, t6, handler_add_4
+    beq     t4, t6, handler_add_4   // Add 2 or 4 to EPC?
     
     handler_add_2:
         addi t5,t5,2
@@ -77,7 +77,7 @@ test_data_error_handler:
     handler_add_4:
         addi t5,t5,4
 
-    handler_add_done:
+    handler_add_done:               // Put back incremented EPC.
         csrw    mepc, t5
     
     handler_finish:
