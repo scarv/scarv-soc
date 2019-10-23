@@ -22,15 +22,18 @@ parameter SCARV_CPU_PC_RESET_VALUE = 32'h1000_0000;
 
 /* verilator lint_off WIDTH */
 parameter [255*8:0] BRAM_ROM_MEMH_FILE = "";
+parameter [255*8:0] BRAM_RAM_MEMH_FILE = "";
 /* verilator lint_on WIDTH */
 
 //
 // SCARV CPU Interface Wires
 // ------------------------------------------------------------
 
-wire [31:0] cpu_trs_pc          ; // Trace program counter.
-wire [31:0] cpu_trs_instr       ; // Trace instruction.
-wire        cpu_trs_valid       ; // Trace output valid.
+// CPU trace signals are make verilator public so that in the verilated
+// model, the testbench can probe down and interface with them.
+wire [31:0] cpu_trs_pc    /*verilator public*/; // Trace program counter.
+wire [31:0] cpu_trs_instr /*verilator public*/; // Trace instruction.
+wire        cpu_trs_valid /*verilator public*/; // Trace output valid.
 
 wire [31:0] cpu_leak_prng       ; // Current PRNG value.
 wire        cpu_leak_fence_unc0 ; // uncore 0 fence
@@ -383,6 +386,7 @@ ic_cpu_bus_bram_bridge i_ram_dmem_bus_bridge(
 );
 
 scarv_soc_bram_dual #(
+.MEMH_FILE(BRAM_RAM_MEMH_FILE),
 .DEPTH    (65536             )
 ) i_ram (
 .clka (g_clk                ),
