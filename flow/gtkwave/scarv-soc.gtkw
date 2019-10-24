@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
-[*] Thu Oct 24 08:32:03 2019
+[*] Thu Oct 24 10:30:53 2019
 [*]
-[dumpfile] "/home/ben/scarv/repos/scarv-soc/work/selfcheck/test_03_data_bus_error/test_03_data_bus_error.vcd"
-[dumpfile_mtime] "Thu Oct 24 08:21:46 2019"
-[dumpfile_size] 5568081
+[dumpfile] "/home/ben/scarv/repos/scarv-soc/work/selfcheck/test_05_instr_bus_error/test_05_instr_bus_error.vcd"
+[dumpfile_mtime] "Thu Oct 24 10:30:43 2019"
+[dumpfile_size] 4034955
 [savefile] "/home/ben/scarv/repos/scarv-soc/flow/gtkwave/scarv-soc.gtkw"
 [timestart] 1
 [size] 1920 1025
 [pos] -1 -1
-*-13.026241 14010 26746 -1 786 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-11.585980 8187 26746 -1 786 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] TOP.
 [treeopen] TOP.scarv_soc.
 [treeopen] TOP.scarv_soc.i_ic_top.
@@ -20,7 +20,7 @@
 [sst_width] 325
 [signals_width] 367
 [sst_expanded] 1
-[sst_vpaned_height] 215
+[sst_vpaned_height] 283
 @28
 TOP.g_clk
 TOP.g_resetn
@@ -123,7 +123,7 @@ TOP.scarv_soc.i_scarv_cpu.i_pipeline.s3_instr[31:0]
 TOP.scarv_soc.i_scarv_cpu.i_pipeline.s4_instr[31:0]
 @1401200
 -CPU Decode Stage
-@800200
+@c00200
 -CPU Data Memory
 @28
 TOP.scarv_soc.cpu_dmem_req
@@ -142,14 +142,14 @@ TOP.scarv_soc.cpu_dmem_ack
 TOP.scarv_soc.cpu_dmem_error
 @22
 TOP.scarv_soc.cpu_dmem_rdata[31:0]
-@1000200
+@1401200
 -CPU Data Memory
 @800200
 -CPU Trace
 @22
 TOP.scarv_soc.cpu_trs_instr[31:0]
 @2022
-^3 /home/ben/scarv/repos/scarv-soc/work/selfcheck/test_03_data_bus_error/test_03_data_bus_error.gtkwl
+^3 /home/ben/scarv/repos/scarv-soc/work/selfcheck/test_05_instr_bus_error/test_05_instr_bus_error.gtkwl
 TOP.scarv_soc.cpu_trs_instr[31:0]
 @22
 >1
@@ -158,7 +158,7 @@ TOP.scarv_soc.cpu_trs_pc[31:0]
 >0
 TOP.scarv_soc.cpu_trs_valid
 TOP.scarv_soc.i_scarv_cpu.i_pipeline.trap_cpu
-@420
+@24
 TOP.scarv_soc.i_scarv_cpu.i_pipeline.trap_cause[5:0]
 @28
 TOP.scarv_soc.i_scarv_cpu.i_pipeline.trap_int
@@ -172,14 +172,12 @@ TOP.scarv_soc.i_scarv_cpu.i_pipeline.cf_target[31:0]
 -GPRs
 @22
 TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_gprs.gprs(0)[31:0]
-TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_gprs.gprs(1)[31:0]
++{1 - ra} TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_gprs.gprs(1)[31:0]
 TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_gprs.gprs(2)[31:0]
 TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_gprs.gprs(3)[31:0]
 TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_gprs.gprs(4)[31:0]
 +{5 - t0} TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_gprs.gprs(5)[31:0]
-@23
 +{6 - t1} TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_gprs.gprs(6)[31:0]
-@22
 +{7 - t2} TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_gprs.gprs(7)[31:0]
 TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_gprs.gprs(8)[31:0]
 TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_gprs.gprs(9)[31:0]
@@ -201,10 +199,10 @@ TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_gprs.gprs(24)[31:0]
 TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_gprs.gprs(25)[31:0]
 TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_gprs.gprs(26)[31:0]
 TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_gprs.gprs(27)[31:0]
-TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_gprs.gprs(28)[31:0]
-TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_gprs.gprs(29)[31:0]
-TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_gprs.gprs(30)[31:0]
-TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_gprs.gprs(31)[31:0]
++{28 - t3} TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_gprs.gprs(28)[31:0]
++{29 - t4} TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_gprs.gprs(29)[31:0]
++{30 - t5} TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_gprs.gprs(30)[31:0]
++{31 - t6} TOP.scarv_soc.i_scarv_cpu.i_pipeline.i_gprs.gprs(31)[31:0]
 @1000200
 -GPRs
 -SCARV CPU
