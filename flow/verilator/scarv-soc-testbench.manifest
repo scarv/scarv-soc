@@ -1,4 +1,5 @@
 
+$SOC_HOME/verif/scarv-soc/axi4lite/a4l_slave_agent.cpp
 $SOC_HOME/verif/scarv-soc/dut_wrapper.cpp
 $SOC_HOME/verif/scarv-soc/testbench.cpp
 $SOC_HOME/verif/scarv-soc/main.cpp

@@ -9,6 +9,9 @@
 #include "verilated_vcd_c.h"
 #include "svdpi.h"
 
+#include "axi4lite/a4l_txns.hpp"
+#include "axi4lite/a4l_slave_agent.hpp"
+
 #include "Vscarv_soc.h"
 #include "Vscarv_soc_scarv_soc.h"
 #include "Vscarv_soc__Dpi.h"
@@ -75,6 +78,9 @@ protected:
     
     //! The DUT object being wrapped.
     Vscarv_soc * dut;
+
+    //! AXI4Lite slave interface agent.
+    a4l_slave_agent * axi_agent;
 
     //! Called on every rising edge of the main clock.
     void posedge_gclk();

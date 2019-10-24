@@ -15,6 +15,28 @@ dut_wrapper::dut_wrapper (
 
     this -> dut                    = new Vscarv_soc();
 
+    this -> axi_agent              = new a4l_slave_agent(
+        &dut -> m0_awvalid      , //
+        &dut -> m0_awready      , //
+        &dut -> m0_awaddr       , //
+        &dut -> m0_awprot       , //
+        &dut -> m0_wvalid       , //
+        &dut -> m0_wready       , //
+        &dut -> m0_wdata        , //
+        &dut -> m0_wstrb        , //
+        &dut -> m0_bvalid       , //
+        &dut -> m0_bready       , //
+        &dut -> m0_bresp        , //
+        &dut -> m0_arvalid      , //
+        &dut -> m0_arready      , //
+        &dut -> m0_araddr       , //
+        &dut -> m0_arprot       , //
+        &dut -> m0_rvalid       , //
+        &dut -> m0_rready       , //
+        &dut -> m0_rresp        , //
+        &dut -> m0_rdata          //
+    );
+
     this -> dump_waves             = dump_waves;
     this -> vcd_wavefile_path      = wavefile;
 
@@ -37,6 +59,8 @@ void dut_wrapper::dut_set_reset() {
     // Put model in reset.
     this -> dut -> g_resetn     = 0;
     this -> dut -> g_clk        = 0;
+    
+    this -> axi_agent -> set_reset();
 
 }
     
@@ -44,6 +68,8 @@ void dut_wrapper::dut_set_reset() {
 void dut_wrapper::dut_clear_reset() {
     
     this -> dut -> g_resetn = 1;
+    
+    this -> axi_agent -> clr_reset();
 
 }
 
@@ -92,6 +118,8 @@ void dut_wrapper::posedge_gclk () {
             }
         );
     }
+
+    this -> axi_agent -> on_posedge_clk();
 
 }
 
