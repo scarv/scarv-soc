@@ -53,16 +53,32 @@ output wire [31:0]  mem_rdata         // Read data
 // Constant assignments
 // ------------------------------------------------------------
 
-assign m0_awaddr = mem_addr ;
+assign m0_awaddr = buf_addr ;
 assign m0_awprot = 3'b000   ; // Unprivilidged, non-secure, Data
 
-assign m0_wdata  = mem_wdata;
-assign m0_wstrb  = mem_strb ;
+assign m0_wdata  = buf_wdata;
+assign m0_wstrb  = buf_strb ;
 
-assign m0_araddr = mem_addr ;
+assign m0_araddr = buf_addr ;
 assign m0_arprot = 3'b000   ; // Unprivilidged, non-secure, Data
 
 assign mem_rdata = m0_rdata ;
+
+reg [ 3:0]  buf_strb        ; // Buffered Write strobe
+reg [31:0]  buf_wdata       ; // Buffered Write data
+reg [31:0]  buf_addr        ; // Buffered Read/Write address
+
+always @(posedge m0_aclk) begin
+    if(!m0_aresetn) begin
+        buf_strb  <=  4'b0;
+        buf_wdata <= 32'b0;
+        buf_addr  <= 32'b0;
+    end else if(cpu_req) begin
+        buf_strb  <= mem_strb ;
+        buf_wdata <= mem_wdata;
+        buf_addr  <= mem_addr ;
+    end
+end
 
 //
 // Bus transaction events
@@ -90,15 +106,12 @@ assign mem_recv = fsm_rd_rsp_wait && m0_rvalid ||
 // AXI Bus valid/ready assignments.
 // ------------------------------------------------------------
 
-assign m0_arvalid = fsm_idle        && mem_req && !mem_wen ||
-                    fsm_rd_req_wait                         ;
+assign m0_arvalid = fsm_rd_req_wait                         ;
 
-assign m0_awvalid = fsm_idle        && mem_req &&  mem_wen ||
-                    fsm_wr_req_wait                        ||
+assign m0_awvalid = fsm_wr_req_wait                        ||
                     fsm_wa_req_wait                         ;
 
-assign m0_wvalid  = fsm_idle        && mem_req &&  mem_wen ||
-                    fsm_wr_req_wait                        ||
+assign m0_wvalid  = fsm_wr_req_wait                        ||
                     fsm_wd_req_wait                         ;
 
 assign m0_rready  = fsm_rd_rsp_wait && mem_recv             ;
@@ -174,7 +187,7 @@ always @(*) begin case(fsm)
     end
     FSM_WD_REQ_WAIT: begin
         // Waiting for write data to be snet.
-        n_fsm = axi_aw_req ? FSM_WR_RSP_WAIT : FSM_WD_REQ_WAIT;
+        n_fsm = axi_wd_req ? FSM_WR_RSP_WAIT : FSM_WD_REQ_WAIT;
     end
     FSM_RD_RSP_WAIT: begin
         // Waiting for read response to be accepted.
@@ -182,7 +195,7 @@ always @(*) begin case(fsm)
     end
     FSM_WR_RSP_WAIT: begin
         // Waiting for write response to be accepted.
-        n_fsm = axi_wr_rsp ? FSM_IDLE        : FSM_RD_RSP_WAIT;
+        n_fsm = axi_wr_rsp ? FSM_IDLE        : FSM_WR_RSP_WAIT;
     end
     default        : begin
         n_fsm = FSM_IDLE;
