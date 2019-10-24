@@ -132,6 +132,47 @@ ic_rsp_router i_rsp_router_imem_ram (
 );
 
 //
+// Instruction <-> Error Response
+// ------------------------------------------------------------
+
+wire        err_imem_req    = ic_imem_error && cpu_imem_req;
+
+wire        err_imem_gnt    ;
+wire        err_imem_recv   ;
+wire        err_imem_ack    ;
+wire        err_imem_error  ;
+wire [31:0] err_imem_rdata  ;
+
+wire        route_rsp_imem_err   ;
+
+ic_error_rsp_stub i_error_stub_imem (
+.g_clk      (g_clk          ),
+.g_resetn   (g_resetn       ),
+.enable     (err_imem_req   ), // Enable requests / does addr map?
+.mem_req    (err_imem_req   ), // Start memory request
+.mem_gnt    (err_imem_gnt   ), // request accepted
+.mem_wen    ( 1'b0          ), // Write enable
+.mem_strb   ( 4'b0          ), // Write strobe
+.mem_wdata  (32'b0          ), // Write data
+.mem_addr   (32'b0          ), // Read/Write address
+.mem_recv   (err_imem_recv  ), // Instruction memory recieve response.
+.mem_ack    (err_imem_ack   ), // Instruction memory ack response.
+.mem_error  (err_imem_error ), // Error
+.mem_rdata  (err_imem_rdata )  // Read data
+);
+
+ic_rsp_router i_rsp_router_imem_err (
+.g_clk           (g_clk             ),
+.g_resetn        (g_resetn          ),
+.cpu_ack         (cpu_imem_ack      ),
+.periph_req      (err_imem_req      ),
+.periph_ack      (err_imem_ack      ),
+.periph_recv     (err_imem_recv     ),
+.periph_gnt      (err_imem_gnt      ),
+.route_periph_rsp(route_rsp_imem_err)
+);
+
+//
 // Instruction <-> ROM Routing
 // ------------------------------------------------------------
 
@@ -251,18 +292,21 @@ ic_rsp_router i_rsp_router_dmem_err (
 
 assign cpu_imem_recv =
     route_rsp_imem_rom  && rom_imem_recv    ||
-    route_rsp_imem_ram  && ram_imem_recv    ;
+    route_rsp_imem_ram  && ram_imem_recv    ||
+    route_rsp_imem_err  && err_imem_recv    ;
 
 assign cpu_imem_error=
     route_rsp_imem_rom  && rom_imem_error   ||
-    route_rsp_imem_ram  && ram_imem_error   ;
+    route_rsp_imem_ram  && ram_imem_error   ||
+    route_rsp_imem_err  && err_imem_error   ;
 
 assign cpu_imem_rdata=
     {32{route_rsp_imem_rom}} & rom_imem_rdata   |
     {32{route_rsp_imem_ram}} & ram_imem_rdata   ;
 
 assign cpu_imem_gnt   = ic_imem_route_ram && ram_imem_gnt ||
-                        ic_imem_route_rom && rom_imem_gnt ;
+                        ic_imem_route_rom && rom_imem_gnt ||
+                        ic_imem_error     && err_imem_gnt ;
 
 //
 // Data Response Routing
