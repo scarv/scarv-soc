@@ -25,8 +25,12 @@ test_spec_t tests [] = {
     {.addr = (char*)0x50000000, .expect_error = 1},
     {.addr = (char*)0x3FFFFFFF, .expect_error = 1},
     {.addr = (char*)0x20010000, .expect_error = 1},
+    {.addr = (char*)0x2000FFFF, .expect_error = 0},
+    {.addr = (char*)0x20000000, .expect_error = 0},
     {.addr = (char*)0x1FFFFFFF, .expect_error = 1},
     {.addr = (char*)0x10000400, .expect_error = 1},
+    {.addr = (char*)0x100003FF, .expect_error = 0},
+    {.addr = (char*)0x10000000, .expect_error = 0},
     {.addr = (char*)0x0FFFFFFF, .expect_error = 1} 
 };
 

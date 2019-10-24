@@ -18,12 +18,12 @@ test_data_load_error:
     j               no_match
 
     match:                          // No trap occured
-        beqz a1, test_pass          // - That was     expected
-        j        test_fail          // - That was not expected
-
-    no_match:                       // A trap occured
         beqz a1, test_fail          // - That was not expected
         j        test_pass          // - That was     expected
+
+    no_match:                       // A trap occured
+        beqz a1, test_pass          // - That was not expected
+        j        test_fail          // - That was     expected
 
     test_fail:
         li a0, 1                    // return non-zero
@@ -58,11 +58,11 @@ test_data_error_handler:
     j   handler_pass
 
     handler_fail:
-        li  t2, 0xA                 // Load failure code in t2
+        li  t1, 0xA                 // Load failure code in t2
         j   handler_finish
 
     handler_pass:
-        li  t2, 0xB                 // Load pass code in t2
+        li  t1, 0xB                 // Load pass code in t2
 
     lbu     t4, 0(t5)               // Size of failing instruction?
     andi    t4, t4, 0b11
