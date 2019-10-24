@@ -6,7 +6,31 @@
 //
 module scarv_soc (
 input  wire        g_clk            ,
-input  wire        g_resetn          
+input  wire        g_resetn         ,
+                                    
+output wire        m0_awvalid       , //
+input  wire        m0_awready       , //
+output wire [31:0] m0_awaddr        , //
+output wire [ 2:0] m0_awprot        , //
+                                    
+output wire        m0_wvalid        , //
+input  wire        m0_wready        , //
+output wire [31:0] m0_wdata         , //
+output wire [ 3:0] m0_wstrb         , //
+                                    
+input  wire        m0_bvalid        , //
+output wire        m0_bready        , //
+input  wire [ 1:0] m0_bresp         , //
+                                    
+output wire        m0_arvalid       , //
+input  wire        m0_arready       , //
+output wire [31:0] m0_araddr        , //
+output wire [ 2:0] m0_arprot        , //
+                                    
+input  wire        m0_rvalid        , //
+output wire        m0_rready        , //
+input  wire [ 1:0] m0_rresp         , //
+input  wire [31:0] m0_rdata           //
 );
 
 //
@@ -240,7 +264,26 @@ ic_top i_ic_top (
 .ram_dmem_recv    (ram_dmem_recv    ), // Instruction memory recieve response.
 .ram_dmem_ack     (ram_dmem_ack     ), // Instruction memory ack response.
 .ram_dmem_error   (ram_dmem_error   ), // Error
-.ram_dmem_rdata   (ram_dmem_rdata   )  // Read data
+.ram_dmem_rdata   (ram_dmem_rdata   ), // Read data
+.m0_awvalid       (m0_awvalid       ), //
+.m0_awready       (m0_awready       ), //
+.m0_awaddr        (m0_awaddr        ), //
+.m0_awprot        (m0_awprot        ), //
+.m0_wvalid        (m0_wvalid        ), //
+.m0_wready        (m0_wready        ), //
+.m0_wdata         (m0_wdata         ), //
+.m0_wstrb         (m0_wstrb         ), //
+.m0_bvalid        (m0_bvalid        ), //
+.m0_bready        (m0_bready        ), //
+.m0_bresp         (m0_bresp         ), //
+.m0_arvalid       (m0_arvalid       ), //
+.m0_arready       (m0_arready       ), //
+.m0_araddr        (m0_araddr        ), //
+.m0_arprot        (m0_arprot        ), //
+.m0_rvalid        (m0_rvalid        ), //
+.m0_rready        (m0_rready        ), //
+.m0_rresp         (m0_rresp         ), //
+.m0_rdata         (m0_rdata         )  //
 );
 
 //

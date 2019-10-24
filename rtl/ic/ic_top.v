@@ -73,7 +73,31 @@ input  wire        ram_dmem_gnt     , // request accepted
 input  wire        ram_dmem_recv    , // Instruction memory recieve response.
 output wire        ram_dmem_ack     , // Instruction memory ack response.
 input  wire        ram_dmem_error   , // Error
-input  wire [31:0] ram_dmem_rdata     // Read data
+input  wire [31:0] ram_dmem_rdata   , // Read data
+
+output wire        m0_awvalid       , //
+input  wire        m0_awready       , //
+output wire [31:0] m0_awaddr        , //
+output wire [ 2:0] m0_awprot        , //
+                                    
+output wire        m0_wvalid        , //
+input  wire        m0_wready        , //
+output wire [31:0] m0_wdata         , //
+output wire [ 3:0] m0_wstrb         , //
+                                    
+input  wire        m0_bvalid        , //
+output wire        m0_bready        , //
+input  wire [ 1:0] m0_bresp         , //
+                                    
+output wire        m0_arvalid       , //
+input  wire        m0_arready       , //
+output wire [31:0] m0_araddr        , //
+output wire [ 2:0] m0_arprot        , //
+                                    
+input  wire        m0_rvalid        , //
+output wire        m0_rready        , //
+input  wire [ 1:0] m0_rresp         , //
+input  wire [31:0] m0_rdata           //
 
 );
 
@@ -244,6 +268,65 @@ ic_rsp_router i_rsp_router_dmem_rom (
 .route_periph_rsp(route_rsp_dmem_rom)
 );
 
+//
+// Data <-> AXI
+// ------------------------------------------------------------
+
+wire        axi_dmem_req    = ic_dmem_route_axi && cpu_dmem_req;
+
+wire        axi_dmem_gnt    ;
+wire        axi_dmem_recv   ;
+wire        axi_dmem_ack    ;
+wire        axi_dmem_error  ;
+wire [31:0] axi_dmem_rdata  ;
+
+wire   route_rsp_dmem_axi   ;
+
+ic_rsp_router i_rsp_router_dmem_axi (
+.g_clk           (g_clk             ),
+.g_resetn        (g_resetn          ),
+.cpu_ack         (cpu_dmem_ack      ),
+.periph_req      (axi_dmem_req      ),
+.periph_ack      (axi_dmem_ack      ),
+.periph_recv     (axi_dmem_recv     ),
+.periph_gnt      (axi_dmem_gnt      ),
+.route_periph_rsp(route_rsp_dmem_axi)
+);
+
+ic_cpu_bus_axi_bridge i_cpu_dmem_axi_bridge (
+.m0_aclk         (g_clk           ), // AXI Clock
+.m0_aresetn      (g_resetn        ), // AXI Reset
+.m0_awvalid      (m0_awvalid      ), //
+.m0_awready      (m0_awready      ), //
+.m0_awaddr       (m0_awaddr       ), //
+.m0_awprot       (m0_awprot       ), //
+.m0_wvalid       (m0_wvalid       ), //
+.m0_wready       (m0_wready       ), //
+.m0_wdata        (m0_wdata        ), //
+.m0_wstrb        (m0_wstrb        ), //
+.m0_bvalid       (m0_bvalid       ), //
+.m0_bready       (m0_bready       ), //
+.m0_bresp        (m0_bresp        ), //
+.m0_arvalid      (m0_arvalid      ), //
+.m0_arready      (m0_arready      ), //
+.m0_araddr       (m0_araddr       ), //
+.m0_arprot       (m0_arprot       ), //
+.m0_rvalid       (m0_rvalid       ), //
+.m0_rready       (m0_rready       ), //
+.m0_rresp        (m0_rresp        ), //
+.m0_rdata        (m0_rdata        ), //
+.enable          (axi_dmem_req    ), // Enable requests / does addr map?
+.mem_req         (axi_dmem_req    ), // Start memory request
+.mem_gnt         (axi_dmem_gnt    ), // request accepted
+.mem_wen         (cpu_dmem_wen    ), // Write enable
+.mem_strb        (cpu_dmem_strb   ), // Write strobe
+.mem_wdata       (cpu_dmem_wdata  ), // Write data
+.mem_addr        (cpu_dmem_addr   ), // Read/Write address
+.mem_recv        (axi_dmem_recv   ), // Instruction memory recieve response.
+.mem_ack         (axi_dmem_ack    ), // Instruction memory ack response.
+.mem_error       (axi_dmem_error  ), // Error
+.mem_rdata       (axi_dmem_rdata  )  // Read data
+);
 
 //
 // Data <-> Error Response
@@ -315,19 +398,23 @@ assign cpu_imem_gnt   = ic_imem_route_ram && ram_imem_gnt ||
 assign cpu_dmem_recv =
     route_rsp_dmem_rom  && rom_dmem_recv    ||
     route_rsp_dmem_ram  && ram_dmem_recv    ||
+    route_rsp_dmem_axi  && axi_dmem_recv    ||
     route_rsp_dmem_err  && err_dmem_recv    ;
 
 assign cpu_dmem_error=
     route_rsp_dmem_rom  && rom_dmem_error   ||
     route_rsp_dmem_ram  && ram_dmem_error   ||
+    route_rsp_dmem_axi  && axi_dmem_error   ||
     route_rsp_dmem_err  && err_dmem_error   ;
 
 assign cpu_dmem_rdata=
     {32{route_rsp_dmem_rom}} & rom_dmem_rdata   |
+    {32{route_rsp_dmem_axi}} & axi_dmem_rdata   |
     {32{route_rsp_dmem_ram}} & ram_dmem_rdata   ;
 
 assign cpu_dmem_gnt   = ic_dmem_route_ram && ram_dmem_gnt ||
                         ic_dmem_route_rom && rom_dmem_gnt ||
+                        ic_dmem_route_axi && axi_dmem_gnt ||
                         ic_dmem_error     && err_dmem_gnt ;
 
 //
