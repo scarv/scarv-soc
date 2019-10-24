@@ -29,8 +29,8 @@ output wire        route_axi        // Route to the AXI bridge.
 // Memory map parameters
 
 parameter MAP_ROM_MATCH = 32'h1000_0000;
-parameter MAP_ROM_MASK  = 32'hFFFF_C000;
-parameter MAP_ROM_RANGE = 32'h0000_3FFF;
+parameter MAP_ROM_MASK  = 32'hFFFF_FC00;
+parameter MAP_ROM_RANGE = 32'h0000_03FF;
 
 parameter MAP_RAM_MATCH = 32'h2000_0000;
 parameter MAP_RAM_MASK  = 32'hFFFF_0000;
