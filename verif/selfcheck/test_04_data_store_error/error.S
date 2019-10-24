@@ -63,12 +63,14 @@ test_data_error_handler:
 
     handler_pass:
         li  t1, 0xB                 // Load pass code in t2
+    
+    handler_finish:
 
-    lbu     t4, 0(t5)               // Size of failing instruction?
-    andi    t4, t4, 0b11
-    li      t6, 0b11
+        lbu     t4, 0(t5)               // Size of failing instruction?
+        andi    t4, t4, 0b11
+        li      t6, 0b11
 
-    beq     t4, t6, handler_add_4   // Add 2 or 4 to EPC?
+        beq     t4, t6, handler_add_4   // Add 2 or 4 to EPC?
     
     handler_add_2:
         addi t5,t5,2
@@ -79,6 +81,4 @@ test_data_error_handler:
 
     handler_add_done:               // Put back incremented EPC.
         csrw    mepc, t5
-    
-    handler_finish:
         mret
