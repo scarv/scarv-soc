@@ -14,5 +14,11 @@
 */
 void selfcheck_uart_putc(char tx);
 
+/*!
+@brief Read a single character to the simulated UART AXI device.
+@note Blocks until a character is recieved.
+*/
+char selfcheck_uart_getc();
+
 #endif
 
