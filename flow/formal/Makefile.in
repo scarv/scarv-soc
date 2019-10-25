@@ -25,3 +25,6 @@ $(foreach PROOF,$(PROOF_NAMES),$(eval $(call add_target_proof,$(PROOF))))
 
 prove-all: $(ALL_PROOFS)
 
+prove-clean:
+	rm -rf $(SOC_WORK)/formal
+
