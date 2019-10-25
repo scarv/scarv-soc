@@ -203,9 +203,18 @@ void a4l_slave_agent::handle_channel_r () {
         
         a4l_ar_txn * req = read_reqs.front();
 
-        n_sig_rdata  = 0; // TODO Fix this
-        n_sig_rresp  = 0; // TODO Fix this
+        memory_req_txn * req_txn = new memory_req_txn (
+            req -> address, 4, false
+        );
+
+        memory_rsp_txn * rsp_txn = bus -> request(req_txn);
+
+        n_sig_rdata  = rsp_txn -> data_word();
+        n_sig_rresp  = rsp_txn -> error()    ? 2 : 0;
         n_sig_rvalid = 1;
+
+        delete req_txn;
+        delete rsp_txn;
 
     } else {
         
@@ -241,9 +250,28 @@ void a4l_slave_agent::handle_channel_b () {
         
         a4l_aw_txn * req_addr = write_addr_reqs.front();
         a4l_w_txn  * req_data = write_data_reqs.front();
+        
+        memory_req_txn * req_txn = new memory_req_txn (
+            req_addr -> address, 4, true
+        );
 
-        n_sig_bresp  = 0; // TODO Fix this
+        req_txn -> data()[0] = (req_data -> data >>  0) & 0xFF;
+        req_txn -> data()[1] = (req_data -> data >>  8) & 0xFF;
+        req_txn -> data()[2] = (req_data -> data >> 16) & 0xFF;
+        req_txn -> data()[3] = (req_data -> data >> 24) & 0xFF;
+
+        req_txn -> strb()[0] = (req_data -> strb >>  0) & 0x1 ;
+        req_txn -> strb()[1] = (req_data -> strb >>  1) & 0x1 ;
+        req_txn -> strb()[2] = (req_data -> strb >>  2) & 0x1 ;
+        req_txn -> strb()[3] = (req_data -> strb >>  3) & 0x1 ;
+
+        memory_rsp_txn * rsp_txn = bus -> request(req_txn);
+
+        n_sig_bresp  = rsp_txn -> error()    ? 2 : 0;
         n_sig_bvalid = 1;
+
+        delete req_txn;
+        delete rsp_txn;
 
     } else {
         

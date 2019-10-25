@@ -8,10 +8,12 @@
 /*!
 */
 dut_wrapper::dut_wrapper (
+    memory_bus    * bus         ,
     bool            dump_waves  ,
     std::string     wavefile
 ){
 
+    this -> bus                    = bus;
 
     this -> dut                    = new Vscarv_soc();
 
@@ -36,6 +38,8 @@ dut_wrapper::dut_wrapper (
         &dut -> m0_rresp        , //
         &dut -> m0_rdata          //
     );
+
+    this -> axi_agent -> set_bus_model(this -> bus);
 
     this -> dump_waves             = dump_waves;
     this -> vcd_wavefile_path      = wavefile;

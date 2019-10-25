@@ -9,6 +9,8 @@
 #include "verilated_vcd_c.h"
 #include "svdpi.h"
 
+#include "memory_bus/memory_bus.hpp"
+
 #include "axi4lite/a4l_txns.hpp"
 #include "axi4lite/a4l_slave_agent.hpp"
 
@@ -35,10 +37,12 @@ public:
 
     /*!
     @brief Create a new dut_wrapper object
+    @param in bus - Memory bus model for outgoing AXI requests.
     @param in dump_waves - If true, write wave file.
     @oaram in wavefile path to dump waves too.
     */
     dut_wrapper (
+        memory_bus    * bus         ,
         bool            dump_waves  ,
         std::string     wavefile
     );
@@ -84,6 +88,9 @@ protected:
 
     //! Called on every rising edge of the main clock.
     void posedge_gclk();
+        
+    //! Memory bus model for outgoing AXI requests.
+    memory_bus    * bus;
 
 };
 

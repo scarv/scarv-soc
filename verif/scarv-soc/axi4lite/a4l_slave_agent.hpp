@@ -4,6 +4,8 @@
 #include <utility>
 #include <cstdlib>
 
+#include "../memory_bus/memory_bus.hpp"
+
 #include "a4l_txns.hpp"
 
 #ifndef A4L_AGENT_HPP
@@ -47,7 +49,15 @@ public:
     //! Must be called whenever the bus reset signal is cleared.
     void clr_reset();
 
+    //! Tell the agent to forward requests to this bus model.
+    void set_bus_model(memory_bus * bus){
+        this -> bus = bus;   
+    };
+
 protected:
+    
+    //! Simulated memory bus device used to emulate peripheral accesses.
+    memory_bus * bus;
 
     //! Accept new requests from the AR channel.
     void handle_channel_ar();
