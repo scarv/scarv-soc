@@ -210,5 +210,61 @@ always @(posedge m0_aclk) begin
     end
 end
 
+
+//
+// Assumptions which we require to be true.
+`ifdef FORMAL
+
+initial assume(!m0_aresetn);
+
+always @(posedge m0_aclk) if(m0_aresetn && $past(m0_aresetn)) begin
+
+    if(m0_rvalid && !$past(m0_rready)) begin
+        assume($stable(m0_rdata));
+        assume($stable(m0_rresp));
+    end
+
+    if(m0_bvalid && !$past(m0_bready)) begin
+        assume($stable(m0_bresp));
+    end
+
+end
+
+`endif
+
+
+//
+// Assertions which we require to be true.
+`ifdef FORMAL_CPU_BUS_AXI_BRIDGE
+
+initial assume(!m0_aresetn);
+
+always @(posedge m0_aclk) if(m0_aresetn && $past(m0_aresetn)) begin
+    
+    // Address read channel
+    if(m0_arvalid && !$past(m0_arready)) begin
+        assert($stable(m0_arvalid));
+        assert($stable(m0_araddr ));
+        assert($stable(m0_arprot ));
+    end
+    
+    // Address write channel
+    if(m0_awvalid && !$past(m0_awready)) begin
+        assert($stable(m0_awvalid));
+        assert($stable(m0_awaddr ));
+        assert($stable(m0_awprot ));
+    end
+    
+    // Write data channel
+    if(m0_wvalid && !$past(m0_wready)) begin
+        assert($stable(m0_wvalid));
+        assert($stable(m0_wdata ));
+        assert($stable(m0_wstrb ));
+    end
+
+end
+
+`endif
+
 endmodule
 
