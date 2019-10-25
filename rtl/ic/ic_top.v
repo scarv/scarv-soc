@@ -454,13 +454,19 @@ always @(posedge g_clk) if(g_resetn && $past(g_resetn)) begin
     assert(!(route_rsp_imem_ram && route_rsp_imem_rom));
     
     assert(!(route_rsp_dmem_ram && route_rsp_dmem_rom));
+    
+    assert(!(route_rsp_dmem_ram && route_rsp_dmem_axi));
+   
+    assert(!(route_rsp_dmem_rom && route_rsp_dmem_axi));
 
     if($past(cpu_imem_recv) && !$past(cpu_imem_ack)) begin
+        assert($stable(cpu_imem_recv ));
         assert($stable(cpu_imem_rdata));
         assert($stable(cpu_imem_error));
     end
 
     if($past(cpu_dmem_recv) && !$past(cpu_dmem_ack)) begin
+        assert($stable(cpu_dmem_recv ));
         assert($stable(cpu_dmem_rdata));
         assert($stable(cpu_dmem_error));
     end
