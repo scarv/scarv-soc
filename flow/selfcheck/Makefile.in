@@ -122,7 +122,7 @@ endef
 #
 define add_target_selfcheck_test
 
-$(call map_selfcheck_elf,${1}) : $(call map_selfcheck_srcs,${1})
+$(call map_selfcheck_elf,${1}) : $(call map_selfcheck_srcs,${1}) $(SELFCHECK_SHARED_SRC)
 	@mkdir -p $(call map_selfcheck_dir,${1})
 	$(CC) -T$(SELFCHECK_LINK_TEST) $(SELFCHECK_CFLAGS) -o $${@} $${^}
 
