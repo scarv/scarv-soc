@@ -62,7 +62,7 @@ assign m0_wstrb  = buf_strb ;
 assign m0_araddr = buf_addr ;
 assign m0_arprot = 3'b000   ; // Unprivilidged, non-secure, Data
 
-assign mem_rdata = m0_rdata ;
+assign mem_rdata = fsm_rd_rsp_wait ? m0_rdata : 32'b0;
 
 assign mem_error =
     fsm_rd_rsp_wait && |m0_rresp ||
@@ -231,15 +231,27 @@ always @(posedge m0_aclk) begin
     end
 end
 
-// Track the number of outstanding write requests.
-reg  [2:0]   writes_outstanding;
-wire [2:0] n_writes_outstanding = writes_outstanding + axi_aw_req - axi_wr_rsp;
+// Track the number of outstanding write address requests.
+reg  [2:0]   wa_outstanding;
+wire [2:0] n_wa_outstanding = wa_outstanding + axi_aw_req - axi_wr_rsp;
 
 always @(posedge m0_aclk) begin
     if(!m0_aresetn) begin
-        writes_outstanding <= 'b0;
+        wa_outstanding <= 'b0;
     end else begin
-        writes_outstanding <= n_writes_outstanding;
+        wa_outstanding <= n_wa_outstanding;
+    end
+end
+
+// Track the number of outstanding write data requests.
+reg  [2:0]   wd_outstanding;
+wire [2:0] n_wd_outstanding = wd_outstanding + axi_wd_req - axi_wr_rsp;
+
+always @(posedge m0_aclk) begin
+    if(!m0_aresetn) begin
+        wd_outstanding <= 'b0;
+    end else begin
+        wd_outstanding <= n_wd_outstanding;
     end
 end
 
@@ -250,12 +262,14 @@ always @(posedge m0_aclk) begin
     if($past(m0_rvalid) && !$past(m0_rready)) begin
         assume($stable(m0_rdata));
         assume($stable(m0_rresp));
+        assume($stable(m0_rvalid));
     end
 
     // Assume that the write response channel behaves itself
     // in terms of signal stability.
     if($past(m0_bvalid) && !$past(m0_bready)) begin
         assume($stable(m0_bresp));
+        assume($stable(m0_bvalid));
     end
     
     // No unexpected read responses.
@@ -264,7 +278,7 @@ always @(posedge m0_aclk) begin
     end
     
     // No unexpected write responses.
-    if(writes_outstanding == 0) begin
+    if(wa_outstanding == 0 || wd_outstanding == 0) begin
         assume(m0_bvalid == 1'b0);
     end
 
@@ -300,16 +314,6 @@ always @(posedge m0_aclk) if(m0_aresetn && $stable(m0_aresetn)) begin
         assert($stable(m0_wvalid));
         assert($stable(m0_wdata ));
         assert($stable(m0_wstrb ));
-    end
-
-    // Read data channel
-    if($past(m0_rvalid) && !$past(m0_rready)) begin
-        assert($stable(m0_rvalid));
-    end
-    
-    // Write response channel
-    if($past(m0_bvalid) && !$past(m0_bready)) begin
-        assert($stable(m0_bvalid));
     end
 
 end
