@@ -64,6 +64,10 @@ assign m0_arprot = 3'b000   ; // Unprivilidged, non-secure, Data
 
 assign mem_rdata = m0_rdata ;
 
+assign mem_error =
+    fsm_rd_rsp_wait && |m0_rresp ||
+    fsm_wr_rsp_wait && |m0_bresp  ;
+
 reg [ 3:0]  buf_strb        ; // Buffered Write strobe
 reg [31:0]  buf_wdata       ; // Buffered Write data
 reg [31:0]  buf_addr        ; // Buffered Read/Write address
@@ -114,9 +118,9 @@ assign m0_awvalid = fsm_wr_req_wait                        ||
 assign m0_wvalid  = fsm_wr_req_wait                        ||
                     fsm_wd_req_wait                         ;
 
-assign m0_rready  = fsm_rd_rsp_wait && mem_recv             ;
+assign m0_rready  = fsm_rd_rsp_wait && mem_ack              ;
 
-assign m0_bready  = fsm_wr_rsp_wait && mem_recv             ;
+assign m0_bready  = fsm_wr_rsp_wait && mem_ack              ;
 
 //
 // FSM State handling
@@ -212,20 +216,56 @@ end
 
 
 //
-// Assumptions which we require to be true.
+// Assumptions which we require to be true for all formal proofs.
 `ifdef FORMAL
 
-initial assume(!m0_aresetn);
+// Track the number of outstanding read requests.
+reg  [2:0]   reads_outstanding;
+wire [2:0] n_reads_outstanding = reads_outstanding + axi_rd_req - axi_rd_rsp;
 
-always @(posedge m0_aclk) if(m0_aresetn && $past(m0_aresetn)) begin
+always @(posedge m0_aclk) begin
+    if(!m0_aresetn) begin
+        reads_outstanding <= 'b0;
+    end else begin
+        reads_outstanding <= n_reads_outstanding;
+    end
+end
 
-    if(m0_rvalid && !$past(m0_rready)) begin
+// Track the number of outstanding write requests.
+reg  [2:0]   writes_outstanding;
+wire [2:0] n_writes_outstanding = writes_outstanding + axi_aw_req - axi_wr_rsp;
+
+always @(posedge m0_aclk) begin
+    if(!m0_aresetn) begin
+        writes_outstanding <= 'b0;
+    end else begin
+        writes_outstanding <= n_writes_outstanding;
+    end
+end
+
+always @(posedge m0_aclk) begin
+
+    // Assume that the read response channel behaves itself
+    // in terms of signal stability.
+    if($past(m0_rvalid) && !$past(m0_rready)) begin
         assume($stable(m0_rdata));
         assume($stable(m0_rresp));
     end
 
-    if(m0_bvalid && !$past(m0_bready)) begin
+    // Assume that the write response channel behaves itself
+    // in terms of signal stability.
+    if($past(m0_bvalid) && !$past(m0_bready)) begin
         assume($stable(m0_bresp));
+    end
+    
+    // No unexpected read responses.
+    if(reads_outstanding == 0) begin
+        assume(m0_rvalid == 1'b0);
+    end
+    
+    // No unexpected write responses.
+    if(writes_outstanding == 0) begin
+        assume(m0_bvalid == 1'b0);
     end
 
 end
@@ -239,27 +279,37 @@ end
 
 initial assume(!m0_aresetn);
 
-always @(posedge m0_aclk) if(m0_aresetn && $past(m0_aresetn)) begin
+always @(posedge m0_aclk) if(m0_aresetn && $stable(m0_aresetn)) begin
     
     // Address read channel
-    if(m0_arvalid && !$past(m0_arready)) begin
+    if($past(m0_arvalid) && !$past(m0_arready)) begin
         assert($stable(m0_arvalid));
         assert($stable(m0_araddr ));
         assert($stable(m0_arprot ));
     end
-    
+
     // Address write channel
-    if(m0_awvalid && !$past(m0_awready)) begin
+    if($past(m0_awvalid) && !$past(m0_awready)) begin
         assert($stable(m0_awvalid));
         assert($stable(m0_awaddr ));
         assert($stable(m0_awprot ));
     end
-    
+
     // Write data channel
-    if(m0_wvalid && !$past(m0_wready)) begin
+    if($past(m0_wvalid) && !$past(m0_wready)) begin
         assert($stable(m0_wvalid));
         assert($stable(m0_wdata ));
         assert($stable(m0_wstrb ));
+    end
+
+    // Read data channel
+    if($past(m0_rvalid) && !$past(m0_rready)) begin
+        assert($stable(m0_rvalid));
+    end
+    
+    // Write response channel
+    if($past(m0_bvalid) && !$past(m0_bready)) begin
+        assert($stable(m0_bvalid));
     end
 
 end
