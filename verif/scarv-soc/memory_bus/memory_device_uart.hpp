@@ -22,8 +22,8 @@
 Register Map:
 Offset  |  Register
 --------|----------------------
-0x0     | TX
-0x4     | RX
+0x0     | RX
+0x4     | TX
 0x8     | CTRL
 0xC     | STATUS
 */
@@ -35,12 +35,28 @@ public:
         memory_address base
     ) : memory_device(base,MEMORY_DEVICE_UART_RANGE) {
 
-        addr_tx     = addr_base + 0 ;
-        addr_rx     = addr_base + 4 ;
-        addr_ctrl   = addr_base + 8 ;
-        addr_status = addr_base + 12;
+        addr_rx     = addr_base + 0 ;
+        addr_tx     = addr_base + 4 ;
+        addr_status = addr_base + 8 ;
+        addr_ctrl   = addr_base + 12;
 
         this -> setup_pseudo_terminal();
+
+        //this -> rx_buffer.push('0');
+        //this -> rx_buffer.push('1');
+        //this -> rx_buffer.push('2');
+        //this -> rx_buffer.push('3');
+        //this -> rx_buffer.push('4');
+        //this -> rx_buffer.push('5');
+        //this -> rx_buffer.push('6');
+        //this -> rx_buffer.push('7');
+        //this -> rx_buffer.push('8');
+        //this -> rx_buffer.push('9');
+        //this -> rx_buffer.push('A');
+        //this -> rx_buffer.push('B');
+        //this -> rx_buffer.push('C');
+        //this -> rx_buffer.push('D');
+        //this -> rx_buffer.push('E');
     }
 
     ~memory_device_uart(){

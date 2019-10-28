@@ -6,7 +6,7 @@ void memory_device_uart::setup_pseudo_terminal() {
 
     int status;
 
-    pseudo_term_handle = posix_openpt(O_RDWR | O_NOCTTY | O_SYNC);
+    pseudo_term_handle = posix_openpt(O_RDWR | O_NOCTTY | O_SYNC | O_NONBLOCK);
 
     status = grantpt(pseudo_term_handle);
     assert(status>=0);
@@ -28,18 +28,30 @@ bool memory_device_uart::read_word (
     uint32_t     * dout
 ){
 
+    std::cout << "UART ";
 
     if (addr == addr_tx) {
         dout = &reg_tx;
     }
     else if (addr == addr_rx) {
         dout = &reg_rx;
+        std::cout << "Read RX"<<std::endl;
     }
     else if(addr == addr_ctrl) {
+        std::cout << "Read CTRL"<<std::endl;
         dout = &reg_ctrl;
     }
     else if(addr == addr_status) {
+    
+        poll_pseudo_terminal();
+
+        reg_status = 
+            (tx_buffer.size() >= tx_buf_depth) << 3 |
+            (tx_buffer.size() ==            0) << 2 |
+            (rx_buffer.size() !=            0) << 0 ;
+
         dout = &reg_status;
+        std::cout << "Read STATUS"<<std::endl;
     }
     else {
         return false;
@@ -109,7 +121,8 @@ uint8_t memory_device_uart::read_byte (
     }
     else if(addr == addr_rx){
         
-        return get_from_rx_buffer();
+        reg_rx = get_from_rx_buffer();
+        return byte_off == 0 ? reg_rx : 0;
 
     }
     else if(addr == addr_ctrl){
@@ -124,10 +137,10 @@ uint8_t memory_device_uart::read_byte (
 
         reg_status = 
             (tx_buffer.size() >= tx_buf_depth) << 3 |
-            (tx_buffer.size() ==            0) << 2 |
-            (rx_buffer.size() !=            0) << 0 ;
+            (tx_buffer.size()  ==           0) << 2 |
+            (rx_buffer.size()  >            0) << 0 ;
 
-        return reg_status;
+        return byte_off == 0 ? reg_status : 0;
 
     }
     else {
@@ -144,9 +157,11 @@ void memory_device_uart::poll_pseudo_terminal() {
         // Add data from the pseudo terminal to the rx buffer.
         char  read_data [1];
 
-        read(pseudo_term_handle, read_data, 1);
+        size_t count = read(pseudo_term_handle, read_data, 1);
 
-        rx_buffer.push(read_data[0]);
+        if(count == 1) {
+            rx_buffer.push(read_data[0]);
+        }
 
     }
 
@@ -157,14 +172,14 @@ uint8_t memory_device_uart::get_from_rx_buffer() {
 
     poll_pseudo_terminal();
 
-    if(rx_buffer.size() > 0) {
+    if(rx_buffer.empty() == false) {
 
         uint8_t tr = rx_buffer.front();
         rx_buffer.pop();
         return tr;
 
     } else {
-
+        
         return 0;
 
     }
@@ -173,8 +188,6 @@ uint8_t memory_device_uart::get_from_rx_buffer() {
 
 //! Get the next char from the rx buffer and pop it from the buffer.
 void memory_device_uart::write_to_tx_buffer(uint8_t data) {
-    
-    tx_buffer.push(data);
 
     if(pseudo_term_open) {
 
@@ -185,6 +198,8 @@ void memory_device_uart::write_to_tx_buffer(uint8_t data) {
         write(pseudo_term_handle, tosend, 1);
 
     } else {
+    
+        tx_buffer.push(data);
 
         // Just print stuff to STDOUT.
         // Line buffered - so if we see a newline, print and empty the buffer.
