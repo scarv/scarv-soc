@@ -8,12 +8,7 @@ char * message = "Hello World!\n"
 
 int main() {
 
-    for(int i = 0; i < 20; i++) {
-        char to_echo = selfcheck_uart_getc();
-        selfcheck_uart_putc(to_echo);
-    }
-        
-    selfcheck_uart_putc('\n');
+    selfcheck_uart_getc();
     
     for(int i = 0; message[i] != 0; i ++) {
         selfcheck_uart_putc(message[i]);
