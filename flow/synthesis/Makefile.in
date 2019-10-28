@@ -1,0 +1,14 @@
+
+SYNTH_SCRIPT = $(SOC_HOME)/flow/synthesis/synth_yosys.tcl
+SYNTH_DIR    = $(SOC_WORK)/synthesis
+SYNTH_VERILOG= $(SYNTH_DIR)/synthesised.v
+SYNTH_LOG    = $(SYNTH_DIR)/synthesis.log
+
+synthesise :
+	@mkdir -p $(dir $(SYNTH_VERILOG))
+	@mkdir -p $(dir $(SYNTH_LOG))
+	yosys \
+        -QT \
+        -l      $(SYNTH_LOG) \
+	    -c      $(SYNTH_SCRIPT)
+
