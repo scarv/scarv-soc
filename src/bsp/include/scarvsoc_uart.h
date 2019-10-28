@@ -67,8 +67,8 @@ char scarvsoc_uart_rx_avail(
 /*!
 @brief Check if there is space in the TX buffer for sending.
 @returns 
-- Zero     if there are is    space available.
-- Non-zero if there are is no space available.
+- Zero     if there are is no space available.
+- Non-zero if there are is    space available.
 @ingroup driver_uart
 */
 char scarvsoc_uart_tx_ready(

@@ -66,7 +66,7 @@ char scarvsoc_uart_getc_b(
 char scarvsoc_uart_rx_avail(
     scarvsoc_uart_conf conf    //!< The UART to access.
 ){
-    return (conf[scarvsoc_uart_reg_stat] & (0x01 << 0));
+    return (conf[scarvsoc_uart_reg_stat] & 0x01);
 }
 
 
@@ -75,7 +75,7 @@ char scarvsoc_uart_rx_avail(
 char scarvsoc_uart_tx_ready(
     scarvsoc_uart_conf conf    //!< The UART to access.
 ){
-    return (conf[scarvsoc_uart_reg_stat] & (0x01 << 3));
+    return !(conf[scarvsoc_uart_reg_stat] & (0x01 << 3));
 }
 
 
