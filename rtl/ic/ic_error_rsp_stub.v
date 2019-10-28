@@ -23,7 +23,6 @@ output wire         mem_error       , // Error
 output wire [31:0]  mem_rdata         // Read data
 );
 
-assign mem_error    = 1'b0;
 assign mem_gnt      = !fsm_wait && !fsm_buf;
 assign mem_error    = 1'b1;
 
