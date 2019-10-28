@@ -1,0 +1,56 @@
+
+SW_EXAMPLES_LINK    = $(SOC_HOME)/src/examples/share/link.ld
+SW_EXAMPLES_DIR     = $(SOC_WORK)/examples
+SW_EXAMPLES_CFLAGS  = -march=rv32imc -mabi=ilp32 -Wall -O2 -nostartfiles \
+                      -I$(BSP_INCLUDE) \
+                      -T$(SW_EXAMPLES_LINK)
+
+define map_sw_example_dir
+$(SW_EXAMPLES_DIR)/${1}
+endef
+
+define map_sw_example_elf
+$(call map_sw_example_dir,${1})/${1}.elf
+endef
+
+define map_sw_example_dis
+$(call map_sw_example_dir,${1})/${1}.dis
+endef
+
+define map_sw_example_hex
+$(call map_sw_example_dir,${1})/${1}.hex
+endef
+
+define map_sw_example_bin
+$(call map_sw_example_dir,${1})/${1}.bin
+endef
+
+#
+# Add a new example program to the build system
+# 
+# Arguments:
+# 1 - Friendly experiment name
+# 2 - Source files
+#
+define add_sw_example_target
+
+$(call map_sw_example_elf,${1}) : ${2} $(BSP_LIB)
+	@mkdir -p $(dir $(call map_sw_example_elf,${1}))
+	$(CC) $(SW_EXAMPLES_CFLAGS) -o $${@} $${^}
+
+$(call map_sw_example_dis,${1}) : $(call map_sw_example_elf,${1})
+	@mkdir -p $(dir $(call map_sw_example_dis,${1}))
+	$(OBJDUMP) -z -D $${<} > $${@}
+
+$(call map_sw_example_hex,${1}) : $(call map_sw_example_elf,${1})
+	@mkdir -p $(dir $(call map_sw_example_hex,${1}))
+	$(OBJCOPY) --change-addresses=0xE0000000 --gap-fill 0 -O verilog $${<} $${@}
+
+example-${1} : $(call map_sw_example_elf,${1}) \
+               $(call map_sw_example_dis,${1}) \
+               $(call map_sw_example_hex,${1}) 
+
+endef
+
+include $(SOC_HOME)/src/examples/uart/Makefile.in
+
