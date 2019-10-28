@@ -7,6 +7,9 @@
 module scarv_soc (
 input  wire        g_clk            ,
 input  wire        g_resetn         ,
+
+input  wire        cpu_int_external , // External interrupt trigger line.
+input  wire        cpu_int_software , // Software interrupt trigger line.
                                     
 output wire        m0_awvalid       , //
 input  wire        m0_awready       , //
@@ -72,9 +75,6 @@ wire        cpu_rng_rsp_valid   =1'b1; // RNG response data valid
 wire [ 2:0] cpu_rng_rsp_status  ; // RNG status
 wire [31:0] cpu_rng_rsp_data    ; // RNG response / sample data.
 wire        cpu_rng_rsp_ready   ; // CPU accepts response.
-
-wire        cpu_int_external    =1'b0; // External interrupt trigger line.
-wire        cpu_int_software    =1'b0; // Software interrupt trigger line.
 
 wire        cpu_imem_req        ; // Start memory request
 wire        cpu_imem_wen        ; // Write enable
