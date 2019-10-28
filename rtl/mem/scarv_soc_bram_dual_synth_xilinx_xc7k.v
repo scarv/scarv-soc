@@ -37,31 +37,34 @@ parameter [255*8:0] MEMH_FILE = "NONE";
 wire [3:0] wen_a = WRITE_EN ? wea : 4'b0;
 wire [3:0] wen_b = WRITE_EN ? web : 4'b0;
 
+wire [15:0] addra_idx = addra[LW-1:2];
+wire [15:0] addrb_idx = addrb[LW-1:2];
+
 generate if(DEPTH == 1024) begin // 1Kb
 
 BRAM_TDP_MACRO #(
 .BRAM_SIZE("36Kb"), // Target BRAM: "18Kb" or "36Kb" 
 .DEVICE("7SERIES"), // Target device: "7SERIES" 
-.DOA_REG(1),        // Optional port A output register (0 or 1)
-.DOB_REG(1),        // Optional port B output register (0 or 1)
+.DOA_REG(0),        // Optional port A output register (0 or 1)
+.DOB_REG(0),        // Optional port B output register (0 or 1)
 .INIT_A(36'h0000000),  // Initial values on port A output port
 .INIT_B(36'h00000000), // Initial values on port B output port
 .INIT_FILE (MEMH_FILE),
-.READ_WIDTH_A (36),   // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
-.READ_WIDTH_B (36),   // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
+.READ_WIDTH_A (32),   // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
+.READ_WIDTH_B (32),   // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
 .WRITE_MODE_A("WRITE_FIRST"), // "WRITE_FIRST", "READ_FIRST", or "NO_CHANGE" 
 .WRITE_MODE_B("WRITE_FIRST"), // "WRITE_FIRST", "READ_FIRST", or "NO_CHANGE" 
-.WRITE_WIDTH_A(36), // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
-.WRITE_WIDTH_B(36)  // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
+.WRITE_WIDTH_A(32), // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
+.WRITE_WIDTH_B(32)  // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
 ) BRAM_TDP_MACRO_inst (
 .DOA    (douta  ), // Output port-A data, width defined by READ_WIDTH_A parameter
 .DOB    (doutb  ), // Output port-B data, width defined by READ_WIDTH_B parameter
-.ADDRA  (addra  ), // Input port-A address, width defined by Port A depth
-.ADDRB  (addrb  ), // Input port-B address, width defined by Port B depth
+.ADDRA  (addra_idx), // Input port-A address, width defined by Port A depth
+.ADDRB  (addrb_idx), // Input port-B address, width defined by Port B depth
 .CLKA   (clka   ), // 1-bit input port-A clock
-.CLKB   (clkb   ), // 1-bit input port-B clock
-.DIA    (dina   ), // Input port-A data, width defined by WRITE_WIDTH_A parameter
-.DIB    (dinb   ), // Input port-B data, width defined by WRITE_WIDTH_B parameter
+.CLKB   (clka   ), // 1-bit input port-B clock
+.DIA    (32'b0), // Input port-A data, width defined by WRITE_WIDTH_A parameter
+.DIB    (32'b0), // Input port-B data, width defined by WRITE_WIDTH_B parameter
 .ENA    (ena    ), // 1-bit input port-A enable
 .ENB    (enb    ), // 1-bit input port-B enable
 .REGCEA (ena    ), // 1-bit input port-A output register enable
@@ -109,26 +112,26 @@ end
 BRAM_TDP_MACRO #(
 .BRAM_SIZE("36Kb"), // Target BRAM: "18Kb" or "36Kb" 
 .DEVICE("7SERIES"), // Target device: "7SERIES" 
-.DOA_REG(1),        // Optional port A output register (0 or 1)
-.DOB_REG(1),        // Optional port B output register (0 or 1)
+.DOA_REG(0),        // Optional port A output register (0 or 1)
+.DOB_REG(0),        // Optional port B output register (0 or 1)
 .INIT_A(36'h0000000),  // Initial values on port A output port
 .INIT_B(36'h00000000), // Initial values on port B output port
 .INIT_FILE (MEMH_FILE),
-.READ_WIDTH_A (36),   // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
-.READ_WIDTH_B (36),   // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
+.READ_WIDTH_A (32),   // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
+.READ_WIDTH_B (32),   // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
 .WRITE_MODE_A("WRITE_FIRST"), // "WRITE_FIRST", "READ_FIRST", or "NO_CHANGE" 
 .WRITE_MODE_B("WRITE_FIRST"), // "WRITE_FIRST", "READ_FIRST", or "NO_CHANGE" 
-.WRITE_WIDTH_A(36), // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
-.WRITE_WIDTH_B(36)  // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
+.WRITE_WIDTH_A(32), // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
+.WRITE_WIDTH_B(32)  // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
 ) BRAM_TDP_MACRO_inst_lo (
 .DOA    (dout_a_lo), // Output port-A data, width defined by READ_WIDTH_A parameter
 .DOB    (dout_b_lo), // Output port-B data, width defined by READ_WIDTH_B parameter
-.ADDRA  (addra  ), // Input port-A address, width defined by Port A depth
-.ADDRB  (addrb  ), // Input port-B address, width defined by Port B depth
+.ADDRA  (addra_idx), // Input port-A address, width defined by Port A depth
+.ADDRB  (addrb_idx), // Input port-B address, width defined by Port B depth
 .CLKA   (clka   ), // 1-bit input port-A clock
-.CLKB   (clkb   ), // 1-bit input port-B clock
-.DIA    (dina   ), // Input port-A data, width defined by WRITE_WIDTH_A parameter
-.DIB    (dinb   ), // Input port-B data, width defined by WRITE_WIDTH_B parameter
+.CLKB   (clka   ), // 1-bit input port-B clock
+.DIA    ({2'b00,dina}), // Input port-A data, width defined by WRITE_WIDTH_A parameter
+.DIB    ({2'b00,dinb}), // Input port-B data, width defined by WRITE_WIDTH_B parameter
 .ENA    (en_a_lo), // 1-bit input port-A enable
 .ENB    (en_b_lo), // 1-bit input port-B enable
 .REGCEA (en_a_lo), // 1-bit input port-A output register enable
@@ -145,26 +148,26 @@ BRAM_TDP_MACRO #(
 BRAM_TDP_MACRO #(
 .BRAM_SIZE("36Kb"), // Target BRAM: "18Kb" or "36Kb" 
 .DEVICE("7SERIES"), // Target device: "7SERIES" 
-.DOA_REG(1),        // Optional port A output register (0 or 1)
-.DOB_REG(1),        // Optional port B output register (0 or 1)
+.DOA_REG(0),        // Optional port A output register (0 or 1)
+.DOB_REG(0),        // Optional port B output register (0 or 1)
 .INIT_A(36'h0000000),  // Initial values on port A output port
 .INIT_B(36'h00000000), // Initial values on port B output port
 .INIT_FILE (MEMH_FILE),
-.READ_WIDTH_A (36),   // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
-.READ_WIDTH_B (36),   // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
+.READ_WIDTH_A (32),   // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
+.READ_WIDTH_B (32),   // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
 .WRITE_MODE_A("WRITE_FIRST"), // "WRITE_FIRST", "READ_FIRST", or "NO_CHANGE" 
 .WRITE_MODE_B("WRITE_FIRST"), // "WRITE_FIRST", "READ_FIRST", or "NO_CHANGE" 
-.WRITE_WIDTH_A(36), // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
-.WRITE_WIDTH_B(36)  // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
+.WRITE_WIDTH_A(32), // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
+.WRITE_WIDTH_B(32)  // Valid values are 1-36 (19-36 only valid when BRAM_SIZE="36Kb")
 ) BRAM_TDP_MACRO_inst_hi (
 .DOA    (dout_a_hi), // Output port-A data, width defined by READ_WIDTH_A parameter
 .DOB    (dout_b_hi), // Output port-B data, width defined by READ_WIDTH_B parameter
-.ADDRA  (addra  ), // Input port-A address, width defined by Port A depth
-.ADDRB  (addrb  ), // Input port-B address, width defined by Port B depth
+.ADDRA  (addra_idx), // Input port-A address, width defined by Port A depth
+.ADDRB  (addrb_idx), // Input port-B address, width defined by Port B depth
 .CLKA   (clka   ), // 1-bit input port-A clock
-.CLKB   (clkb   ), // 1-bit input port-B clock
-.DIA    (dina   ), // Input port-A data, width defined by WRITE_WIDTH_A parameter
-.DIB    (dinb   ), // Input port-B data, width defined by WRITE_WIDTH_B parameter
+.CLKB   (clka   ), // 1-bit input port-B clock
+.DIA    ({2'b00,dina}), // Input port-A data, width defined by WRITE_WIDTH_A parameter
+.DIB    ({2'b00,dinb}), // Input port-B data, width defined by WRITE_WIDTH_B parameter
 .ENA    (en_a_hi), // 1-bit input port-A enable
 .ENB    (en_b_hi), // 1-bit input port-B enable
 .REGCEA (en_a_hi), // 1-bit input port-A output register enable
