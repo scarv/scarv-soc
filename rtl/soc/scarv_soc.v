@@ -353,7 +353,8 @@ ic_cpu_bus_bram_bridge i_rom_dmem_bus_bridge(
 
 scarv_soc_bram_dual #(
 .MEMH_FILE(BRAM_ROM_MEMH_FILE),
-.DEPTH    (1024              )
+.DEPTH    (1024              ),
+.WRITE_EN (0                 )
 ) i_rom (
 .clka (g_clk                ),
 .rsta (bram_reset           ),
@@ -430,7 +431,8 @@ ic_cpu_bus_bram_bridge i_ram_dmem_bus_bridge(
 
 scarv_soc_bram_dual #(
 .MEMH_FILE(BRAM_RAM_MEMH_FILE),
-.DEPTH    (65536             )
+.DEPTH    (65536             ),
+.WRITE_EN (1                 )
 ) i_ram (
 .clka (g_clk                ),
 .rsta (bram_reset           ),
