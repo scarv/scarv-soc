@@ -18,7 +18,7 @@ $(call map_sw_example_dir,${1})/${1}.dis
 endef
 
 define map_sw_example_hex
-$(call map_sw_example_dir,${1})/${1}.hex
+$(call map_sw_example_dir,${1})/ram.hex
 endef
 
 define map_sw_example_bin
@@ -48,9 +48,16 @@ $(call map_sw_example_hex,${1}) : $(call map_sw_example_elf,${1})
 
 example-${1} : $(call map_sw_example_elf,${1}) \
                $(call map_sw_example_dis,${1}) \
-               $(call map_sw_example_hex,${1}) 
+               $(call map_sw_example_hex,${1}) \
+               $(VL_OUT)                       \
+               $(FSBL_HEX)                     
+	cp $(FSBL_HEX)  $(call map_sw_example_dir,${1})/rom.hex
+	cp $(VL_OUT)    $(call map_sw_example_dir,${1})/verilated
 
 endef
 
 include $(SOC_HOME)/src/examples/uart/Makefile.in
+
+run-example-% : example-%
+	cd $(SW_EXAMPLES_DIR)/$* ; ./verilated +TIMEOUT=10000000
 

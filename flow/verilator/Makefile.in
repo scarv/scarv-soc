@@ -48,7 +48,7 @@ ${1} : $(VL_CSRC)
 
 endef
 
-$(eval $(call tgt_verilator_build,$(VL_OUT),$(VL_DIR),$(FSBL_HEX),))
+$(eval $(call tgt_verilator_build,$(VL_OUT),$(VL_DIR),rom.hex,ram.hex))
 
 verilator-build: $(VL_OUT)
 
@@ -59,3 +59,6 @@ verilator-run-waves: $(VL_OUT) fsbl
 
 verilator-clean:
 	rm -rf $(VL_DIR)
+
+verilator-generic:
+

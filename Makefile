@@ -12,10 +12,10 @@ OBJDUMP         = $(RISCV)/bin/riscv32-unknown-elf-objdump
 OBJCOPY         = $(RISCV)/bin/riscv32-unknown-elf-objcopy
 
 include $(SOC_HOME)/src/fsbl/Makefile.in
-include $(SOC_HOME)/src/bsp/Makefile.in
-include $(SOC_HOME)/src/examples/Makefile.in
 
 include $(SOC_HOME)/flow/verilator/Makefile.in
 include $(SOC_HOME)/flow/formal/Makefile.in
 include $(SOC_HOME)/flow/selfcheck/Makefile.in
 
+include $(SOC_HOME)/src/bsp/Makefile.in
+include $(SOC_HOME)/src/examples/Makefile.in
