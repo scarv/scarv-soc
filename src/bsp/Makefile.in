@@ -1,0 +1,30 @@
+
+BSP_BUILD   = $(SOC_WORK)/bsp
+
+BSP_INCLUDE = $(BSP_BUILD)/include
+
+BSP_HEAD_SRC= $(wildcard $(SOC_HOME)/src/bsp/include/*.h)
+BSP_HEADERS = $(addprefix $(BSP_INCLUDE)/,$(notdir $(BSP_HEAD_SRC)))
+
+BSP_SRCS    = $(wildcard $(SOC_HOME)/src/bsp/src/*.c)
+BSP_OBJ     = $(addprefix $(BSP_BUILD)/obj/,$(notdir $(BSP_SRCS:%.c=%.o)))
+
+BSP_LIB     = $(BSP_BUILD)/lib/scarvsoc.a
+
+BSP_CFLAGS  = -O2 -Wall -march=rv32imc -mabi=ilp32 \
+              -I$(BSP_INCLUDE)
+
+$(BSP_BUILD)/obj/%.o : $(SOC_HOME)/src/bsp/src/%.c
+	@mkdir -p $(dir $@)
+	$(CC) -c $(BSP_CFLAGS) -o $@ $<
+
+$(BSP_LIB) : $(BSP_OBJ)
+	@mkdir -p $(dir $@)
+	$(AR) rcs $@ $^
+
+$(BSP_INCLUDE)/%.h : $(SOC_HOME)/src/bsp/include/%.h
+	@mkdir -p $(dir $@)
+	cp $< $@
+
+scarvsoc-bsp: $(BSP_LIB) $(BSP_HEADERS)
+
