@@ -7,9 +7,13 @@ SECTIONS {
 
     . = 0x10000000;
 
-    .text : SUBALIGN(4) { *(.text.*) } > rom
-    .data :             { *(.data.*) } > rom
-    .bss  :             { *(.bss)    } > rom
+    .text ALIGN(4) : SUBALIGN(4) {
+        *(.text.*) 
+        *(.text) 
+        . = ALIGN(4);
+    } > rom
+    .data ALIGN(4) : SUBALIGN(4) { *(.data.*) } > rom
+    .bss  ALIGN(4) : SUBALIGN(4) { *(.bss)    } > rom
 
     /DISCARD/ : { *(.comment) }
 
