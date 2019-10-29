@@ -81,15 +81,15 @@ void fsbl_print_welcome() {
 */
 void fsbl() {
     
-    //gpio[GPIO_LEDS] = 0x1;
+    gpio[GPIO_LEDS] = 0x1;
 
     fsbl_uart_setup();
     
-    //gpio[GPIO_LEDS] = 0x2;
+    gpio[GPIO_LEDS] = 0x2;
 
     fsbl_print_welcome();
     
-    //gpio[GPIO_LEDS] = 0x4;
+    gpio[GPIO_LEDS] = 0x4;
     
     // First 4 bytes are the size of the program (in bytes).
     uint32_t    program_size =
@@ -98,8 +98,8 @@ void fsbl() {
         ((uint32_t)uart_rd_char() <<  8) |
         ((uint32_t)uart_rd_char() <<  0) ;
     
-    //gpio[GPIO_LEDS] = 0x8;
-    
+    gpio[GPIO_LEDS] = 0x8;
+
     // Next 4 bytes are a 32-bit destination address.
     uint32_t    program_dest =
         ((uint32_t)uart_rd_char() << 24) |
@@ -107,7 +107,7 @@ void fsbl() {
         ((uint32_t)uart_rd_char() <<  8) |
         ((uint32_t)uart_rd_char() <<  0) ;
     
-    //gpio[GPIO_LEDS] = -1;
+    gpio[GPIO_LEDS] = -1;
 
     int bytes_per_led = program_size / 8;
     int led_count     = 0;
