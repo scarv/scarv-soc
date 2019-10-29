@@ -1,11 +1,15 @@
 
+MEMORY {
+    rom (rx)    : ORIGIN = 0x10000000, LENGTH = 1K
+}
+
 SECTIONS {
 
-    . = 0x00000000;
+    . = 0x10000000;
 
-    .text : { *(.text.*) }
-    .data : { *(.data.*) }
-    .bss  : { *(.bss) }
+    .text : SUBALIGN(4) { *(.text.*) } > rom
+    .data :             { *(.data.*) } > rom
+    .bss  :             { *(.bss)    } > rom
 
     /DISCARD/ : { *(.comment) }
 

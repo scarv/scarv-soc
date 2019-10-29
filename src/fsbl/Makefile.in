@@ -21,7 +21,7 @@ $(FSBL_OBJDUMP) : $(FSBL_OBJ)
 
 $(FSBL_HEX) : $(FSBL_OBJ)
 	@mkdir -p $(dir $@)
-	$(OBJCOPY) --reverse-bytes=4 --verilog-data-width=4 --gap-fill 0 -O verilog $< $@
+	$(OBJCOPY) $(OBJCOPY_HEX_ARGS) --change-address=0xF0000000 -O verilog $< $@
 
 $(FSBL_GTKWL) : $(FSBL_OBJDUMP)
 	grep ".*:	" $(FSBL_OBJDUMP) \

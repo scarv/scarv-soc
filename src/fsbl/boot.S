@@ -42,4 +42,3 @@ _start:
 .global __fsbl_goto_main
 __fsbl_goto_main:
     jalr    zero, a0                // Jump to pointer value passed in a0.
-
