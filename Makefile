@@ -11,6 +11,8 @@ AR              = $(RISCV)/bin/riscv32-unknown-elf-ar
 OBJDUMP         = $(RISCV)/bin/riscv32-unknown-elf-objdump
 OBJCOPY         = $(RISCV)/bin/riscv32-unknown-elf-objcopy
 
+OBJCOPY_HEX_ARGS= --gap-fill 0 --reverse-bytes=4 --verilog-data-width=4
+
 include $(SOC_HOME)/src/fsbl/Makefile.in
 
 include $(SOC_HOME)/flow/verilator/Makefile.in
