@@ -19,6 +19,9 @@ typedef struct tb_arguments {
     
     //! Do we ever dump out waves?
     bool        dump_waves          = false;
+    
+    //! Should we wait for a keypress before starting the sim?
+    bool        wait_at_start       = false;
 
     //! Where to dump wave files out too?
     std::string vcd_wavefile_path   = "waves.vcd";
@@ -85,6 +88,11 @@ void process_arguments(int argc, char ** argv, tb_arguments_t * args) {
                           <<std::endl;
             }
         }
+        else if(s == "+WAIT") {
+
+            args -> wait_at_start = true;
+
+        }
         else if(s == "+q") {
 
             args -> quiet = true;
@@ -93,6 +101,7 @@ void process_arguments(int argc, char ** argv, tb_arguments_t * args) {
         else if(s == "--help" || s == "-h") {
             std::cout << argv[0] << " [arguments]" << std::endl
             << "\t+q                            -" << std::endl
+            << "\t+WAIT                         -" << std::endl
             << "\t+WAVES=<VCD dump file path>   -" << std::endl
             << "\t+TIMEOUT=<timeout after N>    -" << std::endl
             ;
@@ -139,6 +148,7 @@ int main(int argc, char** argv) {
     // Instance and configure the testbench.
     testbench tb (args.vcd_wavefile_path, args.dump_waves);
 
+    tb.wait_at_start= args.wait_at_start;
     tb.max_sim_time = args.max_sim_time;
 
     if(args.use_sim_pass_address) {

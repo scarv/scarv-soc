@@ -29,6 +29,11 @@ public:
 
     //! Run the simulation from beginning to end.
     void run_simulation() {
+        if(wait_at_start) {
+            std::string dummy;
+            std::cout << ">> Press return to begin simulation:" << std::endl;
+            std::getline(std::cin,dummy);
+        }
         this -> pre_run();   
         this -> run();   
         this -> post_run();
@@ -65,6 +70,9 @@ public:
     //! Base address of the BUS RAM peripheral in the memory space.
     const uint32_t bus_ram_base_address = 0x40000000;
     const uint32_t bus_ram_range        = 0x00000FFF;
+
+    //! Wait for a keypress after building TB but before running the sim.
+    bool           wait_at_start        = false;
 
 protected:
 
