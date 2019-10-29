@@ -8,7 +8,7 @@ SECTIONS {
 
     . = 0x20000000;
 
-    .text : { *(.text.*) } > ram
+    .text ALIGN(4) : SUBALIGN(4) { *(.text.*) } > ram
     .data : { 
         *(.data.*) 
         _edata = .;

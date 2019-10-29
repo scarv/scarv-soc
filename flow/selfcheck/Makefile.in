@@ -42,11 +42,11 @@ $(SELFCHECK_BL_DIS) : $(SELFCHECK_BL_OBJ)
 
 $(SELFCHECK_BL_HEX) : $(SELFCHECK_BL_OBJ)
 	@mkdir -p $(dir $@)
-	$(OBJCOPY) --change-addresses=0xF0000000 --gap-fill 0 -O verilog $< $@
+	$(OBJCOPY) --change-addresses=0xF0000000 $(OBJCOPY_HEX_ARGS) -O verilog $< $@
 
 $(SELFCHECK_BL_BIN) : $(SELFCHECK_BL_OBJ)
 	@mkdir -p $(dir $@)
-	$(OBJCOPY) --change-addresses=0xF0000000 --gap-fill 0 -O binary $< $@
+	$(OBJCOPY) --change-addresses=0xF0000000 $(OBJCOPY_HEX_ARGS) -O binary $< $@
 
 $(SELFCHECK_BL_GTKW) : $(SELFCHECK_BL_DIS)
 	grep "100.*:	" $(SELFCHECK_BL_DIS) \
@@ -132,7 +132,7 @@ $(call map_selfcheck_dis,${1}) : $(call map_selfcheck_elf,${1})
 
 $(call map_selfcheck_hex,${1}) : $(call map_selfcheck_elf,${1})
 	@mkdir -p $(dir $${@})
-	$(OBJCOPY) --change-addresses=0xE0000000 --gap-fill 0 -O verilog $${<} $${@}
+	$(OBJCOPY) --change-addresses=0xE0000000 $(OBJCOPY_HEX_ARGS) -O verilog $${<} $${@}
 
 $(call map_selfcheck_bin,${1}) : $(call map_selfcheck_elf,${1})
 	@mkdir -p $(dir $${@})

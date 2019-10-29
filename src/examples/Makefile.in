@@ -44,7 +44,7 @@ $(call map_sw_example_dis,${1}) : $(call map_sw_example_elf,${1})
 
 $(call map_sw_example_hex,${1}) : $(call map_sw_example_elf,${1})
 	@mkdir -p $(dir $(call map_sw_example_hex,${1}))
-	$(OBJCOPY) --change-addresses=0xE0000000 --gap-fill 0 -O verilog $${<} $${@}
+	$(OBJCOPY) --change-addresses=0xE0000000 $(OBJCOPY_HEX_ARGS) -O verilog $${<} $${@}
 
 example-${1} : $(call map_sw_example_elf,${1}) \
                $(call map_sw_example_dis,${1}) \

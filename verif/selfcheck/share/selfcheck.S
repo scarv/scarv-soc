@@ -6,6 +6,7 @@
 //
 //
 
+.section .text
 
 .global selfcheck_uart_putc
 .func   selfcheck_uart_putc
