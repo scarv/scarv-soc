@@ -46,9 +46,14 @@ $(call map_sw_example_hex,${1}) : $(call map_sw_example_elf,${1})
 	@mkdir -p $(dir $(call map_sw_example_hex,${1}))
 	$(OBJCOPY) --change-addresses=0xE0000000 $(OBJCOPY_HEX_ARGS) -O verilog $${<} $${@}
 
+$(call map_sw_example_bin,${1}) : $(call map_sw_example_elf,${1})
+	@mkdir -p $(dir $(call map_sw_example_hex,${1}))
+	$(OBJCOPY) -O binary $${<} $${@}
+
 example-${1} : $(call map_sw_example_elf,${1}) \
                $(call map_sw_example_dis,${1}) \
                $(call map_sw_example_hex,${1}) \
+               $(call map_sw_example_bin,${1}) \
                $(VL_OUT)                       \
                $(FSBL_HEX)                     
 	cp $(FSBL_HEX)  $(call map_sw_example_dir,${1})/rom.hex
