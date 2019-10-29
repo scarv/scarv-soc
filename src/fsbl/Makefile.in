@@ -7,6 +7,8 @@ FSBL_OBJDUMP= $(SOC_WORK)/fsbl/fsbl.objdump
 FSBL_HEX    = $(SOC_WORK)/fsbl/fsbl.hex
 FSBL_GTKWL  = $(SOC_WORK)/fsbl/fsbl.gtkwl
 
+FSBL_VIVADO_HEX = $(SOC_WORK)/fsbl/fsbl-vivado.hex
+
 FSBL_CFLAGS = -nostartfiles -Os -O2 -Wall -fpic -fPIC \
               -T$(SOC_HOME)/src/fsbl/link.ld
 FSBL_CFLAGS += -march=rv32imc -mabi=ilp32
@@ -22,6 +24,13 @@ $(FSBL_OBJDUMP) : $(FSBL_OBJ)
 $(FSBL_HEX) : $(FSBL_OBJ)
 	@mkdir -p $(dir $@)
 	$(OBJCOPY) $(OBJCOPY_HEX_ARGS) --change-address=0xF0000000 -O verilog $< $@
+$(FSBL_VIVADO_HEX) : $(FSBL_OBJ)
+	@mkdir -p $(dir $@)
+	$(OBJCOPY) $(OBJCOPY_HEX_ARGS) \
+        --reverse-bytes=4 \
+        --verilog-data-width=4 \
+        --change-address=0xF0000000 \
+        -O verilog $< $@
 
 $(FSBL_GTKWL) : $(FSBL_OBJDUMP)
 	grep ".*:	" $(FSBL_OBJDUMP) \
@@ -30,4 +39,4 @@ $(FSBL_GTKWL) : $(FSBL_OBJDUMP)
         | sed 's/\(^....    \)    /0000\1/' \
         > $@
 
-fsbl: $(FSBL_OBJ) $(FSBL_OBJDUMP) $(FSBL_HEX) $(FSBL_GTKWL)
+fsbl: $(FSBL_OBJ) $(FSBL_OBJDUMP) $(FSBL_HEX) $(FSBL_GTKWL) $(FSBL_VIVADO_HEX)
