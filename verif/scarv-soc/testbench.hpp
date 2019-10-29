@@ -7,6 +7,7 @@
 #include "memory_bus/memory_bus.hpp"
 #include "memory_bus/memory_device_ram.hpp"
 #include "memory_bus/memory_device_uart.hpp"
+#include "memory_bus/memory_device_gpio.hpp"
 
 class testbench {
 
@@ -66,6 +67,9 @@ public:
 
     //! Base address of the UART peripheral in the memory space.
     const uint32_t uart_base_address = 0x40001000;
+    
+    //! Base address of the GPIO peripheral in the memory space.
+    const uint32_t gpio_base_address = 0x40002000;
 
     //! Base address of the BUS RAM peripheral in the memory space.
     const uint32_t bus_ram_base_address = 0x40000000;
@@ -117,6 +121,9 @@ protected:
 
     //! Simulated memory, accessed via the AXI bus
     memory_device_ram  * bus_ram;
+
+    //! Simulated GPIO
+    memory_device_gpio * gpio;
     
 };
 

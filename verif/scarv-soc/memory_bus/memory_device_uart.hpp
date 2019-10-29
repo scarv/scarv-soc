@@ -42,21 +42,6 @@ public:
 
         this -> setup_pseudo_terminal();
 
-        //this -> rx_buffer.push('0');
-        //this -> rx_buffer.push('1');
-        //this -> rx_buffer.push('2');
-        //this -> rx_buffer.push('3');
-        //this -> rx_buffer.push('4');
-        //this -> rx_buffer.push('5');
-        //this -> rx_buffer.push('6');
-        //this -> rx_buffer.push('7');
-        //this -> rx_buffer.push('8');
-        //this -> rx_buffer.push('9');
-        //this -> rx_buffer.push('A');
-        //this -> rx_buffer.push('B');
-        //this -> rx_buffer.push('C');
-        //this -> rx_buffer.push('D');
-        //this -> rx_buffer.push('E');
     }
 
     ~memory_device_uart(){

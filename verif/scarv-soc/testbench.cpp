@@ -8,6 +8,10 @@ void testbench::build() {
     this -> uart = new memory_device_uart(
         this -> uart_base_address
     );
+    
+    this -> gpio = new memory_device_gpio(
+        this -> gpio_base_address
+    );
 
     this -> bus_ram = new memory_device_ram(
         this -> bus_ram_base_address,
@@ -17,6 +21,7 @@ void testbench::build() {
     this -> bus = new memory_bus();
 
     this -> bus -> add_device(this -> uart);
+    this -> bus -> add_device(this -> gpio);
     this -> bus -> add_device(this -> bus_ram);
 
     this -> dut = new dut_wrapper(
