@@ -34,6 +34,8 @@ always @(sys_clk_clk_p) #10 sys_clk_clk_p <= !sys_clk_clk_p;
 
 initial #40 sys_reset = 1'b1;
 initial #80 sys_reset = 1'b0;
+initial #8000 sys_reset = 1'b1;
+initial #8500 sys_reset = 1'b0;
 
 wire [9:0] gpio_led_tri_o;
 wire [0:0] gpio_trig_tri_o;
