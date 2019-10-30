@@ -1,0 +1,17 @@
+
+[options]
+mode  bmc
+depth 20
+
+[engines]
+smtbmc boolector
+
+[script]
+verilog_defaults -add -DFORMAL_IC_RSP_TRACKER
+verilog_defaults -add -DBLACKBOX_SCARV_SOC_BRAM_SINGLE
+verilog_defaults -add -formal
+tcl read_sources.tcl
+prep -top scarv_soc
+
+[files]
+flow/formal/read_sources.tcl

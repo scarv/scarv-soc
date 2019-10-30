@@ -73,7 +73,7 @@ initial assume(!g_resetn);
 
 always @(posedge g_clk) if(g_resetn && $past(g_resetn)) begin
 
-    assert(!(new_req && !ready))
+    assert(!(new_req && !ready));
 
 end
 
