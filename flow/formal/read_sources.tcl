@@ -47,7 +47,7 @@ read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_register.v
 read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_writeback.v
 read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_rngif.v
 
-read_verilog $::env(SOC_HOME)/rtl/mem/scarv_soc_bram_dual.v
+read_verilog $::env(SOC_HOME)/rtl/mem/scarv_soc_bram_dual_formal.v
 
 read_verilog $::env(SOC_HOME)/rtl/soc/scarv_soc.v
 

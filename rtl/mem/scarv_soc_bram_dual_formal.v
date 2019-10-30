@@ -31,6 +31,9 @@ parameter   WRITE_EN = 1;
 parameter   DEPTH = 1024;
 localparam  LW    = $clog2(DEPTH);
 
+//! Memory file to load. ignored in formal code.
+parameter [255*8:0] MEMH_FILE = "";
+
 reg [31:0] blackbox_read_value_a = $anyseq;
 reg [31:0] blackbox_read_value_b = $anyseq;
 
