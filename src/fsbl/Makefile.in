@@ -31,6 +31,7 @@ $(FSBL_VIVADO_HEX) : $(FSBL_OBJ)
         --verilog-data-width=4 \
         --change-address=0xF0000000 \
         -O verilog $< $@
+	$(SOC_HOME)/bin/vl-hex-align.py --scale 4 $@
 
 $(FSBL_GTKWL) : $(FSBL_OBJDUMP)
 	grep ".*:	" $(FSBL_OBJDUMP) \
