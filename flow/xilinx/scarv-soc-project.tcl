@@ -56,6 +56,7 @@
 #    "$::env(SOC_HOME)/rtl/ic/ic_cpu_bus_bram_bridge.v"
 #    "$::env(SOC_HOME)/rtl/ic/ic_error_rsp_stub.v"
 #    "$::env(SOC_HOME)/rtl/ic/ic_rsp_router.v"
+#    "$::env(SOC_HOME)/rtl/ic/ic_rsp_tracker.v"
 #    "$::env(SOC_HOME)/rtl/ic/ic_top.v"
 #    "$::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/p_addsub/p_addsub.v"
 #    "$::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/p_shfrot/p_shfrot.v"
@@ -222,6 +223,7 @@ set files [list \
  [file normalize "$::env(SOC_HOME)/rtl/ic/ic_cpu_bus_bram_bridge.v"] \
  [file normalize "$::env(SOC_HOME)/rtl/ic/ic_error_rsp_stub.v"] \
  [file normalize "$::env(SOC_HOME)/rtl/ic/ic_rsp_router.v"] \
+ [file normalize "$::env(SOC_HOME)/rtl/ic/ic_rsp_tracker.v"] \
  [file normalize "$::env(SOC_HOME)/rtl/ic/ic_top.v"] \
  [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/p_addsub/p_addsub.v"] \
  [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/p_shfrot/p_shfrot.v"] \
@@ -409,6 +411,9 @@ if { [get_files ic_error_rsp_stub.v] == "" } {
 }
 if { [get_files ic_rsp_router.v] == "" } {
   import_files -quiet -fileset sources_1 $::env(SOC_HOME)/rtl/ic/ic_rsp_router.v
+}
+if { [get_files ic_rsp_tracker.v] == "" } {
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/rtl/ic/ic_rsp_tracker.v
 }
 if { [get_files ic_top.v] == "" } {
   import_files -quiet -fileset sources_1 $::env(SOC_HOME)/rtl/ic/ic_top.v
