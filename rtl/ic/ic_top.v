@@ -374,48 +374,113 @@ ic_rsp_router i_rsp_router_dmem_err (
 // ------------------------------------------------------------
 
 assign cpu_imem_recv =
-    route_rsp_imem_rom  && rom_imem_recv    ||
-    route_rsp_imem_ram  && ram_imem_recv    ||
-    route_rsp_imem_err  && err_imem_recv    ;
+    imem_rsp_mask_rom && rom_imem_recv    ||
+    imem_rsp_mask_ram && ram_imem_recv    ||
+    imem_rsp_mask_err && err_imem_recv    ;
 
 assign cpu_imem_error=
-    route_rsp_imem_rom  && rom_imem_error   ||
-    route_rsp_imem_ram  && ram_imem_error   ||
-    route_rsp_imem_err  && err_imem_error   ;
+    imem_rsp_mask_rom && rom_imem_error   ||
+    imem_rsp_mask_ram && ram_imem_error   ||
+    imem_rsp_mask_err && err_imem_error   ;
 
 assign cpu_imem_rdata=
-    {32{route_rsp_imem_rom}} & rom_imem_rdata   |
-    {32{route_rsp_imem_ram}} & ram_imem_rdata   ;
+    {32{imem_rsp_mask_rom}} & rom_imem_rdata   |
+    {32{imem_rsp_mask_ram}} & ram_imem_rdata   ;
 
-assign cpu_imem_gnt   = ic_imem_route_ram && ram_imem_gnt ||
-                        ic_imem_route_rom && rom_imem_gnt ||
-                        ic_imem_error     && err_imem_gnt ;
+assign cpu_imem_gnt   = imem_req_ready && (
+    ic_imem_route_ram && ram_imem_gnt ||
+    ic_imem_route_rom && rom_imem_gnt ||
+    ic_imem_error     && err_imem_gnt );
+
+wire [2:0] imem_reqs = {
+    rom_imem_req && rom_imem_gnt,
+    ram_imem_req && ram_imem_gnt,
+    err_imem_req && err_imem_gnt
+};
+
+wire [2:0] imem_rsps = {
+    rom_imem_recv && cpu_imem_ack,
+    ram_imem_recv && cpu_imem_ack,
+    err_imem_recv && cpu_imem_ack
+};
+
+wire [2:0] imem_rsp_mask;
+wire       imem_rsp_mask_rom = imem_rsp_mask[2];
+wire       imem_rsp_mask_ram = imem_rsp_mask[1];
+wire       imem_rsp_mask_err = imem_rsp_mask[0];
+wire       imem_req_ready;
+
+ic_rsp_tracker #(
+.ND (3),
+.MAX_REQUESTS(3)
+) i_ic_rsp_tracker_imem (
+.g_clk          (g_clk         ),
+.g_resetn       (g_resetn      ),
+.requests       (imem_reqs     ),
+.responses      (imem_rsps     ),
+.response_gnt   (imem_rsp_mask ),
+.ready          (imem_req_ready)
+);
 
 //
 // Data Response Routing
 // ------------------------------------------------------------
 
 assign cpu_dmem_recv =
-    route_rsp_dmem_rom  && rom_dmem_recv    ||
-    route_rsp_dmem_ram  && ram_dmem_recv    ||
-    route_rsp_dmem_axi  && axi_dmem_recv    ||
-    route_rsp_dmem_err  && err_dmem_recv    ;
+    dmem_rsp_mask_rom  && rom_dmem_recv    ||
+    dmem_rsp_mask_ram  && ram_dmem_recv    ||
+    dmem_rsp_mask_axi  && axi_dmem_recv    ||
+    dmem_rsp_mask_err  && err_dmem_recv    ;
 
 assign cpu_dmem_error=
-    route_rsp_dmem_rom  && rom_dmem_error   ||
-    route_rsp_dmem_ram  && ram_dmem_error   ||
-    route_rsp_dmem_axi  && axi_dmem_error   ||
-    route_rsp_dmem_err  && err_dmem_error   ;
+    dmem_rsp_mask_rom  && rom_dmem_error   ||
+    dmem_rsp_mask_ram  && ram_dmem_error   ||
+    dmem_rsp_mask_axi  && axi_dmem_error   ||
+    dmem_rsp_mask_err  && err_dmem_error   ;
 
 assign cpu_dmem_rdata=
-    {32{route_rsp_dmem_rom}} & rom_dmem_rdata   |
-    {32{route_rsp_dmem_axi}} & axi_dmem_rdata   |
-    {32{route_rsp_dmem_ram}} & ram_dmem_rdata   ;
+    {32{dmem_rsp_mask_rom}} & rom_dmem_rdata   |
+    {32{dmem_rsp_mask_axi}} & axi_dmem_rdata   |
+    {32{dmem_rsp_mask_ram}} & ram_dmem_rdata   ;
 
-assign cpu_dmem_gnt   = ic_dmem_route_ram && ram_dmem_gnt ||
-                        ic_dmem_route_rom && rom_dmem_gnt ||
-                        ic_dmem_route_axi && axi_dmem_gnt ||
-                        ic_dmem_error     && err_dmem_gnt ;
+assign cpu_dmem_gnt   = dmem_req_ready && (
+    ic_dmem_route_ram && ram_dmem_gnt ||
+    ic_dmem_route_rom && rom_dmem_gnt ||
+    ic_dmem_route_axi && axi_dmem_gnt ||
+    ic_dmem_error     && err_dmem_gnt );
+
+wire [3:0] dmem_reqs = {
+    rom_dmem_req && rom_dmem_gnt,
+    ram_dmem_req && ram_dmem_gnt,
+    axi_dmem_req && axi_dmem_gnt,
+    err_dmem_req && err_dmem_gnt
+};
+
+wire [3:0] dmem_rsps = {
+    rom_dmem_recv && cpu_dmem_ack,
+    ram_dmem_recv && cpu_dmem_ack,
+    axi_dmem_recv && cpu_dmem_ack,
+    err_dmem_recv && cpu_dmem_ack
+};
+
+wire [3:0] dmem_rsp_mask;
+wire       dmem_rsp_mask_rom = dmem_rsp_mask[3];
+wire       dmem_rsp_mask_ram = dmem_rsp_mask[2];
+wire       dmem_rsp_mask_axi = dmem_rsp_mask[1];
+wire       dmem_rsp_mask_err = dmem_rsp_mask[0];
+wire       dmem_req_ready;
+
+ic_rsp_tracker #(
+.ND (4),
+.MAX_REQUESTS(3)
+) i_ic_rsp_tracker_dmem (
+.g_clk          (g_clk         ),
+.g_resetn       (g_resetn      ),
+.requests       (dmem_reqs     ),
+.responses      (dmem_rsps     ),
+.response_gnt   (dmem_rsp_mask ),
+.ready          (dmem_req_ready)
+);
 
 //
 // Submodule instances
@@ -450,14 +515,20 @@ ic_addr_decode ic_addr_decode_cpu_dmem (
 initial assume(!g_resetn);
 
 always @(posedge g_clk) if(g_resetn && $past(g_resetn)) begin
+    
+    assert(!(imem_rsp_mask_err && imem_rsp_mask_rom));
 
-    assert(!(route_rsp_imem_ram && route_rsp_imem_rom));
+    assert(!(imem_rsp_mask_err && imem_rsp_mask_ram));
+
+    assert(!(imem_rsp_mask_ram && imem_rsp_mask_rom));
+
     
     assert(!(route_rsp_dmem_ram && route_rsp_dmem_rom));
     
     assert(!(route_rsp_dmem_ram && route_rsp_dmem_axi));
    
     assert(!(route_rsp_dmem_rom && route_rsp_dmem_axi));
+
 
     if($past(cpu_imem_recv) && !$past(cpu_imem_ack)) begin
         assert($stable(cpu_imem_recv ));

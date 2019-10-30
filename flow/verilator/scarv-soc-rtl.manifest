@@ -5,6 +5,7 @@ $SOC_HOME/rtl/ic/ic_addr_decode.v
 $SOC_HOME/rtl/ic/ic_cpu_bus_bram_bridge.v
 $SOC_HOME/rtl/ic/ic_cpu_bus_axi_bridge.v
 $SOC_HOME/rtl/ic/ic_rsp_router.v
+$SOC_HOME/rtl/ic/ic_rsp_tracker.v
 $SOC_HOME/rtl/ic/ic_error_rsp_stub.v
 $SOC_HOME/rtl/ic/ic_top.v
 
