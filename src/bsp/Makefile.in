@@ -14,7 +14,7 @@ BSP_LIB     = $(BSP_BUILD)/lib/scarvsoc.a
 BSP_CFLAGS  = -O2 -Wall -march=rv32imc -mabi=ilp32 \
               -I$(BSP_INCLUDE)
 
-$(BSP_BUILD)/obj/%.o : $(SOC_HOME)/src/bsp/src/%.c
+$(BSP_BUILD)/obj/%.o : $(SOC_HOME)/src/bsp/src/%.c $(BSP_HEADERS)
 	@mkdir -p $(dir $@)
 	$(CC) -c $(BSP_CFLAGS) -o $@ $<
 
