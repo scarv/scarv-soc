@@ -1,0 +1,19 @@
+
+UPLOAD_SCRIPT = $(SOC_HOME)/bin/upload-program.py
+PORT          = /dev/ttyUSB0
+BAUD          = 128000
+BINARY       ?= $(SOC_WORK)/examples/uart/uart.bin
+START_ADDR    = 0x20000000
+
+SERIAL_TERM   = miniterm.py
+
+xilinx-upload-binary:
+	$(UPLOAD_SCRIPT) \
+        --baud $(BAUD) \
+        $(PORT) \
+        $(BINARY) \
+        $(START_ADDR)
+
+xilinx-interact: xilinx-upload-binary
+	$(SERIAL_TERM) $(PORT) $(BAUD)
+

@@ -22,3 +22,6 @@ include $(SOC_HOME)/flow/synthesis/Makefile.in
 
 include $(SOC_HOME)/src/bsp/Makefile.in
 include $(SOC_HOME)/src/examples/Makefile.in
+
+include $(SOC_HOME)/flow/xilinx/Makefile.in
+
