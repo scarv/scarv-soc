@@ -60,6 +60,8 @@
 #    "$::env(SOC_HOME)/rtl/ic/ic_top.v"
 #    "$::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/p_addsub/p_addsub.v"
 #    "$::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/p_shfrot/p_shfrot.v"
+#    "$::env(SOC_HOME)/rtl/rng/scarv_rng_lfsr.v"
+#    "$::env(SOC_HOME)/rtl/rng/scarv_rng_top.v"
 #    "$::env(SOC_HOME)/rtl/mem/scarv_soc_bram_dual_synth_xilinx_xc7k.v"
 #    "$::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/xc_aesmix/xc_aesmix.v"
 #    "$::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/xc_aessub/xc_aessub.v"
@@ -227,6 +229,8 @@ set files [list \
  [file normalize "$::env(SOC_HOME)/rtl/ic/ic_top.v"] \
  [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/p_addsub/p_addsub.v"] \
  [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/p_shfrot/p_shfrot.v"] \
+ [file normalize "$::env(SOC_HOME)/rtl/rng/scarv_rng_lfsr.v"] \
+ [file normalize "$::env(SOC_HOME)/rtl/rng/scarv_rng_top.v"] \
  [file normalize "$::env(SOC_HOME)/rtl/mem/scarv_soc_bram_dual_synth_xilinx_xc7k.v"] \
  [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/xc_aesmix/xc_aesmix.v"] \
  [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/xc_aessub/xc_aessub.v"] \
@@ -423,6 +427,12 @@ if { [get_files p_addsub.v] == "" } {
 }
 if { [get_files p_shfrot.v] == "" } {
   import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/p_shfrot/p_shfrot.v
+}
+if { [get_files scarv_rng_lfsr.v] == "" } {
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/rtl/rng/scarv_rng_lfsr.v
+}
+if { [get_files scarv_rng_top.v] == "" } {
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/rtl/rng/scarv_rng_top.v
 }
 if { [get_files scarv_soc_bram_dual_synth_xilinx_xc7k.v] == "" } {
   import_files -quiet -fileset sources_1 $::env(SOC_HOME)/rtl/mem/scarv_soc_bram_dual_synth_xilinx_xc7k.v
