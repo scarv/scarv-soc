@@ -8,7 +8,9 @@ module scarv_soc (
 input  wire        g_clk            ,
 input  wire        g_resetn         ,
 
+input  wire        cpu_int_nmi      , // Non-maskable interrupt.
 input  wire        cpu_int_external , // External interrupt trigger line.
+input  wire [ 3:0] cpu_int_ext_cause, // External interrupt cause
 input  wire        cpu_int_software , // Software interrupt trigger line.
                                     
 output wire        m0_awvalid       , //
@@ -184,7 +186,9 @@ frv_core #(
 .rng_rsp_status (cpu_rng_rsp_status ), // RNG status
 .rng_rsp_data   (cpu_rng_rsp_data   ), // RNG response / sample data.
 .rng_rsp_ready  (cpu_rng_rsp_ready  ), // CPU accepts response.
+.int_nmi        (cpu_int_nmi        ), // Non-maskable interrupt
 .int_external   (cpu_int_external   ), // External interrupt trigger line.
+.int_extern_cause(cpu_int_ext_cause ), // External interrupt cause
 .int_software   (cpu_int_software   ), // Software interrupt trigger line.
 .imem_req       (cpu_imem_req       ), // Start memory request
 .imem_wen       (cpu_imem_wen       ), // Write enable

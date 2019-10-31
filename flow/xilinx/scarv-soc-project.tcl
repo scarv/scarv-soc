@@ -606,6 +606,13 @@ proc cr_bd_system_top { parentCell } {
    CONFIG.CONST_VAL {0} \
  ] $CONST_0
 
+  # Create instance: CONST_4_0, and set properties
+  set CONST_4_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 CONST_4_0 ]
+  set_property -dict [ list \
+   CONFIG.CONST_VAL {0} \
+   CONFIG.CONST_WIDTH {4} \
+ ] $CONST_4_0
+
   # Create instance: SOC_HOME, and set properties
   set block_name scarv_soc
   set block_cell_name SOC_HOME
@@ -665,6 +672,7 @@ proc cr_bd_system_top { parentCell } {
 
   # Create port connections
   connect_bd_net -net CLK_clk_out1 [get_bd_pins AXI_IC/ACLK] [get_bd_pins AXI_IC/M00_ACLK] [get_bd_pins AXI_IC/M01_ACLK] [get_bd_pins AXI_IC/S00_ACLK] [get_bd_pins SOC_HOME/g_clk] [get_bd_pins SYS_CLK/clk_100] [get_bd_pins SYS_GPIO/s_axi_aclk] [get_bd_pins SYS_RESET/slowest_sync_clk] [get_bd_pins SYS_UART0/s_axi_aclk]
+  connect_bd_net -net CONST_4_0_dout [get_bd_pins CONST_4_0/dout] [get_bd_pins SOC_HOME/cpu_int_ext_cause]
   connect_bd_net -net proc_sys_reset_0_peripheral_aresetn [get_bd_pins AXI_IC/ARESETN] [get_bd_pins AXI_IC/M00_ARESETN] [get_bd_pins AXI_IC/M01_ARESETN] [get_bd_pins AXI_IC/S00_ARESETN] [get_bd_pins SOC_HOME/g_resetn] [get_bd_pins SYS_GPIO/s_axi_aresetn] [get_bd_pins SYS_RESET/peripheral_aresetn] [get_bd_pins SYS_UART0/s_axi_aresetn]
   connect_bd_net -net reset_rtl_0_1 [get_bd_ports sys_reset] [get_bd_pins SYS_RESET/ext_reset_in]
   connect_bd_net -net xlconstant_0_dout [get_bd_pins CONST_0/dout] [get_bd_pins SOC_HOME/cpu_int_external] [get_bd_pins SOC_HOME/cpu_int_software] [get_bd_pins SYS_CLK/reset]
@@ -678,31 +686,33 @@ proc cr_bd_system_top { parentCell } {
    "ExpandedHierarchyInLayout":"",
    "guistr":"# # String gsaved with Nlview 7.0.19  2019-03-26 bk=1.5019 VDI=41 GEI=35 GUI=JA:9.0 TLS
 #  -string -flagsOSRD
-preplace port sys_clk -pg 1 -lvl 0 -x 0 -y 70 -defaultsOSRD
-preplace port gpio_trig -pg 1 -lvl 7 -x 1630 -y 210 -defaultsOSRD
-preplace port uart -pg 1 -lvl 7 -x 1630 -y 70 -defaultsOSRD
-preplace port gpio_led -pg 1 -lvl 7 -x 1630 -y 230 -defaultsOSRD
-preplace port sys_reset -pg 1 -lvl 0 -x 0 -y 190 -defaultsOSRD
-preplace inst SYS_CLK -pg 1 -lvl 2 -x 290 -y 80 -defaultsOSRD
-preplace inst SYS_RESET -pg 1 -lvl 3 -x 580 -y 210 -defaultsOSRD
-preplace inst AXI_IC -pg 1 -lvl 5 -x 1200 -y 190 -defaultsOSRD
-preplace inst SYS_GPIO -pg 1 -lvl 6 -x 1490 -y 220 -defaultsOSRD
-preplace inst SYS_UART0 -pg 1 -lvl 6 -x 1490 -y 80 -defaultsOSRD
-preplace inst CONST_0 -pg 1 -lvl 1 -x 100 -y 130 -defaultsOSRD
-preplace inst SOC_HOME -pg 1 -lvl 4 -x 910 -y 110 -defaultsOSRD
-preplace netloc reset_rtl_0_1 1 0 3 NJ 190 NJ 190 NJ
-preplace netloc CLK_clk_out1 1 2 4 400 80 770 200 1050 50 1360
-preplace netloc proc_sys_reset_0_peripheral_aresetn 1 3 3 780 210 1040 330 1370
-preplace netloc xlconstant_0_dout 1 1 3 180 10 NJ 10 760
-preplace netloc axi_interconnect_0_M01_AXI 1 5 1 N 200
+preplace port gpio_led -pg 1 -lvl 7 -x 1670 -y 230 -defaultsOSRD
+preplace port gpio_trig -pg 1 -lvl 7 -x 1670 -y 210 -defaultsOSRD
+preplace port sys_clk -pg 1 -lvl 0 -x 0 -y 260 -defaultsOSRD
+preplace port uart -pg 1 -lvl 7 -x 1670 -y 70 -defaultsOSRD
+preplace port sys_reset -pg 1 -lvl 0 -x 0 -y 380 -defaultsOSRD
+preplace inst AXI_IC -pg 1 -lvl 5 -x 1240 -y 190 -defaultsOSRD
+preplace inst CONST_0 -pg 1 -lvl 1 -x 100 -y 320 -defaultsOSRD
+preplace inst SYS_CLK -pg 1 -lvl 2 -x 290 -y 270 -defaultsOSRD
+preplace inst SYS_GPIO -pg 1 -lvl 6 -x 1530 -y 220 -defaultsOSRD
+preplace inst SYS_RESET -pg 1 -lvl 3 -x 580 -y 400 -defaultsOSRD
+preplace inst SYS_UART0 -pg 1 -lvl 6 -x 1530 -y 80 -defaultsOSRD
+preplace inst SOC_HOME -pg 1 -lvl 4 -x 930 -y 110 -defaultsOSRD
+preplace inst CONST_4_0 -pg 1 -lvl 3 -x 580 -y 140 -defaultsOSRD
+preplace netloc CLK_clk_out1 1 2 4 400 220 760 220 1080 40 1410
+preplace netloc proc_sys_reset_0_peripheral_aresetn 1 3 3 770 230 1090 50 1390
+preplace netloc reset_rtl_0_1 1 0 3 NJ 380 NJ 380 NJ
+preplace netloc xlconstant_0_dout 1 1 3 180 200 NJ 200 780
+preplace netloc CONST_4_0_dout 1 3 1 NJ 140
 preplace netloc SYS_UART0_UART 1 6 1 NJ 70
+preplace netloc axi_interconnect_0_M01_AXI 1 5 1 N 200
 preplace netloc SOC_HOME_m0 1 4 1 N 110
-preplace netloc SYS_GPIO_GPIO 1 6 1 NJ 210
-preplace netloc diff_clock_rtl_0_1 1 0 2 NJ 70 NJ
-preplace netloc axi_interconnect_0_M00_AXI 1 5 1 1350 60n
 preplace netloc SYS_GPIO_GPIO2 1 6 1 NJ 230
-levelinfo -pg 1 0 100 290 580 910 1200 1490 1630
-pagesize -pg 1 -db -bbox -sgen -120 0 1750 340
+preplace netloc axi_interconnect_0_M00_AXI 1 5 1 1400 60n
+preplace netloc SYS_GPIO_GPIO 1 6 1 NJ 210
+preplace netloc diff_clock_rtl_0_1 1 0 2 NJ 260 NJ
+levelinfo -pg 1 0 100 290 580 930 1240 1530 1670
+pagesize -pg 1 -db -bbox -sgen -120 0 1790 500
 "
 }
 
