@@ -1,6 +1,6 @@
 \documentclass{scarv-report}
 
-\title{SCARV-SoC}
+\title{SCARV-SoC\\Technical Report and User Guide}
 \date{Version $0.0.1$ (\today)}
 \author{Ben Marshall}
 \affil{
@@ -19,32 +19,67 @@ Bristol, BS8 1UB, United Kingdom.\\
 % =============================================================================
 
 \section{Introduction}
+\label{sec:intro}
+
+\import{./tex/}{intro.tex}
 
 \section{Design Requirements}
+\label{sec:intro}
+
+\import{./tex/}{requirements.tex}
 
 \section{Project Organisation}
+\label{sec:intro}
 
-\section{Development Flows}
-
-\subsection{Make Flow Overview}
-
-\subsection{Verilator Simulation}
-
-\subsection{Symbiyosys Formal Verification Flow}
-
-\subsection{Yosys Synthesis}
-
-\subsection{Xilinx Vivado Project}
+\import{./tex/}{organisation.tex}
 
 \section{SoC Design}
 
 \subsection{SCARV-CPU}
+\import{./tex/}{design-scarv-cpu.tex}
 
 \subsection{Local Interconnect}
+\import{./tex/}{design-local-ic.tex}
 
 \subsection{Local Memories}
+\import{./tex/}{design-local-mem.tex}
 
 \subsection{AXI Bus Bridge}
+\import{./tex/}{design-axi-bridge.tex}
+
+\section{Hardware Development Flows}
+
+\subsection{Make Flow Overview}
+\import{./tex/}{flow-make.tex}
+
+\subsection{Verilator Simulation}
+\import{./tex/}{flow-verilator.tex}
+
+\subsection{Symbiyosys Formal Verification Flow}
+\import{./tex/}{flow-symbiyosys.tex}
+
+\subsection{Yosys Synthesis}
+\import{./tex/}{flow-yosys-synth.tex}
+
+\subsection{Xilinx Vivado Project}
+\import{./tex/}{flow-xilinx-vivado.tex}
+
+\subsection{Bootloader Usage}
+\import{./tex/}{flow-bootloader.tex}
+
+\section{Software Development Guide}
+
+\subsection{First Stage Boot Loader}
+\import{./tex/}{sw-fsbl.tex}
+
+\subsection{Board Support Package}
+\import{./tex/}{sw-bsp.tex}
+
+\subsection{Example Programs}
+\import{./tex/}{sw-examples.tex}
+
+\subsection{Developing Programs}
+\import{./tex/}{sw-development.tex}
 
 % =============================================================================
 
