@@ -124,12 +124,12 @@ void fsbl() {
         if(led_count >= bytes_per_led) {
             led_count = 0;
 
-            //gpio[GPIO_LEDS] = gpio[GPIO_LEDS] << 1;
+            gpio[GPIO_LEDS] = gpio[GPIO_LEDS] << 1;
         }
 
     }
     
-    //gpio[GPIO_LEDS] = 0x0;
+    gpio[GPIO_LEDS] = 0x0;
 
     // Jump to the downloaded program.
     __fsbl_goto_main((uint32_t*)program_dest);
