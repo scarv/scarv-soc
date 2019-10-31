@@ -5,6 +5,8 @@
 
 yosys -import
 
+#
+# Interconnect sources
 read_verilog $::env(SOC_HOME)/rtl/ic/ic_addr_decode.v
 read_verilog $::env(SOC_HOME)/rtl/ic/ic_cpu_bus_bram_bridge.v
 read_verilog $::env(SOC_HOME)/rtl/ic/ic_cpu_bus_axi_bridge.v
@@ -13,6 +15,13 @@ read_verilog $::env(SOC_HOME)/rtl/ic/ic_rsp_tracker.v
 read_verilog $::env(SOC_HOME)/rtl/ic/ic_error_rsp_stub.v
 read_verilog $::env(SOC_HOME)/rtl/ic/ic_top.v
 
+#
+# Random number generator sources
+read_verilog $::env(SOC_HOME)/rtl/rng/scarv_rng_lfsr.v
+read_verilog $::env(SOC_HOME)/rtl/rng/scarv_rng_top.v
+
+#
+# XCrypto + SCARV CPU sources.
 read_verilog $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/p_addsub/p_addsub.v
 read_verilog $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/p_shfrot/p_shfrot.v
 read_verilog $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/xc_sha3/xc_sha3.v
@@ -48,7 +57,12 @@ read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_register.v
 read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_writeback.v
 read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_rngif.v
 
+
+#
+# Memories
 read_verilog $::env(SOC_HOME)/rtl/mem/scarv_soc_bram_dual_formal.v
 
+#
+# SCARV SoC top level sources.
 read_verilog $::env(SOC_HOME)/rtl/soc/scarv_soc.v
 

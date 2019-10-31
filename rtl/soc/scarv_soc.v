@@ -53,6 +53,17 @@ parameter [255*8:0] BRAM_RAM_MEMH_FILE = "";
 /* verilator lint_on WIDTH */
 
 //
+// RNG Parameters
+// ------------------------------------------------------------
+
+/*
+Which instance of the RNG should we use?
+Valid values are one of the following strings:
+- "lfsr" - A simple 32-bit linear feedback shift register.
+*/
+parameter RNG_TYPE = "lfsr";
+
+//
 // SCARV CPU Interface Wires
 // ------------------------------------------------------------
 
@@ -70,8 +81,8 @@ wire        cpu_leak_fence_unc2 ; // uncore 2 fence
 wire        cpu_rng_req_valid   ; // Signal a new request to the RNG
 wire [ 2:0] cpu_rng_req_op      ; // Operation to perform on the RNG
 wire [31:0] cpu_rng_req_data    ; // Suplementary seed/init data
-wire        cpu_rng_req_ready   =1'b1; // RNG accepts request
-wire        cpu_rng_rsp_valid   =1'b1; // RNG response data valid
+wire        cpu_rng_req_ready   ; // RNG accepts request
+wire        cpu_rng_rsp_valid   ; // RNG response data valid
 wire [ 2:0] cpu_rng_rsp_status  ; // RNG status
 wire [31:0] cpu_rng_rsp_data    ; // RNG response / sample data.
 wire        cpu_rng_rsp_ready   ; // CPU accepts response.
@@ -284,6 +295,25 @@ ic_top i_ic_top (
 .m0_rready        (m0_rready        ), //
 .m0_rresp         (m0_rresp         ), //
 .m0_rdata         (m0_rdata         )  //
+);
+
+//
+// RNG instances
+// ------------------------------------------------------------
+
+scarv_rng_top #(
+.RNG_TYPE(RNG_TYPE)
+) i_scarv_rng_top (
+.g_clk          (g_clk              ), // global clock
+.g_resetn       (g_resetn           ), // synchronous reset
+.rng_req_valid  (cpu_rng_req_valid  ), // Signal a new request to the RNG
+.rng_req_op     (cpu_rng_req_op     ), // Operation to perform on the RNG
+.rng_req_data   (cpu_rng_req_data   ), // Suplementary seed/init data
+.rng_req_ready  (cpu_rng_req_ready  ), // RNG accepts request
+.rng_rsp_valid  (cpu_rng_rsp_valid  ), // RNG response data valid
+.rng_rsp_status (cpu_rng_rsp_status ), // RNG status
+.rng_rsp_data   (cpu_rng_rsp_data   ), // RNG response / sample data.
+.rng_rsp_ready  (cpu_rng_rsp_ready  )  // CPU accepts response.
 );
 
 //

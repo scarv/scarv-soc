@@ -1,5 +1,9 @@
 
 //
+// Reads all of the sources for the design to be verilated 
+//
+
+//
 // Interconnect sources
 $SOC_HOME/rtl/ic/ic_addr_decode.v
 $SOC_HOME/rtl/ic/ic_cpu_bus_bram_bridge.v
@@ -9,6 +13,10 @@ $SOC_HOME/rtl/ic/ic_rsp_tracker.v
 $SOC_HOME/rtl/ic/ic_error_rsp_stub.v
 $SOC_HOME/rtl/ic/ic_top.v
 
+//
+// Random number generator sources
+$SOC_HOME/rtl/rng/scarv_rng_lfsr.v
+$SOC_HOME/rtl/rng/scarv_rng_top.v
 
 //
 // XCrypto + SCARV CPU sources.
