@@ -1,4 +1,6 @@
 
+#include <stdint.h>
+
 #ifndef SELFCHECK_H
 #define SELFCHECK_H
 
@@ -19,6 +21,15 @@ void selfcheck_uart_putc(char tx);
 @note Blocks until a character is recieved.
 */
 char selfcheck_uart_getc();
+
+//! Seed the XCrypto RNG
+static inline  void    _xc_rngseed (uint32_t seed) {             __asm__ volatile ("xc.rngseed  %0" :          : "r"(seed));           }
+
+//! Sample the XCrypto RNG                                                       
+static inline uint32_t _xc_rngsamp (             ) {uint32_t rd; __asm__ volatile ("xc.rngsamp  %0" : "=r"(rd) :          ); return rd;}
+
+//! Check the XCrypto RNG is healthy                                             
+static inline uint32_t _xc_rngtest (             ) {uint32_t rd; __asm__ volatile ("xc.rngtest  %0" : "=r"(rd) :          ); return rd;}
 
 #endif
 
