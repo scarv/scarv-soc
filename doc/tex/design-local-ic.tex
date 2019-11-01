@@ -3,7 +3,16 @@ The local memory interconnect is responsible for routing requests from the
 CPU to the appropriate peripheral.
 It also enforces the first stage of the SoC memory map.
 
-% TODO: Local memory interconnect block diagram.
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{image/soc-local-ic.png}
+\caption{
+Block diagram of the \SCARVSOC inner sub-system memory interconnect, 
+showing how the \SCARVCPU instruction and data memory requests/responses
+are routed to each peripheral.
+}
+\label{fig:design:soc-local-ic}
+\end{figure}
 
 \noindent Input Request Ports:
 \begin{enumerate}
