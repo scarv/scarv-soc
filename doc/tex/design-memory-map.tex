@@ -1,0 +1,44 @@
+
+The SoC memory map is split into two levels.
+The first level is managed by the the local memory interconnect
+(\SECREF{design:block:local-ic}),
+and is detailed in table \ref{tab:memory-map:1}.
+
+Requests which map to an inner layer peripheral are handled completely
+by the local memory interconnect.
+Requests which map to the AXI Bus Bridge memory space are forwarded to
+the outer layer AXI interconnect and the on to the relevent 3rd party
+peripheral.
+The current Xilinx specific AXI interconnect memory map is shown in
+table \ref{tab:memory-map:2}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lll}
+Address      & Range        & Description   \\ \hline
+{\tt 0x4000\_0000} & {\tt 0x4FFF\_FFFF} & AXI Bus Bridge                    \\
+{\tt 0x2000\_0000} & {\tt 0x2000\_FFFF} & 64K RAM                           \\
+{\tt 0x1000\_0000} & {\tt 0x1000\_3FFF} & First Stage Boot Loader 1K ROM    \\
+{\tt 0x0000\_0000} & {\tt 0x0000\_0FFF} & CPU Internal memory mapped devices.
+\end{tabular}
+\caption{
+    First stage \SCARVSOC memory map, managed by the local memory
+    interconnect.
+}
+\label{tab:memory-map:1}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lll}
+Address      & Range        & Description  \\ \hline
+{\tt 0x4000\_2000} & {\tt 0x4000\_20FF} & AXI mapped GPIO peripheral.  \\
+{\tt 0x4000\_1000} & {\tt 0x4000\_10FF} & AXI mapped UART peripheral.  \\
+\end{tabular}
+\caption{
+    Second stage \SCARVSOC memory map, managed by the outer layer
+    AXI interconnect.
+}
+\label{tab:memory-map:2}
+\end{table}
+

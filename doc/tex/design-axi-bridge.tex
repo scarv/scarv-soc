@@ -1,0 +1,8 @@
+
+The AXI bus bridge translates requests from the CPU data memory
+bus into an AXI4-Lite interface.
+The AXI4-Lite interface should then be used to interface with 3rd party
+IP and peripherals.
+The bridge does not allow multiple outstanding requests.
+One request must fully complete before a new one can begin.
+

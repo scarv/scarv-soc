@@ -1,0 +1,36 @@
+
+The \SCARVSOC is split into two layers:
+
+1) A ``inner" layer, which contains the CPU, local memories, local
+   interconnect and any in-house peripherals.
+
+2) A ``outer" layer, which wraps the ``inner" layer with vendor specific
+   peripherals.
+
+This separation allows vendor IP and peripherals to be gradually brought
+into the inner layer as open-source or in-house alternatives are
+found or developed.
+
+{\bf TODO: Diagram of entire system showing inner/outer layers}.
+
+
+\noindent The principle components of the inner layer are:
+
+\begin{enumerate}
+\item The SCARV-CPU.
+\item The local memory interconnect.
+\item The local RAM and ROM memories.
+\item An AXI4-Lite bus bridge, which connects the core subsystem to
+      external peripherals.
+\end{enumerate}
+
+
+\noindent The current Xilinx specific outer layer is made up of:
+
+\begin{enumerate}
+\item System clock generation.
+\item System reset control.
+\item AXI UART peripheral.
+\item AXI GPIO peripheral.
+\end{enumerate}
+
