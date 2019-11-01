@@ -1,0 +1,54 @@
+
+The \SCARVSOC implements the following functionality:
+
+\begin{itemize}
+
+\item Designed for enabling experimentation.
+    
+    \begin{itemize}
+    \item Capable of running completely inside a simulation environment.
+
+    \item Implementation primarily targets FPGAs.
+
+    \item The number of FPGA specific blocks within the design is
+        minimised.  Some vendor specific IP blocks may be used for
+        bring-up, but these will be be replaced with free/open-source
+        components eventually.
+
+    \item Implementable on an ASIC with minimal changes.
+    \end{itemize}
+
+\item Uses the \SCARVCPU \footnote{\url{https://github.com/scarv/scarv-cpu}}
+      core.
+
+    \begin{itemize}
+    \item 5-stage pipelined RISC-V {\tt RV32I} implementation.
+    \item {\bf M}ultiply standard extension support.
+    \item {\bf C}ompressed standard extension support.
+    \item M-mode privilidged resource architecture implemented.
+    \item Precise exceptions.
+    \item Instruction retired and cycle performance counters.
+    \item External, software and timer interrupts.
+    \item Implements the XCrypto
+        \footnote{\url{https://github.com/scarv/xcrypto}}
+        instruction set extensions for secure and efficient Cryptography.
+    \item Optimised for cryptographic side-channel security.
+    \item Capable of running the Zephyr
+        \footnote{\url{https://zephyrproject.org}}
+        RTOS.
+    \end{itemize}
+
+\item 1K ROM containing a customisable first stage bootloader.
+
+\item 64Kb of tightly coupled SRAM or BRAM.
+
+\item Support for multiple peripherals:
+
+    \begin{itemize}
+    \item UART Serial Interface.
+    \item 16 GPIO Pins.
+    \item One external interrupt pin.
+    \end{itemize}
+
+\end{itemize}
+
