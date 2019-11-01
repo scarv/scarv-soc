@@ -13,6 +13,11 @@ OBJCOPY         = $(RISCV)/bin/riscv32-unknown-elf-objcopy
 
 OBJCOPY_HEX_ARGS= --gap-fill 0 
 
+texdocs-%:
+	$(MAKE) -C $(SOC_HOME)/doc $%
+
+all: texdocs-all
+
 include $(SOC_HOME)/src/fsbl/Makefile.in
 
 include $(SOC_HOME)/flow/verilator/Makefile.in
@@ -24,7 +29,4 @@ include $(SOC_HOME)/src/bsp/Makefile.in
 include $(SOC_HOME)/src/examples/Makefile.in
 
 include $(SOC_HOME)/flow/xilinx/Makefile.in
-
-texdocs-%:
-	$(MAKE) -C $(SOC_HOME)/doc $%
 
