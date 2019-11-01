@@ -1,0 +1,21 @@
+
+The Yosys synthesis flow is a way of checking the relative
+sizes of different SoC components when targeting an abstract CMOS
+device.
+
+\begin{itemize}
+
+\item The synthesis scripts and make flow are found in
+    {\tt \$SOC\_HOME/flow/synthesis}.
+
+\item Run the synthesis flow:
+
+\begin{lstlisting}[language=bash,style=block]
+> make synthesise
+\end{lstlisting}
+
+\item Reports and output artifacts from the synthesis run are placed
+    in {\tt \$SOC\_WORK/synthesis/}.
+
+\end{itemize}
+

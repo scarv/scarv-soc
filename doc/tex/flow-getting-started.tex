@@ -1,0 +1,51 @@
+
+The following commands show how to checkout the \SCARVSOC project
+repository, configure the project workspace and start running
+builds and simulations.
+
+\begin{enumerate}
+
+\item Checkout the repository:
+
+\begin{lstlisting}[language=bash,style=block]
+> git clone git@github.com:scarv/scarv-soc.git scarv-soc
+> cd ./scarv-soc
+\end{lstlisting}
+
+\item Checkout all of the repository submodules:
+
+\begin{lstlisting}[language=bash,style=block]
+> git submodule update --init --recursive
+\end{lstlisting}
+
+\item Set the path to your Yosys and Verilator installations:
+
+\begin{lstlisting}[language=bash,style=block]
+> export YOSYS_ROOT=<path to yosys installation>
+> export VERILATOR_ROOT=<path to verilator installation>
+\end{lstlisting}
+
+\item Run the project workspace configuration script:
+
+\begin{lstlisting}[language=bash,style=block]
+> source ./bin/conf.sh
+------------------------ SCARV SoC Project Setup ----------------------
+SOC_HOME       = /home/ben/scarv/repos/scarv-soc
+SOC_WORK       = /home/ben/scarv/repos/scarv-soc/work
+VERILATOR_ROOT = /home/ben/tools/verilator
+YOSYS_ROOT     = /home/ben/yosys
+-----------------------------------------------------------------------
+\end{lstlisting}
+
+The exact output will differ based on your directory paths.
+
+\end{enumerate}
+
+After this point, you can start running commands using the project
+make flow.
+Note the {\tt \$SOC\_HOME} and {\tt \$SOC\_WORK} variables.
+These are used extensively across the build system.
+The first points to the root directory of the project.
+The second points to where all build artifacts should be dumped.
+By default, this is simple {\tt \$SOC\_HOME/work}.
+

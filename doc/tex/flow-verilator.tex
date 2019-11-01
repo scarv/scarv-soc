@@ -1,0 +1,25 @@
+
+The verilator flow is responsible for creating executable simulation
+models of the \SCARVSOC inner subsystem.
+It wraps the verilated model in a testbench, which emulates the
+3rd party peripherals using C++ models.
+
+\begin{itemize}
+\item Makefiles and manifests are found in {\tt \$SOC\_HOME/flow/verilator}.
+\begin{itemize}
+\item Looking inside the manifest files will show exactly which testbench
+    and RTL files are included in the simulation models.
+\end{itemize}
+\item Testbench source code is found in {\tt \$SOC\_HOME/verif/scarv-soc}.
+\end{itemize}
+
+% TODO: verilator simulation environment diagram.
+
+% TODO: Building the verilator model
+
+% TODO: Verilator model target.
+
+% TODO: Running verilator model:
+%       - Arguments
+
+% TODO: Explain how other targets use the verilator target.

@@ -1,0 +1,78 @@
+
+The formal verification flow is used to prove that critical design
+properties hold true.
+For the \SCARVSOC, this mostly takes the form of proving that bus
+signalling protocols have been implemented correctly, and that
+designer assumptions about things like one-hotness hold true.
+
+Each module which uses the formal flow has the assertions included
+inside the RTL source file.
+The code implementing the assertions is always surrounded by a
+pre-processor definition as shown in Figure \ref{fig:symbiyosys:module}.
+By {\em ifdef}'ing the code, we can selectivley turn on individual
+proofs within the entire SoC environment.
+This means we can run proofs on the entire SoC design and still
+keep the resource/compute requirements manageable.
+
+\begin{figure}
+\centering
+\begin{lstlisting}[style=block, language=verilog]
+module <module_name> (
+// ... module ports ...
+);
+// ... module contents ...
+`ifdef FORMAL_<module name>
+// ... Formal assertions and assertions.
+`endif
+endmodule
+\end{lstlisting}
+\caption{Example verilog module showing how the design RTL is mixed
+with preprocessor protected designer assertions.}
+\label{fig:symbiyosys:module}
+\end{figure}
+
+Each individual proof job is described a {\tt .sby} file in
+{\tt \$SOC\_HOME/verif/formal/}.
+This file describes to the Symbiyosys tool which source files
+should be included, and which compiler define to
+use and activate the relevent proofs.
+
+The following Make commands are used to run the formal flow.
+
+\begin{itemize}
+
+\item Clean up past proof results:
+
+\begin{lstlisting}[style=block, language=verilog]
+> make prove-clean
+\end{lstlisting}
+
+\item Run all available proofs:
+
+\begin{lstlisting}[style=block, language=verilog]
+> make prove-all
+\end{lstlisting}
+
+It is recommended to use Make's {\tt -j N } flag, where {\tt N} is the
+number of jobs to run in parallel.
+The following command will run as many jobs as your PC has CPU cores:
+
+\begin{lstlisting}[style=block, language=verilog]
+> make -j \$(nproc) prove-all
+\end{lstlisting}
+
+\item Run a specific proof:
+
+\begin{lstlisting}[style=block, language=verilog]
+> make prove-<job-name>
+\end{lstlisting}
+
+Where {\tt <job-name>} corresponds to one of the {\tt .sby} files in
+{\tt \$SOC\_HOME/verif/formal/}, but with the extension removed..
+
+\end{itemize}
+
+The results for each proof job are placed in
+{\tt \$SOC\_WORK/formal/<job name>}.
+
+
