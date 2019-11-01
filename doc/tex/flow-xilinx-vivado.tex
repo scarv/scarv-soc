@@ -1,0 +1,71 @@
+
+Here we describe the flow for re-creating the Xilinx project used to generate
+a bitstream for the complete SoC.
+The files for this flow live in {\tt \$SOC\_HOME/flow/xilinx}:
+
+\begin{itemize}
+\item {\tt scarv-soc-project.tcl} - The Vivado `tcl` script which creates 
+    the project.
+
+\item {\tt tb\_top\_behave.wcfg} - Simulation wave view configuration.
+
+\item {\tt constraints-xc7k.xdc} - Pin constraints for targeting the
+    SASEBO-GIII FPGA board.
+
+\item {\tt scarv-soc-xc7k.bit} - A pre-generated bitfile.
+\end{itemize}
+
+\noindent Other relevent files are:
+
+\begin{itemize}
+\item {\tt bin/create-xilinx-xc7k-project.sh} - A bash script to automate the
+    project re-creation steps.
+
+\item {\tt rtl/xilinx/*} - Xilinx project specific RTL files.
+
+\item {\tt verif/xilinx/*} - Testbench files for running simulations inside
+Vivado.
+\end{itemize}
+
+
+\noindent Run the following commands to re-create the project:
+
+\begin{itemize}
+
+\item Make sure that the SOC environment is setup:
+
+\begin{lstlisting}[style=block, language=bash]
+> source ./bin/conf.sh
+\end{lstlisting}
+
+\item Make sure that the {\tt VIVADO\_ROOT} variable points to a Vivado
+      installation:
+
+\begin{lstlisting}[style=block, language=bash]
+> export VIVADO\_ROOT=<path to installation>
+\end{lstlisting}
+
+    Note that the project was initially created using Vivado 2019.1.
+
+\item Source the Vivado environment setup scripts:
+
+\begin{lstlisting}[style=block, language=bash]
+> source \$VIVADO\_ROOT/settings64.sh
+\end{lstlisting}
+
+\item Run the project re-creation scripts:
+
+\begin{lstlisting}[style=block, language=bash]
+> cd \$SOC\_HOME
+> ./bin/create-xilinx-xc7k-project.sh
+\end{lstlisting}
+
+\item You can now open Vivado and the project file in
+  {\tt \$SOC\_WORK/vivado/scarv-soc-xc7k/scarv-soc-xc7k.xpr}
+  and start working with the project.
+
+  There is also a pre-generated bitfile in 
+  {\tt \$SOC\_HOME/flow/xilinx/}.
+
+\end{itemize}
+
