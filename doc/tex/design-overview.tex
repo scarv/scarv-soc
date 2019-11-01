@@ -1,18 +1,23 @@
 
 The \SCARVSOC is split into two layers:
-
 1) A ``inner" layer, which contains the CPU, local memories, local
    interconnect and any in-house peripherals.
-
 2) A ``outer" layer, which wraps the ``inner" layer with vendor specific
    peripherals.
-
 This separation allows vendor IP and peripherals to be gradually brought
 into the inner layer as open-source or in-house alternatives are
 found or developed.
+Figure \ref{fig:design:soc-blocks} shows the \SCARVSOC block diagram.
 
-% TODO: Diagram of entire system showing inner/outer layers
-
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{image/soc-block-diagram.png}
+\caption{
+Block diagram of the \SCARVSOC, showing the inner subsystem which can be
+implemented anywhere, and the Xilinx-specific outer subsystem.
+}
+\label{fig:design:soc-blocks}
+\end{figure}
 
 \noindent The principle components of the inner layer are:
 
