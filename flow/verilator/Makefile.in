@@ -52,13 +52,13 @@ $(eval $(call tgt_verilator_build,$(VL_OUT),$(VL_DIR),rom.hex,ram.hex))
 
 verilator-build: $(VL_OUT)
 
-verilator-run-waves: $(VL_OUT) fsbl
-	$(VL_OUT) $(VL_ARGS) \
+verilator-run-waves: $(VL_OUT) $(FSBL_HEX)
+	cp $(FSBL_HEX) $(dir $(VL_OUT))rom.hex
+	cp $(FSBL_HEX) $(dir $(VL_OUT))ram.hex
+	cd $(dir $(VL_OUT)) && $(VL_OUT) $(VL_ARGS) \
         +WAVES=$(VL_WAVES) \
         +TIMEOUT=$(VL_TIMEOUT)
 
 verilator-clean:
 	rm -rf $(VL_DIR)
-
-verilator-generic:
 
