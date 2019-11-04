@@ -26,5 +26,8 @@ $(BSP_INCLUDE)/%.h : $(SOC_HOME)/src/bsp/include/%.h
 	@mkdir -p $(dir $@)
 	cp $< $@
 
-scarvsoc-bsp: $(BSP_LIB) $(BSP_HEADERS)
+scarvsoc-bsp        : $(BSP_LIB) $(BSP_HEADERS)
+
+scarvsoc-bsp-docs   : $(BSP_SRCS) $(BSP_HEAD_SRC)
+	doxygen $(SOC_HOME)/src/bsp/bsp.doxyfile
 
