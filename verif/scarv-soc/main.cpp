@@ -104,6 +104,8 @@ void process_arguments(int argc, char ** argv, tb_arguments_t * args) {
             << "\t+WAIT                         -" << std::endl
             << "\t+WAVES=<VCD dump file path>   -" << std::endl
             << "\t+TIMEOUT=<timeout after N>    -" << std::endl
+            << "\t+PASS_ADDR=<hex addr>         -" << std::endl
+            << "\t+FAIL_ADDR=<hex addr>         -" << std::endl
             ;
             exit(0);
         }
