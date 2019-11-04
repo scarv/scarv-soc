@@ -1,3 +1,53 @@
 
-% TODO: Purpose, build files, build flow, functionality
+The board support package is a library which provides a software
+abstraction to all of the hardware peripherals on the SoC.
+It's source files are kept in \SOCDIR{src/bsp/}.
+It is built as a static library which other programs can then link
+against.
+
+\begin{itemize}
+\item The BSP is built using:
+
+\begin{lstlisting}[language=bash,style=block]
+> make scarvsoc-bsp
+\end{lstlisting}
+
+    This builds a static library, and places all build
+    artifacts in \SOCDIR[\SOCWORK]{bsp/}.
+
+
+\item The BSP is ``installed" to \SOCDIR[\SOCWORK]{bsp/} with the
+    folder structure shown in Table \ref{tab:sw:bsp:organisation}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+Directory & Description \\ \hline
+\SOCWORK/bsp & Makefiles and linker scripts for building and running tests. \\
+\hspace{1.0cm} lib/     & Contains the built static library. \\
+\hspace{1.0cm} include/ & Header files for each library component. \\
+\hspace{1.0cm} obj/     & Individual source object files. \\
+\hspace{1.0cm} doc/     & Generated API documentation. \\
+\end{tabular}
+\caption{Organisation of the BSP install directory under \SOCWORK.}
+\label{tab:sw:bsp:organisation}
+\end{table}
+
+\item To compile against the BSP, add
+    \SOCDIR[\SOCWORK]{bsp/include}
+    to the header search path using GCCs {\tt -I} flag, and add the
+    \SOCDIR[\SOCWORK]{bsp/lib/scarvsoc.a}
+    to the list of input files.
+
+\item The documentation for the BSP can be built using:
+
+\begin{lstlisting}[language=bash,style=block]
+> make scarvsoc-bsp-docs
+\end{lstlisting}
+
+    This will place the generated HTML documentation in
+    \SOCDIR[\SOCWORK]{bsp/doc}.
+        
+
+\end{itemize}
 
