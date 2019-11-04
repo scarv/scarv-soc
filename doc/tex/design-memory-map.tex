@@ -12,6 +12,13 @@ peripheral.
 The current Xilinx specific AXI interconnect memory map is shown in
 table \ref{tab:memory-map:2}.
 
+Requests which map to an empty part of the first level address space
+are handled by the local memory interconnect.
+It is possible for requests map to a valid address in the first
+level, but be invalid in the second level.
+In this case, the error response is handled by the
+outer layer memory interconnect.
+
 \begin{table}[H]
 \centering
 \begin{tabular}{lll}

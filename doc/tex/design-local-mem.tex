@@ -1,7 +1,32 @@
 
 The inner subsystem contains two tightly coupled local memories:
+A 1Kb ROM, which contains the First Stage Boot Loader,
+A 64Kb RAM, which contains downloaded programs instructions and data.
+All RTL code for the local memories is contained in \SOCDIR{rtl/mem}.
+There are several different models of the local memories, each
+used for a different purpose.
 
 \begin{itemize}
-\item A 1Kb ROM, which contains the First Stage Boot Loader.
-\item A 64Kb RAM, which contains downloaded programs instructions and data.
+
+\item \SOCDIR{rtl/mem/scarv\_soc\_bram\_dual\_sim.v} - 
+    A simple simulation version, which is used with the Verilator
+    flow. See \SECREF{flow:verilator} for more information.
+
+\item \SOCDIR{rtl/mem/scarv\_soc\_bram\_dual\_synth\_xilinx\_xc7k.v} - 
+    A Xilinx specific module, which uses the recommended language
+    template to ensure BRAM inference during the synthesis flow.
+
+\item \SOCDIR{rtl/mem/scarv\_soc\_bram\_dual\_synth\_yosys.v} - 
+    BRAM model used in the Yosys synthesis flow.
+    This is a placeholder for future work.
+
+\item \SOCDIR{rtl/mem/scarv\_soc\_bram\_dual\_formal.v} - 
+    A blackboxed BRAM module used by the formal verification flows.
+    This module contains no {\em memory} in the traditional sense, and
+    is constrained only to obey the BRAM signalling protocol.
+    Any data which is read or written is {\em not} held consistently.
+    Writes are effectively ignored.
+    Reads can return {\em anything} which the solver deems nessesary
+    in order to try and (dis-)prove an assertion or assumption.
+
 \end{itemize}

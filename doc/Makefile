@@ -3,8 +3,13 @@ BUILD = ${SOC_WORK}/texdocs
 
 include ${SOC_HOME}/extern/texmf/make/image.mk
 
+GRAPH_SRC = $(wildcard ./graphs/*)
+GRAPH_OUT = $(addprefix $(BUILD)/,$(notdir $(GRAPH_SRC:%.dot=%.png)))
 
-${BUILD}/scarvsoc.pdf : scarvsoc.tex  $(wildcard ./tex/*) ${IMAGE_TARGETS} dir
+$(BUILD)/%.png : ./graphs/%.dot
+	dot -Tpng $< > $@
+
+${BUILD}/scarvsoc.pdf : scarvsoc.tex  $(wildcard ./tex/*) ${IMAGE_TARGETS} dir $(GRAPH_OUT)
 	@TEXINPUTS="${TEXINPUTS}:.:${BUILD}" pdflatex  -output-directory $(dir ${@}) $(basename ${<})
 	@TEXINPUTS="${TEXINPUTS}:.:${BUILD}" biber    --output_directory $(dir ${@}) $(basename ${<})
 	@TEXINPUTS="${TEXINPUTS}:.:${BUILD}" pdflatex  -output-directory $(dir ${@}) $(basename ${<})

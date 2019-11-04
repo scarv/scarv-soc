@@ -1,40 +1,43 @@
 
 Table \ref{tab:project-organisation} shows the directory structure of
 the project, and which artifacts are kept where.
+The \SOCHOME and \SOCWORK environment variables are setup when the project
+workspace script is first called.
+By default, \SOCWORK defaults to \SOCDIR{work}.
 
 \begin{table}[H]
 \centering
 \begin{tabular}{ll}
 Directory & Description \\ \hline
-\$SOC\_HOME/         & Project root directory \\
-\hspace{0.5cm} bin/            & Utility and project setup scripts. \\
-\hspace{0.5cm} doc/            & All project documentation. \\
-\hspace{0.5cm} extern/         & External git submodule references. \\
-\hspace{1.0cm}     scarv-cpu/  & \SCARVCPU submodule reference. \\
-\hspace{1.0cm}     texmf/      & SCARV Project \LaTeX packages. \\
-\hspace{0.5cm} flow/           & Hardware simulation and verification flow scripts and infrastructure. \\
-\hspace{1.0cm}     formal/     & BMC checking flows using Symbiyosys \\
-\hspace{1.0cm}     gtkwave/    & Save wave view configurations for GTKWave \\
-\hspace{1.0cm}     selfcheck/  & Selfchecking software tests, compilation and running. \\
-\hspace{1.0cm}     synthesis/  & Yosys based simple synthesis flow. \\
-\hspace{1.0cm}     verilator/  & Verilator build scripts and file manifests for the main simulation environment. \\
-\hspace{1.0cm}     xilinx/     & Xilinx specific project and pre-compiled bitfiles. \\
-\hspace{0.5cm} rtl/            & All synthesisable RTL code for the SoC. \\
-\hspace{1.0cm}     ic/         & Local memory interconnect RTL. \\
-\hspace{1.0cm}     mem/        & Memory models for the RAMs and ROMs. \\
-\hspace{1.0cm}     rng/        & Random number generator source code. \\
-\hspace{1.0cm}     soc/        & Inner subsystem top level and glue logic. \\
-\hspace{1.0cm}     xilinx/     & Xilinx specific RTL for the outer subsystem. \\
-\hspace{0.5cm} src/            & Software source code. \\
-\hspace{1.0cm}     bsp/        & Board support package library code for driving peripherals. \\
-\hspace{1.0cm}     examples/   & Example applications. \\
-\hspace{1.0cm}     fsbl/       & First stage bootloader source code. \\
-\hspace{0.5cm} verif/          & Verification sourc code. \\
-\hspace{1.0cm}     formal/     & Symbiyosys job configuration files. \\
-\hspace{1.0cm}     scarv-soc/  & Verilator C++ models and testbench infrastructure. \\
-\hspace{1.0cm}     selfcheck/  & Source code for self-checking C code tests. \\
-\hspace{1.0cm}     xilinx/     & Xilinx specific testbench files for running inside Vivado. \\
-\hspace{0.5cm} work/           & All generated build artifacts are put here. \\
+\SOCHOME/         & Project root directory \\
+\hspace{0.5cm} bin/           & Utility and project setup scripts. \\
+\hspace{0.5cm} doc/           & All project documentation. \\
+\hspace{0.5cm} extern/        & External git submodule references. \\
+\hspace{1.0cm}     scarv-cpu/ & \SCARVCPU submodule reference. \\
+\hspace{1.0cm}     texmf/     & SCARV Project \LaTeX packages. \\
+\hspace{0.5cm} flow/          & Hardware simulation and verification flow scripts and infrastructure. \\
+\hspace{1.0cm}     formal/    & BMC checking flows using Symbiyosys \\
+\hspace{1.0cm}     gtkwave/   & Save wave view configurations for GTKWave \\
+\hspace{1.0cm}     selfcheck/ & Selfchecking software tests, compilation and running. \\
+\hspace{1.0cm}     synthesis/ & Yosys based simple synthesis flow. \\
+\hspace{1.0cm}     verilator/ & Verilator build scripts and file manifests for the main simulation environment. \\
+\hspace{1.0cm}     xilinx/    & Xilinx specific project and pre-compiled bitfiles. \\
+\hspace{0.5cm} rtl/           & All synthesisable RTL code for the SoC. \\
+\hspace{1.0cm}     ic/        & Local memory interconnect RTL. \\
+\hspace{1.0cm}     mem/       & Memory models for the RAMs and ROMs. \\
+\hspace{1.0cm}     rng/       & Random number generator source code. \\
+\hspace{1.0cm}     soc/       & Inner subsystem top level and glue logic. \\
+\hspace{1.0cm}     xilinx/    & Xilinx specific RTL for the outer subsystem. \\
+\hspace{0.5cm} src/           & Software source code. \\
+\hspace{1.0cm}     bsp/       & Board support package library code for driving peripherals. \\
+\hspace{1.0cm}     examples/  & Example applications. \\
+\hspace{1.0cm}     fsbl/      & First stage bootloader source code. \\
+\hspace{0.5cm} verif/         & Verification sourc code. \\
+\hspace{1.0cm}     formal/    & Symbiyosys job configuration files. \\
+\hspace{1.0cm}     scarv-soc/ & Verilator C++ models and testbench infrastructure. \\
+\hspace{1.0cm}     selfcheck/ & Source code for self-checking C code tests. \\
+\hspace{1.0cm}     xilinx/    & Xilinx specific testbench files for running inside Vivado. \\
+\SOCWORK/                     & All generated build artifacts are put here. \\
 \end{tabular}
 \caption{Project directory organisation}
 \label{tab:project-organisation}

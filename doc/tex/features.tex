@@ -6,7 +6,9 @@ The \SCARVSOC implements the following functionality:
 \item Designed for enabling experimentation.
     
     \begin{itemize}
-    \item Capable of running completely inside a simulation environment.
+    \item Capable of running completely inside a noiseless simulation
+        environment. Transparent emulation of IO ports allows identical
+        flows for development and deployment.
 
     \item Implementation primarily targets FPGAs.
 
@@ -15,7 +17,7 @@ The \SCARVSOC implements the following functionality:
         bring-up, but these will be be replaced with free/open-source
         components eventually.
 
-    \item Implementable on an ASIC with minimal changes.
+    \item Designed to be implementable on an ASIC with minimal changes.
     \end{itemize}
 
 \item Uses the \SCARVCPU \footnote{\url{https://github.com/scarv/scarv-cpu}}

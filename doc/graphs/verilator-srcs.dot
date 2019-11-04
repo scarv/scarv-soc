@@ -1,0 +1,50 @@
+
+digraph {
+    
+    CPU_RTL[label="SCARV-CPU\nRTL Sources", color="gold"];
+    SOC_RTL[label="SCARV-SOC\nRTL Sources", color="gold"];
+
+    CPU_RTL -> Verilator;
+    SOC_RTL -> Verilator;
+
+    Verilator[label="Verilator",shape="block"];
+
+    Verilator -> VlCpp;
+
+    VlCpp[label="Verilated RTL\nCPP Model",color="green"];
+
+    TestbenchCPP[label="Testbench\nCPP Code",color="green"];
+
+    VlCpp -> GCC1;
+    TestbenchCPP -> GCC1;
+
+    GCC1[label="GCC Compiler",shape="block"];
+    GCC2[label="GCC Compiler",shape="block"];
+    GCC3[label="GCC Compiler",shape="block"];
+
+    GCC1 -> EXE;
+
+    EXE[label="Executable\nSimulation Model"];
+
+    UART[label="Emulated UART"];
+
+    FSBL[label="First Stage Boot\nLoader Source",color="green"];
+    PROGRAM[label="Program Source\nCode",color="green"];
+
+    FSBL    -> GCC2 -> ROM_FILE
+    PROGRAM -> GCC3 -> RAM_FILE
+
+    RAM_FILE[label="RAM memory\nimage",color="grey"];
+    ROM_FILE[label="ROM memory\nimage",color="grey"];
+    
+    VCD[label="VCD Waveform\nTrace"];
+
+    RAM_FILE -> EXE;
+    ROM_FILE -> EXE;
+
+    EXE -> VCD;
+
+    EXE -> UART;
+    UART -> EXE;
+
+}

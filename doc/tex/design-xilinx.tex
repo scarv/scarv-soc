@@ -2,15 +2,25 @@
 The outer subsystem layer contains several 3rd party IP cores:
 
 \begin{itemize}
-\item AXI4 Bus Interconnect \cite{SCARV:XILINX:AXI-IC}.
 
-\begin{itemize}
-\item AXI4 UARTLite \cite{SCARV:XILINX:UART-Lite}.
 \item AXI4 GPIO \cite{SCARV:XILINX:GPIO}.
-\end{itemize}
+    A 2 bank GPIO peripheral.
+
+\item AXI4 UARTLite \cite{SCARV:XILINX:UART-Lite}.
+    A 128000 baud UART peripheral.
+
+\item AXI4 Bus Interconnect \cite{SCARV:XILINX:AXI-IC}.
+    Responsible for implementing the 2nd level of the memory map.
+    Connects the UART and GPIO peripherals to the AXI4-Lite bridge.
 
 \item System Clock Generator \cite{SCARV:XILINX:ClockingWizard}.
+    Responsible for scaling the 200MHz external clock down to
+    100MHz.
+    This is a board specific requirement, since we are using the
+    SASEBO G-III development platform.
 
 \item Processor System Reset \cite{SCARV:XILINX:ProcessorReset}.
+    Brings up the peripherals, interconnect and CPU in a safe
+    manner after reset.
 
 \end{itemize}

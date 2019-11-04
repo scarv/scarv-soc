@@ -1,25 +1,317 @@
 
-The verilator flow is responsible for creating executable simulation
+The Verilator flow is responsible for creating executable simulation
 models of the \SCARVSOC inner subsystem.
 It wraps the verilated model in a testbench, which emulates the
 3rd party peripherals using C++ models.
 
 \begin{itemize}
-\item Makefiles and manifests are found in {\tt \$SOC\_HOME/flow/verilator}.
+\item Makefiles and manifests are found in \SOCDIR{flow/verilator}.
 \begin{itemize}
 \item Looking inside the manifest files will show exactly which testbench
     and RTL files are included in the simulation models.
 \end{itemize}
-\item Testbench source code is found in {\tt \$SOC\_HOME/verif/scarv-soc}.
+\item Testbench source code is found in \SOCDIR{verif/scarv-soc}.
 \end{itemize}
 
-% TODO: verilator simulation environment diagram.
+Figure \ref{fig:flow:verilator:artifacts}
+shows the main inputs and outputs of the Verilator flow in terms
+of sources, compiler outputs and simulator outputs.
 
-% TODO: Building the verilator model
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{verilator-srcs.png}
+\caption{
+    Flow diagram for building and running verilator based simulation
+    models of the \SCARVSOC.
+}
+\label{fig:flow:verilator:artifacts}
+\end{figure}
 
-% TODO: Verilator model target.
 
-% TODO: Running verilator model:
-%       - Arguments
+\subsubsection{A note on the Verilator makefile target}
 
-% TODO: Explain how other targets use the verilator target.
+All makefile targets which involve building the verilated model
+are parameterised in terms of the RAM and ROM memory images which
+are pre-loaded into the memory models, as well as the
+output directory and executable.
+This can be seen in the {\tt tgt\_verilator\_build} macro in
+\SOCDIR{flow/verilator/Makefile.in}.
+
+This is done because of tool quirks, and how verilator (dis-)allows
+passing or overriding filepaths as Verilog parameters.
+Each simulation target which uses a verilated model then creates
+it's own target using the {\tt tgt\_verilator\_build} macro.
+An example of this is visible in \SOCDIR{flow/selfcheck/Makefile.in}.
+
+Ultimately, this detail is invisible when using the Make flow, as all
+such dependencies are automatically resolved and built.
+It is relevent however when adding your own build and simulation targets.
+
+\subsubsection{Building the Verilated model}
+
+\begin{itemize}
+\item First, ensure that the getting started steps 
+    (\SECREF{flow:getting-started}) have been followed.
+    Your current working directory must be \SOCHOME.
+
+\item Run the following make commands to build the generic verilated model.
+
+\begin{lstlisting}[language=bash,style=block]
+> make verilator-build
+\end{lstlisting}
+
+    This will build a generic simulation model, which expects as inputs
+    two files: ``rom.hex" and ``ram.hex".
+    These should be in the same working directory as the simulation
+    executable when it is launched.
+    The files {\em may} be empty, but they {\em must} exist.
+
+    The generated model will be written too
+    \SOCDIR[\SOCWORK]{verilator/verilated}.
+
+\item The generic verilated model can be cleaned up using:
+    
+\begin{lstlisting}[language=bash,style=block]
+> make verilator-clean
+\end{lstlisting}
+
+\end{itemize}
+
+\subsubsection{Running the Verilated model}
+
+\begin{itemize}
+
+\item Given a built model at 
+    \SOCDIR[\SOCWORK]{verilator/verilated},
+    one can find the command line arguments the model takes by running:
+
+\begin{lstlisting}[language=bash,style=block]
+> ./work/verilator/verilated
+./work/verilator/verilated [arguments]
+	+q                            -
+	+WAIT                         -
+	+WAVES=<VCD dump file path>   -
+	+TIMEOUT=<timeout after N>    -
+	+PASS_ADDR=<hex addr>         -
+	+FAIL_ADDR=<hex addr>         -
+\end{lstlisting}
+
+    where:
+    \begin{itemize}
+    \item {\tt +q} - Be quiet. Don't print so many messages.
+    \item {\tt +WAIT} - Initialises the simulation and peripheral
+        emulators, but waits for a keypress before running the simulation.
+        This gives users time to attatch a terminal to the emulated UART
+        port.
+    \item {\tt +WAVES=<path>} - Where to dump a VCD waveform trace too.
+        If this argument is omitted, then no waves are dumped.
+        Care should be taken when using this argument over long periods,
+        as VCD files grown in size very quickly.
+        It is not recommended to use this argument when interracting
+        with the program over UART.
+    \item {\tt +TIMEOUT=<N>} - How many cycles to terminate the
+        simulation after.
+    \item {\tt +PASS\_ADDR=<addr>} - A hexadecimal address which, if
+        an instruction is executed at, the simulation will stop and
+        report a pass. Used by the selfchecking tests.
+    \item {\tt +FAIL\_ADDR=<addr>} - A hexadecimal address which, if
+        an instruction is executed at, the simulation will stop and
+        report a failure. Used by the selfchecking tests.
+    \end{itemize}
+
+\item Running the following command will run the verilated model,
+    and simulate execution of the first stage bootloader.
+
+\begin{lstlisting}[language=bash,style=block]
+> make verilator-run-waves
+/home/ben/tools/verilator/bin/verilator --cc -CFLAGS "-O2" -O3 -CFLAGS -g -I/home/ben/scarv/repos/scarv-soc/extern/scarv-cpu/rtl/core --exe --trace --top-module scarv_soc   --Mdir /home/ben/scarv/repos/scarv-soc/work/verilator -o /home/ben/scarv/repos/scarv-soc/work/verilator/verilated -GBRAM_ROM_MEMH_FILE="\"rom.hex\"" -GBRAM_RAM_MEMH_FILE="\"ram.hex\"" -f /home/ben/scarv/repos/scarv-soc/flow/verilator/scarv-soc-rtl.manifest -f /home/ben/scarv/repos/scarv-soc/flow/verilator/scarv-soc-testbench.manifest
+make -C /home/ben/scarv/repos/scarv-soc/work/verilator -f Vscarv_soc.mk
+make[1]: Entering directory '/home/ben/scarv/repos/scarv-soc/work/verilator'
+make[1]: Nothing to be done for 'default'.
+make[1]: Leaving directory '/home/ben/scarv/repos/scarv-soc/work/verilator'
+cp /home/ben/scarv/repos/scarv-soc/work/fsbl/fsbl.hex /home/ben/scarv/repos/scarv-soc/work/verilator/rom.hex
+cp /home/ben/scarv/repos/scarv-soc/work/fsbl/fsbl.hex /home/ben/scarv/repos/scarv-soc/work/verilator/ram.hex
+cd /home/ben/scarv/repos/scarv-soc/work/verilator/ && /home/ben/scarv/repos/scarv-soc/work/verilator/verilated  \
+        +WAVES=/home/ben/scarv/repos/scarv-soc/work/verilator/waves.vcd \
+        +TIMEOUT=10000
+> /home/ben/scarv/repos/scarv-soc/work/verilator/verilated +WAVES=/home/ben/scarv/repos/scarv-soc/work/verilator/waves.vcd +TIMEOUT=10000 
+>> Dumping waves to: /home/ben/scarv/repos/scarv-soc/work/verilator/waves.vcd
+>> Timeout after 10000 cycles.
+>> Open Slave UART at: /dev/pts/5
+__FILE__:__LINE__ - UART Register not implemented.
+>> Finished after 10000 simulated clock cycles
+>> TIMEOUT
+\end{lstlisting}
+
+    A VCD wave dump will be written to \SOCDIR[\SOCWORK]{verilator/waves.vcd}.
+
+\end{itemize}
+
+\subsubsection{Using the emulated UART}
+
+The verilator testbench contains an emulated UART peripheral, which
+models the behaviour of the Xilinx UARTLite IP in the SoC outer layer.
+The model creates a unix ``psuedo-terminal", which we can connect
+a terminal application like PuTTY or miniterm too, and then interract with
+as if talking to the real implemented device.
+For this example, we will show how to ``boot" the SoC using the first stage
+boot loader, upload a program too it over the uart and see that program
+executing.
+
+\begin{itemize}
+
+\item First, ensure the getting started steps in
+    \SECREF{flow:getting-started}
+    have been followed.
+
+\item Build the verilated model, and move to the directory containing
+    the executable.
+
+\begin{lstlisting}[language=bash,style=block]
+> # Terminal 1
+> make verilator-build
+> cd \$SOC_WORK/verilator
+\end{lstlisting}
+
+\item Run the following command to start the model, but pause it just before
+    the simulation starts running.
+
+\begin{lstlisting}[language=bash,style=block]
+> # Terminal 1
+> ./verilated +WAIT +TIMEOUT=100000000
+>> Timeout after 100000 cycles.
+>> Open Slave UART at: /dev/pts/5
+>> Press return to begin simulation:
+\end{lstlisting}
+
+\item Open your favourite serial console app, and connect it to
+    the port indicated on the ``{\tt Open Slave UART at:}" line.
+    In this case, we can open a {\em new} terminal, and run miniterm:
+
+\begin{lstlisting}[language=bash,style=block]
+> # Terminal 2
+> miniterm.py /dev/pts/5
+\end{lstlisting}
+
+\item Switch back to the first terminal session, and press return.
+    The serial application should print the following message,
+    inidicating that the bootloader has completed and is waiting to
+    download a program to execute.
+
+\begin{lstlisting}[language=bash,style=block]
+> # Terminal 2
+--- Miniterm on /dev/pts/5  9600,8,N,1 ---
+--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H ---
+scarv-soc fsbl
+\end{lstlisting}
+
+    Eventually, the simulation will timeout, closing the serial port
+    and likely angering your serial application.
+
+\end{itemize}
+
+\noindent
+Now we know the bootloader works, lets download a proper program
+and interract with the CPU.
+
+\begin{itemize}
+
+\item
+    First, build the ``UART" example program:
+
+\begin{lstlisting}[language=bash,style=block]
+> # Terminal 1
+> cd \$SOC_HOME
+> make example-uart
+\end{lstlisting}
+
+    This will place the build software in
+    \SOCDIR[\SOCWORK]{examples/uart}.
+    Many files in there are not needed for this example, since we're doing
+    the hard way what the make flow can wrap up for us.
+    For this example, we just need the
+    \SOCDIR[\SOCWORK]{examples/uart/uart.bin}
+    file.
+
+\item Next, start the simulation model as before:
+
+\begin{lstlisting}[language=bash,style=block]
+> # Terminal 1
+> make verilator-build
+> cd \$SOC_WORK/verilator
+> ./verilated +WAIT +TIMEOUT=100000000
+>> Timeout after 100000 cycles.
+>> Open Slave UART at: /dev/pts/5
+>> Press return to begin simulation:
+\end{lstlisting}
+
+\item In a {\em new} terminal, run the following command from the
+    \SOCHOME directory. Note that the {\tt /dev/pts/5} part will
+    likely be different for each machine.
+
+\begin{lstlisting}[language=bash,style=block]
+> # Terminal 2
+> ./bin/upload-program.py /dev/pts/5 \$SOC_WORK/examples/uart/uart.bin 0x20000000 
+Waiting for FSBL, please reset the target...
+Programming /home/ben/scarv/repos/scarv-soc/work/examples/uart/uart.bin, size=300, start=0x20000000
+Programming: Done
+\end{lstlisting}
+
+    This program tells the bootloader to place the {\tt uart.bin}
+    file at memory address {0x20000000} and then jump to that
+    address to run the program.
+
+    Initially, the command will hang after printing ``Waiting for FSBL...".
+    At this point, you should press return in the terminal which is running
+    the model.
+
+\item We can now re-connect to the serial port and start interracting
+    with the program.
+
+\begin{lstlisting}[language=bash,style=block]
+> # Terminal 2
+> miniterm.py /dev/pts/5
+--- Miniterm on /dev/pts/5  9600,8,N,1 ---
+--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H ---
+UART Echo Example Program
+Hello world all the
+kings horses and all the kings men.
+Recieved Finish Byte. Stop.
+\end{lstlisting}
+    
+    The UART is just a simple echo program.
+    Anything you type is just echoed back by the CPU.
+    The UART program source code is found in \SOCDIR{src/examples/uart}.
+
+\item
+
+    Sending a ``{\tt !}" character will tell the CPU to terminate
+    the program.
+
+\end{itemize}
+
+\noindent
+Because this is so long winded, it's been wrapped up in a make command.
+
+\begin{itemize}
+\item With the simulator model waiting for a keypress, run:
+
+\begin{lstlisting}[language=bash,style=block]
+> # Terminal 2
+> make xilinx-interract PORT=<port name>
+\end{lstlisting}
+    
+    Once you see the ``Waiting for FSBL..." message, press return
+    on the simulator terminal, and the flow will automatically
+    upload the example UART program and dump you into a serial
+    terminal.
+
+\item The source for this flow is found in
+    \SOCDIR{flow/xilinx/Makefile.in}.
+
+\item Exactly the same flow can be used to upload a program to an
+    FPGA via the UART port.
+    The only thing that changes is the {\tt /dev/*} path passed in.
+
+\end{itemize}
+

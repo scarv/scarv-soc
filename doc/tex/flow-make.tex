@@ -1,16 +1,16 @@
 
 The entire build and simulation flow for the \SCARVSOC project is
 automated using GNU Make.
-The root makefile is found at {\tt \$SOC\_HOME/Makefile}.
+The root makefile is found at \SOCDIR{Makefile}.
 All make commands sould be run from the project root directory.
 The root makefile then {\em includes} all other nessesary Makefiles
 from across the project.
-Each sub-makefile (named {\tt <subdir>/Makefile.in}) is responsible for
+Each sub-makefile (named \SOCDIR{<subdir>/Makefile.in}) is responsible for
 a single piece of the design flow.
 This means that certain makefiles can depend on others in ways which
 are not always immediately apparent.
 
-Most sub-makefiles are found in one of the {\tt \$SOC\_HOME/flow/*}
+Most sub-makefiles are found in one of the \SOCDIR{flow/*}
 directories.
 The only exceptions to this are the software build makefiles for
 the example programs, board support package and first stage bootloader.

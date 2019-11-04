@@ -1,13 +1,31 @@
 
-The \SCARVSOC is split into two layers:
-1) A ``inner" layer, which contains the CPU, local memories, local
-   interconnect and any in-house peripherals.
-2) A ``outer" layer, which wraps the ``inner" layer with vendor specific
-   peripherals.
+To manage the set of in-house and 3rd party RTL,
+the \SCARVSOC is split into two layers:
+
+\begin{itemize}[noitemsep]
+
+\item A ``inner" layer, which contains the CPU, local memories, local
+    interconnect and any in-house peripherals or subsystems.
+
+\item A ``outer" layer, which wraps the ``inner" layer with vendor specific
+    peripherals and subsystems.
+
+\end{itemize}
+
 This separation allows vendor IP and peripherals to be gradually brought
 into the inner layer as open-source or in-house alternatives are
 found or developed.
 Figure \ref{fig:design:soc-blocks} shows the \SCARVSOC block diagram.
+The principle components of each layer are shown in 
+Table \ref{tab:design:overview:component-layers}.
+
+The inner layer communicates with memory mapped devices in the outer
+layer via the AXI4-Lite bus bridge (\SECREF{design:axi-bridge}).
+Any data memory request which maps to the bridge is forwarded into
+the outer layer.
+The outer layer is expected to manage the request and response.
+Currently, this is done using a Xilinx AXI4 Interconnect IP.
+
 
 \begin{figure}
 \centering
@@ -19,23 +37,18 @@ implemented anywhere, and the Xilinx-specific outer subsystem.
 \label{fig:design:soc-blocks}
 \end{figure}
 
-\noindent The principle components of the inner layer are:
 
-\begin{enumerate}
-\item The SCARV-CPU.
-\item The local memory interconnect.
-\item The local RAM and ROM memories.
-\item An AXI4-Lite bus bridge, which connects the core subsystem to
-      external peripherals.
-\end{enumerate}
-
-
-\noindent The current Xilinx specific outer layer is made up of:
-
-\begin{enumerate}
-\item System clock generation.
-\item System reset control.
-\item AXI UART peripheral.
-\item AXI GPIO peripheral.
-\end{enumerate}
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+{\bf Inner Layer}           & {\bf Outer layer} \\ \hline
+SCARV-CPU.                  & System clock generation. \\
+local memory interconnect.  & System reset control. \\
+local RAM and ROM memories. & AXI UART peripheral. \\
+AXI4-Lite bus bridge.       & AXI GPIO peripheral.
+\end{tabular}
+\caption{Main subsystem components of the \SCARVSOC, organised by
+the implementation layer they exist in.}
+\label{tab:design:overview:component-layers}
+\end{table}
 
