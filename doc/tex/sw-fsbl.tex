@@ -1,3 +1,47 @@
 
-% TODO: Purpose, source files, build process, Usage protocol.
+The First Stage Bootloader (FSBL) is used to download programs
+into the local RAM.
+It executes exclusively from the local ROM.
+Source code for the FSBL is kept in
+\SOCDIR{src/fsbl}.
+Operation of the FSBL is as follows.
+
+\begin{enumerate}
+
+\item When the SoC is first reset, the initial CPU Program Counter value
+    points to the base address of the ROM.
+    The ROM contains the FSBL, which is the first thing executed.
+
+\item Initially, the FSBL zeros all general purpose registers and
+    disabled interrupts globally.
+    This is done in the {\tt boot.S} file.
+
+\item It then initialises the stack pointer to the the top of the RAM,
+    and jumps from the {\tt boot.S} file  to the {\tt fsbl\_main} function
+    in {\tt fsbl.c}.
+
+\item The C code prints a welcome message to indicate the bootloader is
+    active: \\ ``{\tt scarv-soc fsbl\textbackslash n}".
+
+\item It then waits for a $4$-byte, little-endian sequence from the
+    UART, indicating the size of the program to be downloaded in bytes.
+
+\item Next, it waits for another $4$-byte little endian sequence indicating
+    {\em where} in the memory space to dump the downloaded program.
+
+\item It then waits until the requisite number of bytes are downloaded
+    and stored at the correct memory address.
+
+\item Once the entire program is downloaded, it jumps to the start address
+    of the program. I.e. it's start location in memory.
+
+\item The new program {\em should not} depend on the stack pointer or
+    to of the RAM memory to be zero'd out, and may contain it's
+    own boot sequence to setup things like interrupts and the stack space.
+
+\end{enumerate}
+
+It may be helpful to compare operation of the FSBL with the explanation
+of the emulated UART and \SOCDIR{bin/upload-program.py} scripts
+in \SECREF{flow:verilator:uart}.
 
