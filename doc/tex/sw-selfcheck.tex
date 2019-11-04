@@ -1,0 +1,184 @@
+
+The selfchecking tests are used as simple smoke-tests to make sure
+that large features are working in the general case.
+They {\em do not} consitute a proper functional verification effort.
+
+\subsubsection{Selfchecking Tests Bootloader}
+
+The selfchecking tests use a dedicated bootloader.
+In normal usage, programs are downloaded to the SoC via the
+First Stage Bootloader (FSBL, \SECREF{sw:fsbl}).
+For testing purposes though, this is slow and not useful.
+Instead, the self-checking programs are directly loaded into
+the RAM memories.
+
+This means the normal FSBL is not needed, so it is replaced by the one in
+\SOCDIR{verif/selfcheck/bootloader}.
+All this bootloader does is zero the general purpose registers,
+disable interrupts and jump to the main program RAM.
+The compiled version of this bootloader forms the {\tt rom.hex}
+file for each selfchecking test.
+
+\subsubsection{Test listing}
+
+The following is a list of the tests and a short description of
+their purpose.
+
+\begin{itemize}
+\item {\tt 00\_example} - A skeleton test which does nothing but boot
+    and pass. 
+    Useful for developing new tests or understanding the make flow.
+
+\item {\tt 01\_simple} -
+    Computes Fibonacci numbers. Tests that general instruction
+    code execution works and that the stack functions correctly.
+
+\item {\tt 02\_ram\_rom\_data} -
+    Checks that we can properly read and write to the RAM/ROM
+    modules as appropriate.
+
+\item {\tt 03\_data\_load\_error} -
+    Checks that a data load to unmapped addresses correctly returns an
+    error response.
+
+\item {\tt 04\_data\_store\_error} -
+    Checks that a data store to unmapped addresses correctly returns an
+    error response.
+
+\item {\tt 05\_instr\_bus\_error} - 
+    Checks if trying to execute instructions from unmapped memory
+    correctly returns an error response.
+
+\item {\tt 06\_axi\_bridge} -
+    Checks that the AXI bridge can be used to access the outer
+    SoC layer.
+
+\item {\tt 07\_axi\_uart} - 
+    Tests the UART driver and emulated model.
+
+\item {\tt 08\_rng}
+    Checks that the random number generator instantiation has been
+    correctly integrated with the SCARV-CPU.
+
+\end{itemize}
+
+\subsubsection{Building Tests}
+
+The selfchecking tests are organised as shown in table
+\ref{tab:sw:selfcheck:organisation}.
+The following commands show how to build the tests.:
+
+\begin{itemize}
+
+\item The selfchecking test bootloader is build with:
+
+\begin{lstlisting}[language=bash,style=block]
+> make selfcheck-bootloader
+\end{lstlisting}
+    
+    If needed, the bootloader is automatically (re-)built by any target
+    which needs it.
+
+\item An individual test can be built using:
+
+\begin{lstlisting}[language=bash,style=block]
+> make selfcheck-build-test_<X>
+> make selfcheck-build-test_00_example
+\end{lstlisting}
+
+    where {\tt <x>} corresponds to one of the {\tt test\_X} folders
+    in \SOCDIR{verif/selfcheck}.
+
+\item Building any test places all build artifacts in
+    \SOCDIR[\SOCWORK]{selfcheck/test\_*}.
+
+    This includes the compiled elf file, disassembly, GTKWave
+    annotations and simulation hex file images.
+    It is the {\tt *.hex} files which are loaded by the simulations.
+
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+Directory & Description \\ \hline
+\SOCHOME/flow/selfcheck    & Makefiles and linker scripts for building and running tests. \\
+\SOCHOME/verif/selfcheck   & Root directory for selfchecking test sources \\
+\hspace{1.0cm} bootloader/ & Source code for the selfchecking test bootloader. \\
+\hspace{1.0cm} share/      & Shared source code for commonly used functions. \\
+\hspace{1.0cm} test\_XX\_X/& Contains all source code for test X. \\
+\SOCWORK/selfcheck         & All generated build artifacts are put here. \\
+\end{tabular}
+\caption{Selfchecking tests directory organisation}
+\label{tab:sw:selfcheck:organisation}
+\end{table}
+
+
+\subsubsection{Running Tests}
+
+\begin{itemize}
+
+\item Any test can be run using the make flow:
+
+\begin{lstlisting}[language=bash,style=block]
+> make selfcheck-run-test_<X>
+> make selfcheck-run-test_00_example
+\end{lstlisting}
+
+    This will run the test, and display a pass or fail result.
+
+\item By default, selfchecking tests do not dump waveform views.
+    To turn this on, run with:
+
+\begin{lstlisting}[language=bash,style=block]
+> make SELFCHECK_WAVES=1 selfcheck-run-test_<X>
+> make SELFCHECK_WAVES=1 selfcheck-run-test_00_example
+\end{lstlisting}
+
+    This will cause a {\tt test\_00\_example.vcd} file to be written into
+    \SOCDIR[\SOCWORK]{/selfcheck/test\_00\_example}.
+
+\item All of the selfchecking tests can be run using:
+
+\begin{lstlisting}[language=bash,style=block]
+> make selfcheck-run-all
+\end{lstlisting}
+
+    Again, the {\tt SELFCHECK\_WAVES=1} argument can be added to dump waves.
+
+\begin{lstlisting}[language=bash,style=block]
+> make SELFCHECK_WAVES=1 selfcheck-run-all
+\end{lstlisting}
+
+    It is recommended to run selfchecking tests each time an RTL
+    change is made to the SoC as a sanity check, before running the
+    formal verification flow.
+
+\end{itemize}
+
+
+\subsubsection{Adding New Tests}
+
+\begin{itemize}
+\item Create a new directory under \SOCDIR{verif/selfcheck/} named
+    in the form {\tt test\_XX\_Y}, where {\tt XX} is the next available
+    test number, and {\tt Y} is a short descriptive name.
+
+\item All source files for the program should live in this directory.
+    It is easiest to copy the example test program and extend it.
+
+\item All C and assembly files in that folder are automatically included.
+    The make flow performs whole program compilation. Essentially,
+    every source file in the folder is fed to a single GCC invocation.
+
+\item The folder path is automatically added to the header include
+    search path.
+
+\item Programs can also include the {\tt selfcheck.h} header, which
+    grants access to all of the functions in\\
+    \SOCDIR{verif/selfcheck/share}.
+
+\item Pass or fail is determined by the return value of the C main function.
+    Return $0$ for pass, or non-$0$ for failure.
+\end{itemize}
+
