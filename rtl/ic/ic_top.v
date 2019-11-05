@@ -118,6 +118,13 @@ parameter MAP_AXI_MASK  = 32'hF000_0000;
 parameter MAP_AXI_RANGE = 32'h0FFF_FFFF;
 
 //
+// Feature Parameters
+// ------------------------------------------------------------
+
+// Turn the AXI bridge on (1) or off (0).
+parameter ENABLE_AXI_BRIDGE = 1;
+
+//
 // Input request address decoding.
 // ------------------------------------------------------------
 
@@ -293,6 +300,8 @@ ic_rsp_router i_rsp_router_dmem_axi (
 .route_periph_rsp(route_rsp_dmem_axi)
 );
 
+generate if(ENABLE_AXI_BRIDGE) begin // ENABLE_AXI_BRIDGE = 1
+
 ic_cpu_bus_axi_bridge i_cpu_dmem_axi_bridge (
 .m0_aclk         (g_clk           ), // AXI Clock
 .m0_aresetn      (g_resetn        ), // AXI Reset
@@ -327,6 +336,39 @@ ic_cpu_bus_axi_bridge i_cpu_dmem_axi_bridge (
 .mem_error       (axi_dmem_error  ), // Error
 .mem_rdata       (axi_dmem_rdata  )  // Read data
 );
+
+end else begin                       // ENABLE_AXI_BRIDGE = 0
+
+// Tie all unused AXI signals to zero.
+assign m0_awvalid = 0; //
+assign m0_awaddr  = 0; //
+assign m0_awprot  = 0; //
+assign m0_wvalid  = 0; //
+assign m0_wdata   = 0; //
+assign m0_wstrb   = 0; //
+assign m0_bready  = 0; //
+assign m0_arvalid = 0; //
+assign m0_araddr  = 0; //
+assign m0_arprot  = 0; //
+assign m0_rready  = 0; //
+
+ic_error_rsp_stub i_error_stub_axi (
+.g_clk      (g_clk          ),
+.g_resetn   (g_resetn       ),
+.enable     (axi_dmem_req   ), // Enable requests / does addr map?
+.mem_req    (axi_dmem_req   ), // Start memory request
+.mem_gnt    (axi_dmem_gnt   ), // request accepted
+.mem_wen    ( 1'b0          ), // Write enable
+.mem_strb   ( 4'b0          ), // Write strobe
+.mem_wdata  (32'b0          ), // Write data
+.mem_addr   (32'b0          ), // Read/Write address
+.mem_recv   (axi_dmem_recv  ), // Instruction memory recieve response.
+.mem_ack    (axi_dmem_ack   ), // Instruction memory ack response.
+.mem_error  (axi_dmem_error ), // Error
+.mem_rdata  (axi_dmem_rdata )  // Read data
+);
+
+end endgenerate
 
 //
 // Data <-> Error Response

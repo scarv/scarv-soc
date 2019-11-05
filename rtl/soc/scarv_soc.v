@@ -60,6 +60,14 @@ parameter           BRAM_ROM_SIZE      = 1024;
 // Size of the RAM memory in bytes.
 parameter           BRAM_RAM_SIZE      = 65536;
 
+
+//
+// Interconnect parameters
+// ------------------------------------------------------------
+
+// Turn the AXI bridge on (1) or off (0).
+parameter IC_ENABLE_AXI_BRIDGE = 1;
+
 //
 // RNG Parameters
 // ------------------------------------------------------------
@@ -223,7 +231,9 @@ frv_core #(
 // Memory Interconnect Instance
 // ------------------------------------------------------------
 
-ic_top i_ic_top (
+ic_top #(
+.ENABLE_AXI_BRIDGE(IC_ENABLE_AXI_BRIDGE)
+) i_ic_top (
 .g_clk            (g_clk            ),
 .g_resetn         (g_resetn         ),
 .cpu_imem_req     (cpu_imem_req     ), // Start memory request
