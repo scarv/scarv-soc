@@ -56,7 +56,7 @@ read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_rngif.v
 
 #
 # Memories
-read_verilog $::env(SOC_HOME)/rtl/mem/scarv_soc_bram_dual_synth_xilinx_xc7k.v
+read_verilog $::env(SOC_HOME)/rtl/mem/scarv_soc_bram_dual_synth_lattice.v
 
 #
 # SCARV SoC top level sources.

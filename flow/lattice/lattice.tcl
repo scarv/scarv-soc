@@ -3,8 +3,11 @@ yosys -import
 
 tcl  $::env(SOC_HOME)/flow/lattice/scarv-soc-rtl.tcl
 
-synth_ice40 -top scarv_soc
+# Lattice specific top level
+read_verilog  $::env(SOC_HOME)/rtl/lattice/lattice_top.v
 
-write_json $::env(SOC_WORK)/lattice/scarv_soc.json
+synth_ice40 -top lattice_top -dsp
+
+write_json $::env(SOC_WORK)/lattice/lattice_top.json
 
 

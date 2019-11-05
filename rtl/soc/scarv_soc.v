@@ -54,6 +54,12 @@ parameter [255*8:0] BRAM_ROM_MEMH_FILE = "";
 parameter [255*8:0] BRAM_RAM_MEMH_FILE = "";
 /* verilator lint_on WIDTH */
 
+// Size of the ROM memory in bytes.
+parameter           BRAM_ROM_SIZE      = 1024;
+
+// Size of the RAM memory in bytes.
+parameter           BRAM_RAM_SIZE      = 65536;
+
 //
 // RNG Parameters
 // ------------------------------------------------------------
@@ -387,7 +393,7 @@ ic_cpu_bus_bram_bridge i_rom_dmem_bus_bridge(
 
 scarv_soc_bram_dual #(
 .MEMH_FILE(BRAM_ROM_MEMH_FILE),
-.DEPTH    (1024              ),
+.DEPTH    (BRAM_ROM_SIZE     ),
 .WRITE_EN (0                 )
 ) i_rom (
 .clka (g_clk                ),
@@ -465,7 +471,7 @@ ic_cpu_bus_bram_bridge i_ram_dmem_bus_bridge(
 
 scarv_soc_bram_dual #(
 .MEMH_FILE(BRAM_RAM_MEMH_FILE),
-.DEPTH    (65536             ),
+.DEPTH    (BRAM_RAM_SIZE     ),
 .WRITE_EN (1                 )
 ) i_ram (
 .clka (g_clk                ),

@@ -1,14 +1,15 @@
 
 LATTICE_DIR         = $(SOC_WORK)/lattice
 LATTICE_LOG_YS      = $(SOC_WORK)/lattice/yosys.log
+LATTICE_LOG_PNR     = $(SOC_WORK)/lattice/pnr.log
 LATTICE_YS_SCRIPT   = $(SOC_HOME)/flow/lattice/lattice.tcl
 LATTICE_PCF         = $(SOC_HOME)/flow/lattice/constraints.pcf
 
-LATTICE_TARGET      = hx1k
+LATTICE_TARGET      = up5k
 
-LATTICE_YS_JSON     = $(LATTICE_DIR)/scarv_soc.json
-LATTICE_PNR_BIN     = $(LATTICE_DIR)/scarv_soc.bin
-LATTICE_PNR_ASC     = $(LATTICE_DIR)/scarv_soc.asc
+LATTICE_YS_JSON     = $(LATTICE_DIR)/lattice_top.json
+LATTICE_PNR_BIN     = $(LATTICE_DIR)/lattice_top.bin
+LATTICE_PNR_ASC     = $(LATTICE_DIR)/lattice_top.asc
 
 
 $(LATTICE_YS_JSON) :
@@ -24,7 +25,8 @@ $(LATTICE_PNR_ASC) : $(LATTICE_YS_JSON)
         --$(LATTICE_TARGET) \
         --json $< \
         --pcf $(LATTICE_PCF) \
-        --asc $@
+        --asc $@ \
+        --log $(LATTICE_LOG_PNR)
 
 
 $(LATTICE_PNR_BIN) : $(LATTICE_PNR_ASC)
