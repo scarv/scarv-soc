@@ -32,7 +32,7 @@ parameter   DEPTH = 1024;
 localparam  LW    = $clog2(DEPTH);
 
 //! Memory file to load
-parameter [255*8:0] MEMH_FILE = "NONE";
+parameter [255*8:0] MEMH_FILE = "";
 
 localparam BRAM_DATA_WIDTH = 32    ;
 localparam BRAM_BYTE_WIDTH = 8     ;
