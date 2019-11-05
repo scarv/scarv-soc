@@ -1,0 +1,42 @@
+
+LATTICE_DIR         = $(SOC_WORK)/lattice
+LATTICE_LOG_YS      = $(SOC_WORK)/lattice/yosys.log
+LATTICE_YS_SCRIPT   = $(SOC_HOME)/flow/lattice/lattice.tcl
+LATTICE_PCF         = $(SOC_HOME)/flow/lattice/constraints.pcf
+
+LATTICE_TARGET      = hx1k
+
+LATTICE_YS_JSON     = $(LATTICE_DIR)/scarv_soc.json
+LATTICE_PNR_BIN     = $(LATTICE_DIR)/scarv_soc.bin
+LATTICE_PNR_ASC     = $(LATTICE_DIR)/scarv_soc.asc
+
+
+$(LATTICE_YS_JSON) :
+	mkdir -p $(LATTICE_DIR)
+	yosys \
+        -QT \
+        -l $(LATTICE_LOG_YS) \
+        -c $(LATTICE_YS_SCRIPT)
+
+
+$(LATTICE_PNR_ASC) : $(LATTICE_YS_JSON)
+	nextpnr-ice40 \
+        --$(LATTICE_TARGET) \
+        --json $< \
+        --pcf $(LATTICE_PCF) \
+        --asc $@
+
+
+$(LATTICE_PNR_BIN) : $(LATTICE_PNR_ASC)
+	icepack $< $@
+
+lattice-synth: $(LATTICE_PNR_BIN) $(LATTICE_PNR_ASC) $(LATTICE_YS_JSON)
+
+lattice-gui: $(LATTICE_YS_JSON) $(LATTICE_PNR_ASC)
+	nextpnr-ice40 \
+        --json $(LATTICE_YS_JSON) \
+        --pcf  $(LATTICE_PCF) \
+        --asc  $(LATTICE_PNR_ASC) \
+        --gui
+	
+
