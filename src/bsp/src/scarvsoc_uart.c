@@ -26,10 +26,10 @@ static const uint32_t scarvsoc_uart_reg_stat= 0x2;
 
 /*!
 @warning This function does not block waiting for the UART TX queue,
-    so might drop characters if you don't periodically drain the queue.
+    so might drop characters if you don't periodically drain the TX queue.
 */
 void scarvsoc_uart_putc_nb(
-    scarvsoc_uart_conf conf,   //!< The UART to access.
+    scarvsoc_uart_conf conf,
     char               tx
 ){
     conf[scarvsoc_uart_reg_tx] = (uint32_t)tx;
@@ -39,8 +39,8 @@ void scarvsoc_uart_putc_nb(
 /*!
 */
 void scarvsoc_uart_putc_b(
-    scarvsoc_uart_conf conf,    //!< The UART to access.
-    char               tx       //!< Character to send.
+    scarvsoc_uart_conf conf,
+    char               tx
 ){
     while(!scarvsoc_uart_tx_ready(conf)) {
         // Do nothing / wait.
@@ -52,7 +52,7 @@ void scarvsoc_uart_putc_b(
 /*!
 */
 char scarvsoc_uart_getc_b(
-    scarvsoc_uart_conf conf    //!< The UART to access.
+    scarvsoc_uart_conf conf
 ){
     while(!scarvsoc_uart_rx_avail(conf)) {
         // Do nothing / wait.
@@ -64,7 +64,7 @@ char scarvsoc_uart_getc_b(
 /*!
 */
 char scarvsoc_uart_rx_avail(
-    scarvsoc_uart_conf conf    //!< The UART to access.
+    scarvsoc_uart_conf conf
 ){
     return (conf[scarvsoc_uart_reg_stat] & 0x01);
 }
@@ -73,7 +73,7 @@ char scarvsoc_uart_rx_avail(
 /*!
 */
 char scarvsoc_uart_tx_ready(
-    scarvsoc_uart_conf conf    //!< The UART to access.
+    scarvsoc_uart_conf conf
 ){
     return !(conf[scarvsoc_uart_reg_stat] & (0x01 << 3));
 }
@@ -82,8 +82,8 @@ char scarvsoc_uart_tx_ready(
 /*!
 */
 void scarvsoc_uart_putstr_b (
-    scarvsoc_uart_conf conf,    //!< The UART device to access
-    char *             str      //!< The NULL terminated string to send.
+    scarvsoc_uart_conf conf,
+    char *             str  
 ){
     while(*str != '\0') {
         
@@ -92,5 +92,21 @@ void scarvsoc_uart_putstr_b (
         str++;
 
     }
+}
+
+/*!
+@warning This function will block forever until the right number of
+    bytes has been recieved.
+*/
+void scarvsoc_uart_getstr_b (
+    scarvsoc_uart_conf conf,
+    char *             str, 
+    size_t             len  
+){
+
+    for(size_t i = 0; i < len; i ++) {
+        str[i] = scarvsoc_uart_getc_b(conf);
+    }
+
 }
 

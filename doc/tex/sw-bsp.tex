@@ -9,7 +9,7 @@ against.
 \item The BSP is built using:
 
 \begin{lstlisting}[language=bash,style=block]
-> make scarvsoc-bsp
+> make bsp-lib
 \end{lstlisting}
 
     This builds a static library, and places all build
@@ -36,18 +36,23 @@ Directory & Description \\ \hline
 \item To compile against the BSP, add
     \SOCDIR[\SOCWORK]{bsp/include}
     to the header search path using GCCs {\tt -I} flag, and add the
-    \SOCDIR[\SOCWORK]{bsp/lib/scarvsoc.a}
+    \SOCDIR[\SOCWORK]{bsp/lib/libscarvsocbsp.a}
     to the list of input files.
 
 \item The documentation for the BSP can be built using:
 
 \begin{lstlisting}[language=bash,style=block]
-> make scarvsoc-bsp-docs
+> make bsp-docs
 \end{lstlisting}
 
     This will place the generated HTML documentation in
     \SOCDIR[\SOCWORK]{bsp/doc}.
         
+\item The BSP build can be cleaned up using
+
+\begin{lstlisting}[language=bash,style=block]
+> make bsp-clean
+\end{lstlisting}
 
 \end{itemize}
 

@@ -1,5 +1,6 @@
 
 #include <stdint.h>
+#include <stdlib.h>
 
 #ifndef SCARVSOC_UART_H
 #define SCARVSOC_UART_H
@@ -7,6 +8,12 @@
 /*!
 @defgroup driver_uart UART
 @brief API for the UART peripheral on the SCARV SoC
+@details The UART can be used by including "scarvsoc_uart.h".
+*/
+
+/*!
+@ingroup driver_uart
+@file scarvsoc_uart.h
 */
 
 //! Config object for a single instance of the SCARV SoC UART peripheral.
@@ -80,10 +87,22 @@ char scarvsoc_uart_tx_ready(
 @brief Send a string of characters out via the UART
 @note Blocks until all characters are sent. Uses scarvsoc_uart_putc_b
     underneath.
+@ingroup driver_uart
 */
 void scarvsoc_uart_putstr_b (
     scarvsoc_uart_conf conf,    //!< The UART device to access
     char *             str      //!< The NULL terminated string to send.
+);
+
+/*!
+@brief Read a string of given length from the UART.
+@note Blocks until all characters are recieved.
+@ingroup driver_uart
+*/
+void scarvsoc_uart_getstr_b (
+    scarvsoc_uart_conf conf,    //!< The UART device to access
+    char *             str,     //!< Buffer to store the recieved string in.
+    size_t             len      //!< Number of characters to recieve.
 );
 
 #endif

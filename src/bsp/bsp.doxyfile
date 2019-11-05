@@ -6,7 +6,7 @@
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = "SCARV-SoC BSP"
 PROJECT_NUMBER         =
-PROJECT_BRIEF          = "The SCARV-SoC Board Support Package"
+PROJECT_BRIEF          = ""
 PROJECT_LOGO           =
 OUTPUT_DIRECTORY       = ./work/bsp/doc
 CREATE_SUBDIRS         = NO

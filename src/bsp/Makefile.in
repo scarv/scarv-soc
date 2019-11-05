@@ -9,7 +9,7 @@ BSP_HEADERS = $(addprefix $(BSP_INCLUDE)/,$(notdir $(BSP_HEAD_SRC)))
 BSP_SRCS    = $(wildcard $(SOC_HOME)/src/bsp/src/*.c)
 BSP_OBJ     = $(addprefix $(BSP_BUILD)/obj/,$(notdir $(BSP_SRCS:%.c=%.o)))
 
-BSP_LIB     = $(BSP_BUILD)/lib/scarvsoc.a
+BSP_LIB     = $(BSP_BUILD)/lib/libscarvsocbsp.a
 
 BSP_CFLAGS  = -O2 -Wall -march=rv32imc -mabi=ilp32 \
               -I$(BSP_INCLUDE)
@@ -26,8 +26,13 @@ $(BSP_INCLUDE)/%.h : $(SOC_HOME)/src/bsp/include/%.h
 	@mkdir -p $(dir $@)
 	cp $< $@
 
-scarvsoc-bsp        : $(BSP_LIB) $(BSP_HEADERS)
+bsp-lib    : $(BSP_LIB) $(BSP_HEADERS)
 
-scarvsoc-bsp-docs   : $(BSP_SRCS) $(BSP_HEAD_SRC)
+bsp-docs   : $(BSP_SRCS) $(BSP_HEAD_SRC)
 	doxygen $(SOC_HOME)/src/bsp/bsp.doxyfile
+
+bsp-clean  :
+	rm -rf $(BSP_BUILD)
+
+bsp-all    : bsp-lib bsp-docs
 
