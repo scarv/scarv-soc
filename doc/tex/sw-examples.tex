@@ -3,3 +3,66 @@
 % - name, purpose, source files, how to run.
 %
 
+The project includes example programs.
+These demonstrate SoC functionality, how to use it, and how to
+build programs that use the \SCARVSOC BSP.
+Shared code used by multiple example programs is kept in
+\SOCDIR{src/examples/share}.
+The Makefile which discovers and builds example programs is
+\SOCDIR{src/examples/Makefile.in}.
+Studying this will explain how the build flow for example programs
+works.
+
+\subsubsection{UART Example}
+
+The UART example program shows how to use the UART peripheral in
+the BSP, and acts as an ``echo" program: echoing any characters the
+user types into their terminal back to them.
+
+\begin{itemize}
+
+\item Source files for the UART example are kepts in
+    \SOCDIR{src/examples/uart}.
+
+\item The UART example program can be built with:
+
+\begin{lstlisting}[language=bash,style=block]
+> make example-uart
+\end{lstlisting}
+
+    This will compile the BSP (if needed), and link it against the
+    complied example program.
+    It will also build a verilated model which is setup to load the
+    relevent memory images.
+    Build artifacts are placed in
+    \SOCDIR[\SOCWORK]{examples/uart}.
+
+\item The UART example program can be run using:
+
+\begin{lstlisting}[language=bash,style=block]
+> make run-example-uart
+cp \$SOC_WORK/fsbl/fsbl.hex  \$SOC_WORKexamples/uart/rom.hex
+cp \$SOC_WORK/verilator/verilated    \$SOC_WORK/examples/uart/verilated
+cd \$SOC_WORK/examples/uart ; ./verilated +TIMEOUT=10000000 +WAIT
+>> ./verilated +TIMEOUT=10000000 +WAIT
+>> Timeout after 10000000 cycles.
+>> Open Slave UART at: /dev/pts/5
+>> Press return to begin simulation:
+\end{lstlisting}
+
+    This will start the verilated model and open an emulated UART
+    port, which you can connect your favourite serial terminal application
+    too.
+
+    After connecting your serial terminal to the correct port (you do
+    not need to set the correct BAUD rate for the emulated port), return
+    to the terminal session where the verilated model is running and
+    press return.
+
+    You can now start typing in the serial terminal.
+    There should be a welcome message, followed by an echo of whatever
+    you type.
+    Typing ``!" aborts the UART program.
+
+\end{itemize}
+
