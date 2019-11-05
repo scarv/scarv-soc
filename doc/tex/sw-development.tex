@@ -1,3 +1,25 @@
 
-% TODO: Explain how best to develop software targeting the SoC.
+The following is a short guide / set of recommendations about building
+software targeting the \SCARVSOC.
+
+\begin{itemize}
+
+\item You have $64$Kb of RAM to play with. Remember this.
+
+\item While there is nothing stopping you from writing your own
+    device drivers for peripherals on the SoC, it will be easier
+    to link your program against the \SCARVSOC.
+    Instructions for this can be found in \SECREF{sw:bsp}.
+
+\item It will be simpler to run and debug your programs in a simulated
+    environment rather than on actual hardware.
+    Studying the selfchecking test and example program build and
+    simulation flows will demonstrate how to do this.
+
+\item The \SCARVCPU supports custom extensions for cryptography
+    which cannot be accessed without a specialist toolchain.
+    This can be obtained from
+    \url{https://github.com/scarv/riscv-tools}.
+
+\end{itemize}
 
