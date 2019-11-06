@@ -149,18 +149,7 @@ assign ram_imem_strb  = cpu_imem_strb ; // Write strobe
 assign ram_imem_wdata = cpu_imem_wdata; // Write data
 assign ram_imem_addr  = cpu_imem_addr ; // Read/Write address
 
-wire   route_rsp_imem_ram;
-
-ic_rsp_router i_rsp_router_imem_ram (
-.g_clk           (g_clk             ),
-.g_resetn        (g_resetn          ),
-.cpu_ack         (cpu_imem_ack      ),
-.periph_req      (ram_imem_req      ),
-.periph_ack      (ram_imem_ack      ),
-.periph_recv     (ram_imem_recv     ),
-.periph_gnt      (ram_imem_gnt      ),
-.route_periph_rsp(route_rsp_imem_ram)
-);
+assign ram_imem_ack   = imem_rsp_mask_ram && cpu_imem_ack;
 
 //
 // Instruction <-> Error Response
@@ -170,11 +159,9 @@ wire        err_imem_req    = ic_imem_error && cpu_imem_req;
 
 wire        err_imem_gnt    ;
 wire        err_imem_recv   ;
-wire        err_imem_ack    ;
+wire        err_imem_ack    = imem_rsp_mask_err && cpu_imem_ack;
 wire        err_imem_error  ;
 wire [31:0] err_imem_rdata  ;
-
-wire        route_rsp_imem_err   ;
 
 ic_error_rsp_stub i_error_stub_imem (
 .g_clk      (g_clk          ),
@@ -192,17 +179,6 @@ ic_error_rsp_stub i_error_stub_imem (
 .mem_rdata  (err_imem_rdata )  // Read data
 );
 
-ic_rsp_router i_rsp_router_imem_err (
-.g_clk           (g_clk             ),
-.g_resetn        (g_resetn          ),
-.cpu_ack         (cpu_imem_ack      ),
-.periph_req      (err_imem_req      ),
-.periph_ack      (err_imem_ack      ),
-.periph_recv     (err_imem_recv     ),
-.periph_gnt      (err_imem_gnt      ),
-.route_periph_rsp(route_rsp_imem_err)
-);
-
 //
 // Instruction <-> ROM Routing
 // ------------------------------------------------------------
@@ -214,18 +190,8 @@ assign rom_imem_strb  = cpu_imem_strb ; // Write strobe
 assign rom_imem_wdata = cpu_imem_wdata; // Write data
 assign rom_imem_addr  = cpu_imem_addr ; // Read/Write address
 
-wire   route_rsp_imem_rom   ;
+assign rom_imem_ack   = imem_rsp_mask_rom && cpu_imem_ack;
 
-ic_rsp_router i_rsp_router_imem_rom (
-.g_clk           (g_clk             ),
-.g_resetn        (g_resetn          ),
-.cpu_ack         (cpu_imem_ack      ),
-.periph_req      (rom_imem_req      ),
-.periph_ack      (rom_imem_ack      ),
-.periph_recv     (rom_imem_recv     ),
-.periph_gnt      (rom_imem_gnt      ),
-.route_periph_rsp(route_rsp_imem_rom)
-);
 
 //
 // Data <-> RAM Routing
@@ -238,18 +204,7 @@ assign ram_dmem_strb  = cpu_dmem_strb ; // Write strobe
 assign ram_dmem_wdata = cpu_dmem_wdata; // Write data
 assign ram_dmem_addr  = cpu_dmem_addr ; // Read/Write address
 
-wire   route_rsp_dmem_ram;
-
-ic_rsp_router i_rsp_router_dmem_ram (
-.g_clk           (g_clk             ),
-.g_resetn        (g_resetn          ),
-.cpu_ack         (cpu_dmem_ack      ),
-.periph_req      (ram_dmem_req      ),
-.periph_ack      (ram_dmem_ack      ),
-.periph_recv     (ram_dmem_recv     ),
-.periph_gnt      (ram_dmem_gnt      ),
-.route_periph_rsp(route_rsp_dmem_ram)
-);
+assign ram_dmem_ack   = dmem_rsp_mask_ram && cpu_dmem_ack;
 
 //
 // Data <-> ROM Routing
@@ -262,18 +217,7 @@ assign rom_dmem_strb  = cpu_dmem_strb ; // Write strobe
 assign rom_dmem_wdata = cpu_dmem_wdata; // Write data
 assign rom_dmem_addr  = cpu_dmem_addr ; // Read/Write address
 
-wire   route_rsp_dmem_rom   ;
-
-ic_rsp_router i_rsp_router_dmem_rom (
-.g_clk           (g_clk             ),
-.g_resetn        (g_resetn          ),
-.cpu_ack         (cpu_dmem_ack      ),
-.periph_req      (rom_dmem_req      ),
-.periph_ack      (rom_dmem_ack      ),
-.periph_recv     (rom_dmem_recv     ),
-.periph_gnt      (rom_dmem_gnt      ),
-.route_periph_rsp(route_rsp_dmem_rom)
-);
+assign rom_dmem_ack   = dmem_rsp_mask_rom && cpu_dmem_ack;
 
 //
 // Data <-> AXI
@@ -283,22 +227,9 @@ wire        axi_dmem_req    = ic_dmem_route_axi && cpu_dmem_req;
 
 wire        axi_dmem_gnt    ;
 wire        axi_dmem_recv   ;
-wire        axi_dmem_ack    ;
+wire        axi_dmem_ack    = dmem_rsp_mask_axi && cpu_dmem_ack;;
 wire        axi_dmem_error  ;
 wire [31:0] axi_dmem_rdata  ;
-
-wire   route_rsp_dmem_axi   ;
-
-ic_rsp_router i_rsp_router_dmem_axi (
-.g_clk           (g_clk             ),
-.g_resetn        (g_resetn          ),
-.cpu_ack         (cpu_dmem_ack      ),
-.periph_req      (axi_dmem_req      ),
-.periph_ack      (axi_dmem_ack      ),
-.periph_recv     (axi_dmem_recv     ),
-.periph_gnt      (axi_dmem_gnt      ),
-.route_periph_rsp(route_rsp_dmem_axi)
-);
 
 generate if(ENABLE_AXI_BRIDGE) begin // ENABLE_AXI_BRIDGE = 1
 
@@ -378,11 +309,9 @@ wire        err_dmem_req    = ic_dmem_error && cpu_dmem_req;
 
 wire        err_dmem_gnt    ;
 wire        err_dmem_recv   ;
-wire        err_dmem_ack    ;
+wire        err_dmem_ack    = dmem_rsp_mask_err && cpu_dmem_ack;
 wire        err_dmem_error  ;
 wire [31:0] err_dmem_rdata  ;
-
-wire        route_rsp_dmem_err   ;
 
 ic_error_rsp_stub i_error_stub_dmem (
 .g_clk      (g_clk          ),
@@ -398,17 +327,6 @@ ic_error_rsp_stub i_error_stub_dmem (
 .mem_ack    (err_dmem_ack   ), // Instruction memory ack response.
 .mem_error  (err_dmem_error ), // Error
 .mem_rdata  (err_dmem_rdata )  // Read data
-);
-
-ic_rsp_router i_rsp_router_dmem_err (
-.g_clk           (g_clk             ),
-.g_resetn        (g_resetn          ),
-.cpu_ack         (cpu_dmem_ack      ),
-.periph_req      (err_dmem_req      ),
-.periph_ack      (err_dmem_ack      ),
-.periph_recv     (err_dmem_recv     ),
-.periph_gnt      (err_dmem_gnt      ),
-.route_periph_rsp(route_rsp_dmem_err)
 );
 
 //
