@@ -51,8 +51,9 @@ bool memory_device_gpio::write_byte (
         reg_gpio2_tri  = (reg_gpio2_tri  & mask) | tw;
     }
     else {
-        return 0;
+        return false;
     }
+    return true;
 }
 
 
