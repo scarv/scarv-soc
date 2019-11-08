@@ -8,6 +8,10 @@ read_verilog $::env(SOC_HOME)/rtl/ic/ic_rsp_tracker.v
 read_verilog $::env(SOC_HOME)/rtl/ic/ic_error_rsp_stub.v
 read_verilog $::env(SOC_HOME)/rtl/ic/ic_top.v
 
+#
+# Random number generator sources
+read_verilog $::env(SOC_HOME)/rtl/rng/scarv_rng_lfsr.v
+read_verilog $::env(SOC_HOME)/rtl/rng/scarv_rng_top.v
 
 #
 # XCrypto + SCARV CPU sources.
@@ -49,7 +53,7 @@ read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_rngif.v
 
 #
 # Memories
-read_verilog $::env(SOC_HOME)/rtl/mem/scarv_soc_bram_synth_yosys.v
+read_verilog $::env(SOC_HOME)/rtl/mem/scarv_soc_bram_dual_synth_yosys.v
 
 
 #
