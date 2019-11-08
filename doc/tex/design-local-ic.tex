@@ -58,10 +58,6 @@ A brief description of each module is:
     Any requests which do not map to a valid part of the address space are
     mapped to this peripheral.
 
-\item \SOCMODULE{ic\_rsp\_router} - 
-    Instanced per-peripheral, and tracks how many outstanding requests
-    there are for said peripheral.
-
 \item \SOCMODULE{ic\_rsp\_tracker} - 
     A FIFO which is instanced per CPU memory interface.
     Makes sure delayed responses are returned in the correct order.
