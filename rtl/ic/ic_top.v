@@ -475,19 +475,24 @@ ic_addr_decode ic_addr_decode_cpu_dmem (
 initial assume(!g_resetn);
 
 always @(posedge g_clk) if(g_resetn && $past(g_resetn)) begin
-    
+
     assert(!(imem_rsp_mask_err && imem_rsp_mask_rom));
 
     assert(!(imem_rsp_mask_err && imem_rsp_mask_ram));
 
     assert(!(imem_rsp_mask_ram && imem_rsp_mask_rom));
 
+    assert(!(dmem_rsp_mask_err && dmem_rsp_mask_rom));
+
+    assert(!(dmem_rsp_mask_err && dmem_rsp_mask_ram));
+
+    assert(!(dmem_rsp_mask_ram && dmem_rsp_mask_rom));
     
-    assert(!(route_rsp_dmem_ram && route_rsp_dmem_rom));
+    assert(!(dmem_rsp_mask_ram && dmem_rsp_mask_axi));
     
-    assert(!(route_rsp_dmem_ram && route_rsp_dmem_axi));
-   
-    assert(!(route_rsp_dmem_rom && route_rsp_dmem_axi));
+    assert(!(dmem_rsp_mask_err && dmem_rsp_mask_axi));
+    
+    assert(!(dmem_rsp_mask_rom && dmem_rsp_mask_axi));
 
 
     if($past(cpu_imem_recv) && !$past(cpu_imem_ack)) begin

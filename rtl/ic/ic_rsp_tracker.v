@@ -75,6 +75,10 @@ always @(posedge g_clk) if(g_resetn && $past(g_resetn)) begin
 
     assert(!(new_req && !ready));
 
+    if(!$past(ready)) begin
+        assert($stable(requests));
+    end
+
 end
 
 `endif
