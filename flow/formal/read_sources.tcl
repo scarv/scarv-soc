@@ -10,7 +10,6 @@ yosys -import
 read_verilog $::env(SOC_HOME)/rtl/ic/ic_addr_decode.v
 read_verilog $::env(SOC_HOME)/rtl/ic/ic_cpu_bus_bram_bridge.v
 read_verilog $::env(SOC_HOME)/rtl/ic/ic_cpu_bus_axi_bridge.v
-read_verilog $::env(SOC_HOME)/rtl/ic/ic_rsp_router.v
 read_verilog $::env(SOC_HOME)/rtl/ic/ic_rsp_tracker.v
 read_verilog $::env(SOC_HOME)/rtl/ic/ic_error_rsp_stub.v
 read_verilog $::env(SOC_HOME)/rtl/ic/ic_top.v
