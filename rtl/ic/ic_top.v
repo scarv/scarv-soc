@@ -227,7 +227,7 @@ wire        axi_dmem_req    = ic_dmem_route_axi && cpu_dmem_req;
 
 wire        axi_dmem_gnt    ;
 wire        axi_dmem_recv   ;
-wire        axi_dmem_ack    = dmem_rsp_mask_axi && cpu_dmem_ack;;
+wire        axi_dmem_ack    = dmem_rsp_mask_axi && cpu_dmem_ack;
 wire        axi_dmem_error  ;
 wire [31:0] axi_dmem_rdata  ;
 
