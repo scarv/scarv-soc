@@ -1,20 +1,33 @@
-# [SCARV](https://github.com/scarv): SoC
+# [SCARV](https://github.com/scarv/scarv): SoC implementation 
 
----
+<!--- -------------------------------------------------------------------- --->
 
-*Acting as a component part of the
+*Acting as a component part of the wider
 [SCARV](https://www.scarv.org)
 project,
-SCARV-SoC is a technology demonstrator for several outputs of the SCARV Project.
-The SoC consists of a set of common peripherals,
-controlled by a custom
-[RISC-V CPU](https://github.com:/scarv/scarv-cpu),
-augmented with the
+the
+[RISC-V](https://riscv.org)
+compatible SCARV micro-controller
+(comprising a processor core and SoC)
+is the eponymous, capstone output,
+e.g., representing a demonstrator for the
 [XCrypto](https://github.com/scarv/xcrypto)
-instruction set extensions.
-Together,
-this forms an integrated side-channel aware SoC,
-capable of efficient and secure cryptographic code execution.*
+ISE.
+The main
+[repository](https://github.com/scarv/scarv)
+acts as a general container for associated resources;
+this specific submodule houses
+the 
+SoC
+implementation, i.e., infra-structure (such as memory and
+peripherals) surrounding the associated processor core.*
 
----
+<!--- -------------------------------------------------------------------- --->
 
+## Acknowledgements
+
+This work has been supported in part by EPSRC via grant 
+[EP/R012288/1](https://gow.epsrc.ukri.org/NGBOViewGrant.aspx?GrantRef=EP/R012288/1),
+under the [RISE](http://www.ukrise.org) programme.
+
+<!--- -------------------------------------------------------------------- --->
