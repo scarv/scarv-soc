@@ -67,7 +67,15 @@ void testbench::drain_dut_trace() {
 
         }
 
+        if (packet.program_counter >= 0x20000000) {
+            printf("%x %x\n", packet.program_counter, packet.instr_word);
+        }
+
         dut -> dut_trace.pop();
+
+        if (packet.program_counter >= 0x20000000) {
+            getc(stdin);
+        }
 
     }
 
