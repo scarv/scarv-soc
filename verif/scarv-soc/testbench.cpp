@@ -73,9 +73,9 @@ void testbench::drain_dut_trace() {
 
         dut -> dut_trace.pop();
 
-        if (packet.program_counter >= 0x20000000) {
-            getc(stdin);
-        }
+        //if (packet.program_counter >= 0x20000000) {
+        //    getc(stdin);
+        //}
 
     }
 
