@@ -24,8 +24,8 @@ Offset  |  Register
 --------|----------------------
 0x0     | RX
 0x4     | TX
-0x8     | CTRL
-0xC     | STATUS
+0x8     | STATUS
+0xC     | CTRL
 */
 class memory_device_uart : public memory_device {
 
