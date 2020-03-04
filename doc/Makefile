@@ -20,7 +20,11 @@ dir   :
 	@mkdir --parents ${BUILD}
 	@mkdir --parents ${BUILD}/image
 
-all   : dir ${BUILD}/scarvsoc.pdf
+doxygen:
+	@mkdir -p ${SOC_WORK}/doc/verilator-testbench
+	doxygen verilator-environment.doxygen
+
+all   : dir ${BUILD}/scarvsoc.pdf doxygen
 
 clean :
 	@rm -rf ${BUILD}
