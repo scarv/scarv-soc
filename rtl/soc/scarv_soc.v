@@ -125,6 +125,8 @@ wire        cpu_dmem_ack        ; // Data memory ack response.
 wire        cpu_dmem_error      ; // Error
 wire [31:0] cpu_dmem_rdata      ; // Read data
 
+wire        cpu_int_mtime       ; // Machine timer interrupt triggered.
+
 //
 // Memory peripheral routing wires.
 // ------------------------------------------------------------
@@ -204,6 +206,7 @@ frv_core #(
 .int_external   (cpu_int_external   ), // External interrupt trigger line.
 .int_extern_cause(cpu_int_ext_cause ), // External interrupt cause
 .int_software   (cpu_int_software   ), // Software interrupt trigger line.
+.int_mtime      (cpu_int_mtime      ), // Machine timer interrupt triggered.
 .imem_req       (cpu_imem_req       ), // Start memory request
 .imem_wen       (cpu_imem_wen       ), // Write enable
 .imem_strb      (cpu_imem_strb      ), // Write strobe
