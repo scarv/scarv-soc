@@ -18,11 +18,17 @@ void testbench::build() {
         this -> bus_ram_range
     );
 
+    this -> ethernet = new memory_device_ethernet(
+        this -> ethernet_base_address,
+        this -> ethernet_range
+    );
+
     this -> bus = new memory_bus();
 
     this -> bus -> add_device(this -> uart);
     this -> bus -> add_device(this -> gpio);
     this -> bus -> add_device(this -> bus_ram);
+    this -> bus -> add_device(this -> ethernet);
 
     this -> dut = new dut_wrapper(
         this -> bus       ,
@@ -67,9 +73,9 @@ void testbench::drain_dut_trace() {
 
         }
 
-        if (packet.program_counter >= 0x20000000) {
-            printf("%x %x\n", packet.program_counter, packet.instr_word);
-        }
+        //if (packet.program_counter >= 0x20000000) {
+        //    printf("%x %x\n", packet.program_counter, packet.instr_word);
+        //}
 
         dut -> dut_trace.pop();
 

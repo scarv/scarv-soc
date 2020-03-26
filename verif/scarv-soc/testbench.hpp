@@ -8,6 +8,7 @@
 #include "memory_bus/memory_device_ram.hpp"
 #include "memory_bus/memory_device_uart.hpp"
 #include "memory_bus/memory_device_gpio.hpp"
+#include "memory_bus/memory_device_ethernet.hpp"
 
 class testbench {
 
@@ -75,6 +76,10 @@ public:
     const uint32_t bus_ram_base_address = 0x40000000;
     const uint32_t bus_ram_range        = 0x00000FFF;
 
+    //! Base address of the Ethernet peripheral in the memory space.
+    const uint32_t ethernet_base_address = 0x40003000;
+    const uint32_t ethernet_range        = 0x00000FFF;
+
     //! Wait for a keypress after building TB but before running the sim.
     bool           wait_at_start        = false;
 
@@ -124,6 +129,9 @@ protected:
 
     //! Simulated GPIO
     memory_device_gpio * gpio;
+
+    //! Simulated Ethernet peripheral
+    memory_device_ethernet * ethernet;
     
 };
 

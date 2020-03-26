@@ -4,6 +4,7 @@ $SOC_HOME/verif/scarv-soc/memory_bus/memory_device.cpp
 $SOC_HOME/verif/scarv-soc/memory_bus/memory_device_ram.cpp
 $SOC_HOME/verif/scarv-soc/memory_bus/memory_device_uart.cpp
 $SOC_HOME/verif/scarv-soc/memory_bus/memory_device_gpio.cpp
+$SOC_HOME/verif/scarv-soc/memory_bus/memory_device_ethernet.cpp
 $SOC_HOME/verif/scarv-soc/axi4lite/a4l_slave_agent.cpp
 $SOC_HOME/verif/scarv-soc/dut_wrapper.cpp
 $SOC_HOME/verif/scarv-soc/testbench.cpp
