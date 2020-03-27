@@ -43,7 +43,7 @@ protected:
 
     uint8_t destination_address[6];
     uint8_t source_address[6];
-    uint8_t type_length[2];
+    uint16_t type_length;
     uint8_t data[1500];
     uint32_t data_length;
     uint32_t gie;
@@ -80,7 +80,7 @@ protected:
 
     uint8_t destination_address[6];
     uint8_t source_address[6];
-    uint8_t type_length[2];
+    uint16_t type_length;
     uint8_t data[1500];
     uint32_t crc;
     uint32_t control;
