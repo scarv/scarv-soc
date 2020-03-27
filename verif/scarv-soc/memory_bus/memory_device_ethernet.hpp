@@ -87,37 +87,5 @@ protected:
 
 };
 
-class memory_device_ethernet : public memory_device {
-
-public:
-    
-    memory_device_ethernet(
-        memory_address base,
-        size_t         range
-    ) : memory_device(base, range) {
-
-    }
-
-    bool read_word (
-        memory_address addr,
-        uint32_t     * dout
-    );
-
-    bool write_byte (
-        memory_address addr,
-        uint8_t        data
-    );
-
-    uint8_t read_byte (
-        memory_address addr
-    );
-
-protected:
-
-    memory_device_ethernet_transmit transmit;
-    memory_device_ethernet_receive receive;
-
-};
-
 #endif
 

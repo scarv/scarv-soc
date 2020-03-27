@@ -18,8 +18,13 @@ void testbench::build() {
         this -> bus_ram_range
     );
 
-    this -> ethernet = new memory_device_ethernet(
-        this -> ethernet_base_address,
+    this -> ethernet_transmit = new memory_device_ethernet_transmit(
+        this -> ethernet_transmit_base_address,
+        this -> ethernet_range
+    );
+
+    this -> ethernet_receive = new memory_device_ethernet_receive(
+        this -> ethernet_receive_base_address,
         this -> ethernet_range
     );
 
@@ -28,7 +33,8 @@ void testbench::build() {
     this -> bus -> add_device(this -> uart);
     this -> bus -> add_device(this -> gpio);
     this -> bus -> add_device(this -> bus_ram);
-    this -> bus -> add_device(this -> ethernet);
+    this -> bus -> add_device(this -> ethernet_transmit);
+    this -> bus -> add_device(this -> ethernet_receive);
 
     this -> dut = new dut_wrapper(
         this -> bus       ,

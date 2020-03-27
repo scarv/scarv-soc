@@ -77,8 +77,9 @@ public:
     const uint32_t bus_ram_range        = 0x00000FFF;
 
     //! Base address of the Ethernet peripheral in the memory space.
-    const uint32_t ethernet_base_address = 0x40003000;
-    const uint32_t ethernet_range        = 0x00000FFF;
+    const uint32_t ethernet_transmit_base_address = 0x40003000;
+    const uint32_t ethernet_receive_base_address  = 0x40004000;
+    const uint32_t ethernet_range                 = 0x00000FFF;
 
     //! Wait for a keypress after building TB but before running the sim.
     bool           wait_at_start        = false;
@@ -131,7 +132,8 @@ protected:
     memory_device_gpio * gpio;
 
     //! Simulated Ethernet peripheral
-    memory_device_ethernet * ethernet;
+    memory_device_ethernet_transmit * ethernet_transmit;
+    memory_device_ethernet_receive * ethernet_receive;
     
 };
 
