@@ -1,4 +1,3 @@
-
 #include <cstdlib>
 #include <cassert>
 #include <cstdio>
@@ -9,10 +8,29 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+// networking includes
+#include <string.h>
+#include <sys/socket.h>    /* Must precede if*.h */
+#include <linux/if.h>
+#include <linux/if_ether.h>
+#include <linux/if_packet.h>
+#include <sys/ioctl.h>
+#include <arpa/inet.h>
+
 #include "memory_device.hpp"
 
 #ifndef MEMORY_DEVICE_ETHERNET_HPP
 #define MEMORY_DEVICE_ETHERNET_HPP
+
+union ethframe
+{
+  struct
+  {
+    struct ethhdr    header;
+    unsigned char    data[ETH_DATA_LEN];
+  } field;
+  unsigned char    buffer[ETH_FRAME_LEN];
+};
 
 class memory_device_ethernet_transmit : public memory_device {
 
@@ -25,18 +43,15 @@ public:
 
     }
 
-    bool read_word (
-        memory_address addr,
-        uint32_t     * dout
-    );
+    bool read_word(memory_address addr, uint32_t *dout);
 
-    bool write_byte (
-        memory_address addr,
-        uint8_t        data
-    );
+    bool write_byte(memory_address addr, uint8_t data);
 
-    uint8_t read_byte (
-        memory_address addr
+    uint8_t read_byte(memory_address addr);
+
+    int eth_frame_send(
+        char *iface, unsigned char dest[ETH_ALEN],
+        unsigned char *data, unsigned short data_len
     );
 
 protected:

@@ -48,6 +48,17 @@ bool memory_device_ethernet_transmit::write_byte(
         uint8_t *control = (uint8_t *)&(this->control);
 
         control[offset] = data;
+
+        if (data == 1 && offset == 0) {
+            int result = this->eth_frame_send(
+                "eth0", this->destination_address,
+                this->data, this->data_length
+            );
+
+            if (result == 0) {
+                this->control = 0;
+            }
+        }
     }
 
     return true;
@@ -89,6 +100,67 @@ uint8_t memory_device_ethernet_transmit::read_byte(
 
     return 0x4b;
     
+}
+
+// code taken from:
+// https://hacked10bits.blogspot.com/2011/12/sending-raw-ethernet-frames-in-6-easy.html
+int memory_device_ethernet_transmit::eth_frame_send(
+    char *iface, unsigned char dest[ETH_ALEN],
+    unsigned char *data, unsigned short data_len)
+{
+    unsigned short proto = 0x1234;
+    
+    int s;
+    if ((s = socket(AF_PACKET, SOCK_RAW, htons(proto))) < 0) {
+        printf("Error: could not open socket\n");
+        return -1;
+    }
+    
+    struct ifreq buffer;
+    int ifindex;
+    memset(&buffer, 0x00, sizeof(buffer));
+    strncpy(buffer.ifr_name, iface, IFNAMSIZ);
+    if (ioctl(s, SIOCGIFINDEX, &buffer) < 0) {
+        printf("Error: could not get interface index\n");
+        close(s);
+        return -1;
+    }
+    ifindex = buffer.ifr_ifindex;
+    
+    unsigned char source[ETH_ALEN];
+    if (ioctl(s, SIOCGIFHWADDR, &buffer) < 0) {
+        printf("Error: could not get interface address\n");
+        close(s);
+        return -1;
+    }
+    memcpy((void*)source, (void*)(buffer.ifr_hwaddr.sa_data),
+           ETH_ALEN);
+    
+    union ethframe frame;
+    memcpy(frame.field.header.h_dest, dest, ETH_ALEN);
+    memcpy(frame.field.header.h_source, source, ETH_ALEN);
+    frame.field.header.h_proto = htons(proto);
+    memcpy(frame.field.data, data, data_len);
+    
+    unsigned int frame_len = data_len + ETH_HLEN;
+    
+    struct sockaddr_ll saddrll;
+    memset((void*)&saddrll, 0, sizeof(saddrll));
+    saddrll.sll_family = PF_PACKET;   
+    saddrll.sll_ifindex = ifindex;
+    saddrll.sll_halen = ETH_ALEN;
+    memcpy((void*)(saddrll.sll_addr), (void*)dest, ETH_ALEN);
+    
+    if (sendto(s, frame.buffer, frame_len, 0,
+               (struct sockaddr*)&saddrll, sizeof(saddrll)) > 0) {
+        printf("Success!\n");
+    } else {
+        printf("Error, could not send\n");
+    }
+    
+    close(s);
+    
+    return 0;
 }
 
 bool memory_device_ethernet_receive::read_word(
