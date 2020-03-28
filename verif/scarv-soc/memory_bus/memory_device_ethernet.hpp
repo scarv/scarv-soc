@@ -77,18 +77,23 @@ public:
 
     }
 
-    bool read_word (
+    bool read_word(
         memory_address addr,
         uint32_t     * dout
     );
 
-    bool write_byte (
+    bool write_byte(
         memory_address addr,
         uint8_t        data
     );
 
-    uint8_t read_byte (
+    uint8_t read_byte(
         memory_address addr
+    );
+
+    int eth_frame_recv(
+        char *iface,
+        char source[ETH_ALEN], char dest[ETH_ALEN], unsigned char *data
     );
 
 protected:

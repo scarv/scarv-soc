@@ -201,6 +201,16 @@ bool memory_device_ethernet_receive::write_byte(
         uint8_t *arr = (uint8_t *)&(this->control);
 
         arr[offset] = data;
+
+        if (offset == 0 && this->control == 0) {
+            int result = this->eth_frame_recv(
+                "eth0", &this->source, &this->destination, &this->data
+            );
+
+            if (result) {
+                this->control = 1;
+            }
+        }
     }
 
     return true;
@@ -236,4 +246,55 @@ uint8_t memory_device_ethernet_receive::read_byte(
     }
 
     return 0x4b;
+}
+
+int memory_device_ethernet_receive::eth_frame_recv(
+    char *iface,
+    char source[ETH_ALEN], char dest[ETH_ALEN], unsigned char *data)
+{
+    unsigned short proto = 0x1234;
+    
+    int s;
+    if ((s = socket(AF_PACKET, SOCK_RAW, htons(proto))) < 0) {
+        printf("Error: could not open socket\n");
+
+        return -1;
+    }
+    
+    struct ifreq buffer;
+    int ifindex;
+    memset(&buffer, 0x00, sizeof(buffer));
+    strncpy(buffer.ifr_name, iface, IFNAMSIZ);
+    if (ioctl(s, SIOCGIFINDEX, &buffer) < 0) {
+        printf("Error: could not get interface index\n");
+        close(s);
+
+        return -1;
+    }
+    ifindex = buffer.ifr_ifindex;
+    
+    union ethframe frame;
+    
+    struct sockaddr_ll saddrll;
+    memset((void*)&saddrll, 0, sizeof(saddrll));
+
+    socklen_t sll_len = (socklen_t)sizeof(saddrll);
+
+    int recv_result = recvfrom(s, frame.buffer, ETH_FRAME_LEN, 0,
+               (struct sockaddr*)&saddrll, &sll_len);
+    
+    if (recv_result > 0) {
+        memcpy(data, frame.field.data, ETH_DATA_LEN);
+
+        memcpy(source, frame.field.header.h_source, ETH_ALEN);
+        memcpy(dest, frame.field.header.h_dest, ETH_ALEN);
+    
+        close(s);
+
+        return 1;
+    } else {
+        close(s);
+    
+        return recv_result;
+    }
 }
