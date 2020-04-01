@@ -21,7 +21,7 @@ bool memory_device_ethernet_transmit::write_byte(
     uint8_t        data
 ) {
 
-    printf("t: writing byte %08lx <- %02x\n", addr, data);
+    //printf("t: writing byte %08lx <- %02x\n", addr, data);
 
     if (addr >= this->addr_base && addr < this->addr_base + 6) {
         this->destination_address[addr - this->addr_base] = data;
@@ -69,7 +69,7 @@ uint8_t memory_device_ethernet_transmit::read_byte(
     memory_address addr
 ) {
 
-    printf("t: reading byte %08lx\n", addr);
+    //printf("t: reading byte %08lx\n", addr);
 
     if (addr >= this->addr_base && addr < this->addr_base + 6) {
         return this->destination_address[addr - this->addr_base];
@@ -179,7 +179,7 @@ bool memory_device_ethernet_receive::write_byte(
     uint8_t        data
 ) {
 
-    printf("r: writing byte %08lx <- %02x\n", addr, data);
+    //printf("r: writing byte %08lx <- %02x\n", addr, data);
 
     if (addr >= this->addr_base && addr < this->addr_base + 6) {
         this->destination_address[addr - this->addr_base] = data;
@@ -203,8 +203,11 @@ bool memory_device_ethernet_receive::write_byte(
         arr[offset] = data;
 
         if (offset == 0 && this->control == 0) {
+            printf("HERE\n");
+
             int result = this->eth_frame_recv(
-                "eth0", &this->source, &this->destination, &this->data
+                "eth0", this->source_address, this->destination_address,
+                this->data
             );
 
             if (result) {
@@ -221,7 +224,7 @@ uint8_t memory_device_ethernet_receive::read_byte(
     memory_address addr
 ) {
 
-    printf("r: reading byte %08lx\n", addr);
+    //printf("r: reading byte %08lx\n", addr);
 
     if (addr >= this->addr_base && addr < this->addr_base + 6) {
         return this->destination_address[addr - this->addr_base];
@@ -250,51 +253,30 @@ uint8_t memory_device_ethernet_receive::read_byte(
 
 int memory_device_ethernet_receive::eth_frame_recv(
     char *iface,
-    char source[ETH_ALEN], char dest[ETH_ALEN], unsigned char *data)
+    uint8_t source[ETH_ALEN], uint8_t dest[ETH_ALEN], uint8_t *data)
 {
-    unsigned short proto = 0x1234;
-    
-    int s;
-    if ((s = socket(AF_PACKET, SOCK_RAW, htons(proto))) < 0) {
-        printf("Error: could not open socket\n");
-
-        return -1;
-    }
-    
-    struct ifreq buffer;
-    int ifindex;
-    memset(&buffer, 0x00, sizeof(buffer));
-    strncpy(buffer.ifr_name, iface, IFNAMSIZ);
-    if (ioctl(s, SIOCGIFINDEX, &buffer) < 0) {
-        printf("Error: could not get interface index\n");
-        close(s);
-
-        return -1;
-    }
-    ifindex = buffer.ifr_ifindex;
-    
     union ethframe frame;
     
     struct sockaddr_ll saddrll;
-    memset((void*)&saddrll, 0, sizeof(saddrll));
+    memset((void *)&saddrll, 0, sizeof(saddrll));
 
     socklen_t sll_len = (socklen_t)sizeof(saddrll);
 
-    int recv_result = recvfrom(s, frame.buffer, ETH_FRAME_LEN, 0,
-               (struct sockaddr*)&saddrll, &sll_len);
+    printf("receiving\n");
+    int recv_result = recvfrom(
+        this->r_socket, frame.buffer, ETH_FRAME_LEN, 0,
+        (struct sockaddr *)&saddrll, &sll_len
+    );
+    printf("received\n");
     
     if (recv_result > 0) {
         memcpy(data, frame.field.data, ETH_DATA_LEN);
 
         memcpy(source, frame.field.header.h_source, ETH_ALEN);
         memcpy(dest, frame.field.header.h_dest, ETH_ALEN);
-    
-        close(s);
 
         return 1;
     } else {
-        close(s);
-    
         return recv_result;
     }
 }

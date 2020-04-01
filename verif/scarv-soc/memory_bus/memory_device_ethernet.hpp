@@ -74,7 +74,44 @@ public:
         memory_address base,
         size_t         range
     ) : memory_device(base, range) {
+        unsigned short proto = 0x1234;
 
+        this->r_socket = socket(AF_PACKET, SOCK_RAW, proto);
+        
+        if (this->r_socket < 0) {
+            printf("Error: could not open socket\n");
+        } else {
+            printf("Successfully initialised the socket\n");
+        }
+
+        struct ifreq buffer;
+        int ifindex;
+        memset(&buffer, 0x00, sizeof(buffer));
+        strncpy(buffer.ifr_name, "eth0", IFNAMSIZ);
+
+        if (ioctl(this->r_socket, SIOCGIFINDEX, &buffer) < 0) {
+            printf("Error: could not get interface index\n");
+
+            close(this->r_socket);
+        } else {
+            printf("Successfully initialised the interface\n");
+        }
+
+        this->ifindex = buffer.ifr_ifindex;
+        
+        unsigned char source[ETH_ALEN];
+        if (ioctl(this->r_socket, SIOCGIFHWADDR, &buffer) < 0) {
+            printf("Error: could not get interface address\n");
+            close(this->r_socket);
+        }
+        memcpy((void*)source, (void*)(buffer.ifr_hwaddr.sa_data),
+               ETH_ALEN);
+    }
+
+    ~memory_device_ethernet_receive() {
+        printf("Closing socket\n");
+
+        close(this->r_socket);
     }
 
     bool read_word(
@@ -93,11 +130,13 @@ public:
 
     int eth_frame_recv(
         char *iface,
-        char source[ETH_ALEN], char dest[ETH_ALEN], unsigned char *data
+        uint8_t source[ETH_ALEN], uint8_t dest[ETH_ALEN], uint8_t *data
     );
 
 protected:
 
+    int r_socket;
+    int ifindex;
     uint8_t destination_address[6];
     uint8_t source_address[6];
     uint16_t type_length;
