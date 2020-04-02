@@ -76,7 +76,7 @@ public:
     ) : memory_device(base, range) {
         unsigned short proto = 0x1234;
 
-        this->r_socket = socket(AF_PACKET, SOCK_RAW, proto);
+        this->r_socket = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
         
         if (this->r_socket < 0) {
             printf("Error: could not open socket\n");
@@ -84,28 +84,10 @@ public:
             printf("Successfully initialised the socket\n");
         }
 
-        struct ifreq buffer;
-        int ifindex;
-        memset(&buffer, 0x00, sizeof(buffer));
-        strncpy(buffer.ifr_name, "eth0", IFNAMSIZ);
+        // set the socket to be non-blocking
+        int flags = fcntl(this->r_socket, F_GETFL);
 
-        if (ioctl(this->r_socket, SIOCGIFINDEX, &buffer) < 0) {
-            printf("Error: could not get interface index\n");
-
-            close(this->r_socket);
-        } else {
-            printf("Successfully initialised the interface\n");
-        }
-
-        this->ifindex = buffer.ifr_ifindex;
-        
-        unsigned char source[ETH_ALEN];
-        if (ioctl(this->r_socket, SIOCGIFHWADDR, &buffer) < 0) {
-            printf("Error: could not get interface address\n");
-            close(this->r_socket);
-        }
-        memcpy((void*)source, (void*)(buffer.ifr_hwaddr.sa_data),
-               ETH_ALEN);
+        fcntl(this->r_socket, F_SETFL, flags | O_NONBLOCK);
     }
 
     ~memory_device_ethernet_receive() {

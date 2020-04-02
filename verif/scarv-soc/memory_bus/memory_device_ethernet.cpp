@@ -6,8 +6,6 @@ bool memory_device_ethernet_transmit::read_word(
     uint32_t     * dout
 ) {
 
-    printf("t: reading word %08lx\n", addr);
-
     if (addr == this->addr_base + 0x07F4) {
         *dout = this->data_length;
     }
@@ -20,8 +18,6 @@ bool memory_device_ethernet_transmit::write_byte(
     memory_address addr,
     uint8_t        data
 ) {
-
-    //printf("t: writing byte %08lx <- %02x\n", addr, data);
 
     if (addr >= this->addr_base && addr < this->addr_base + 6) {
         this->destination_address[addr - this->addr_base] = data;
@@ -68,8 +64,6 @@ bool memory_device_ethernet_transmit::write_byte(
 uint8_t memory_device_ethernet_transmit::read_byte(
     memory_address addr
 ) {
-
-    //printf("t: reading byte %08lx\n", addr);
 
     if (addr >= this->addr_base && addr < this->addr_base + 6) {
         return this->destination_address[addr - this->addr_base];
@@ -168,8 +162,6 @@ bool memory_device_ethernet_receive::read_word(
     uint32_t     * dout
 ) {
 
-    printf("r: reading word %08lx\n", addr);
-
     return true;
 
 }
@@ -178,8 +170,6 @@ bool memory_device_ethernet_receive::write_byte(
     memory_address addr,
     uint8_t        data
 ) {
-
-    //printf("r: writing byte %08lx <- %02x\n", addr, data);
 
     if (addr >= this->addr_base && addr < this->addr_base + 6) {
         this->destination_address[addr - this->addr_base] = data;
@@ -201,19 +191,6 @@ bool memory_device_ethernet_receive::write_byte(
         uint8_t *arr = (uint8_t *)&(this->control);
 
         arr[offset] = data;
-
-        if (offset == 0 && this->control == 0) {
-            printf("HERE\n");
-
-            int result = this->eth_frame_recv(
-                "eth0", this->source_address, this->destination_address,
-                this->data
-            );
-
-            if (result) {
-                this->control = 1;
-            }
-        }
     }
 
     return true;
@@ -223,8 +200,6 @@ bool memory_device_ethernet_receive::write_byte(
 uint8_t memory_device_ethernet_receive::read_byte(
     memory_address addr
 ) {
-
-    //printf("r: reading byte %08lx\n", addr);
 
     if (addr >= this->addr_base && addr < this->addr_base + 6) {
         return this->destination_address[addr - this->addr_base];
@@ -245,6 +220,17 @@ uint8_t memory_device_ethernet_receive::read_byte(
         uint32_t offset = addr - (this->addr_base + 0x07F8);
         uint8_t *arr = (uint8_t *)&(this->control);
 
+        if (offset == 0 && this->control == 0) {
+            int result = this->eth_frame_recv(
+                "eth0", this->source_address, this->destination_address,
+                this->data
+            );
+
+            if (result > 0) {
+                this->control = 1;
+            }
+        }
+
         return arr[offset];
     }
 
@@ -262,12 +248,10 @@ int memory_device_ethernet_receive::eth_frame_recv(
 
     socklen_t sll_len = (socklen_t)sizeof(saddrll);
 
-    printf("receiving\n");
     int recv_result = recvfrom(
         this->r_socket, frame.buffer, ETH_FRAME_LEN, 0,
         (struct sockaddr *)&saddrll, &sll_len
     );
-    printf("received\n");
     
     if (recv_result > 0) {
         memcpy(data, frame.field.data, ETH_DATA_LEN);
