@@ -61,8 +61,12 @@ parameter           BRAM_ROM_SIZE      = 1024;
 parameter           BRAM_RAM_SIZE      = 262144;
 
 // Width of ram bus signals.
-localparam          RAM_R              = $clog2(BRAM_RAM_SIZE)-1;
+localparam          RAM_W              = $clog2(BRAM_RAM_SIZE);
+localparam          RAM_R              = RAM_W-1;
 
+// RAM mask and range parameters for ic_addr_decode
+localparam          MAP_RAM_MASK       = (32'hFFFF_FFFF >> RAM_W) << RAM_W; 
+localparam          MAP_RAM_RANGE      = ~MAP_RAM_MASK; 
 
 //
 // Interconnect parameters
@@ -238,7 +242,9 @@ frv_core #(
 // ------------------------------------------------------------
 
 ic_top #(
-.ENABLE_AXI_BRIDGE(IC_ENABLE_AXI_BRIDGE)
+.ENABLE_AXI_BRIDGE(IC_ENABLE_AXI_BRIDGE),
+.MAP_RAM_MASK     (MAP_RAM_MASK        ),
+.MAP_RAM_RANGE    (MAP_RAM_RANGE       )
 ) i_ic_top (
 .g_clk            (g_clk            ),
 .g_resetn         (g_resetn         ),

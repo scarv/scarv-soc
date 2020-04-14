@@ -35,6 +35,7 @@ parameter [255*8:0] MEMH_FILE = "";
 
 initial begin
     if(MEMH_FILE != "") begin
+        $display("Loading file: %s",MEMH_FILE);
         $readmemh(MEMH_FILE, mem);
     end
 end
