@@ -58,7 +58,10 @@ parameter [255*8:0] BRAM_RAM_MEMH_FILE = "";
 parameter           BRAM_ROM_SIZE      = 1024;
 
 // Size of the RAM memory in bytes.
-parameter           BRAM_RAM_SIZE      = 65536;
+parameter           BRAM_RAM_SIZE      = 262144;
+
+// Width of ram bus signals.
+localparam          RAM_R              = $clog2(BRAM_RAM_SIZE)-1;
 
 
 //
@@ -491,12 +494,12 @@ scarv_soc_bram_dual #(
 .rsta (bram_reset           ),
 .ena  (ram_a_bram_cen       ),
 .wea  (ram_a_bram_wstrb     ),
-.addra(ram_a_bram_addr[15:0]),
+.addra(ram_a_bram_addr[RAM_R:0]),
 .dina (ram_a_bram_wdata     ),
 .douta(ram_a_bram_rdata     ),
 .enb  (ram_b_bram_cen       ),
 .web  (ram_b_bram_wstrb     ),
-.addrb(ram_b_bram_addr[15:0]),
+.addrb(ram_b_bram_addr[RAM_R:0]),
 .dinb (ram_b_bram_wdata     ),
 .doutb(ram_b_bram_rdata     ) 
 );
