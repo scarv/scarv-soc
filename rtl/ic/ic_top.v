@@ -447,7 +447,17 @@ ic_rsp_tracker #(
 // ------------------------------------------------------------
 
 // CPU Instruction memory interface address routing.
-ic_addr_decode ic_addr_decode_cpu_imem (
+ic_addr_decode #(
+.MAP_ROM_MATCH(MAP_ROM_MATCH),
+.MAP_ROM_MASK (MAP_ROM_MASK ),
+.MAP_ROM_RANGE(MAP_ROM_RANGE),
+.MAP_RAM_MATCH(MAP_RAM_MATCH),
+.MAP_RAM_MASK (MAP_RAM_MASK ),
+.MAP_RAM_RANGE(MAP_RAM_RANGE),
+.MAP_AXI_MATCH(MAP_AXI_MATCH),
+.MAP_AXI_MASK (MAP_AXI_MASK ),
+.MAP_AXI_RANGE(MAP_AXI_RANGE) 
+) ic_addr_decode_cpu_imem (
 .g_clk        (g_clk            ),   // Global clock
 .g_resetn     (g_resetn         ),   // Synchronous active low reset
 .req_valid    (cpu_imem_req     ),   // Request is valid
@@ -459,7 +469,17 @@ ic_addr_decode ic_addr_decode_cpu_imem (
 );
 
 // CPU Data memory interface address routing.
-ic_addr_decode ic_addr_decode_cpu_dmem (
+ic_addr_decode #(
+.MAP_ROM_MATCH(MAP_ROM_MATCH),
+.MAP_ROM_MASK (MAP_ROM_MASK ),
+.MAP_ROM_RANGE(MAP_ROM_RANGE),
+.MAP_RAM_MATCH(MAP_RAM_MATCH),
+.MAP_RAM_MASK (MAP_RAM_MASK ),
+.MAP_RAM_RANGE(MAP_RAM_RANGE),
+.MAP_AXI_MATCH(MAP_AXI_MATCH),
+.MAP_AXI_MASK (MAP_AXI_MASK ),
+.MAP_AXI_RANGE(MAP_AXI_RANGE) 
+) ic_addr_decode_cpu_dmem (
 .g_clk        (g_clk            ),   // Global clock
 .g_resetn     (g_resetn         ),   // Synchronous active low reset
 .req_valid    (cpu_dmem_req     ),   // Request is valid
