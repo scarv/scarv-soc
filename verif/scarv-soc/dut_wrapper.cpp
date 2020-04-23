@@ -127,3 +127,29 @@ void dut_wrapper::posedge_gclk () {
 
 }
 
+void dut_wrapper::set_ext_interrupt(int cause) {
+
+    this -> dut -> cpu_int_ext_cause = cause;
+    this -> dut -> cpu_int_external = 1;
+
+    printf(
+        "dut ext %d, dut cause %d, soc ext %d, soc cause %d\n",
+        this -> dut -> cpu_int_external,
+        this -> dut -> cpu_int_ext_cause,
+        this -> dut -> scarv_soc -> cpu_int_external,
+        this -> dut -> scarv_soc -> cpu_int_ext_cause
+    );
+
+}
+
+void dut_wrapper::clear_ext_interrupt() {
+
+    this -> dut -> cpu_int_external = 0;
+    this -> dut -> cpu_int_ext_cause = 0;
+
+    printf(
+        "dut ext %d, dut cause %d\n",
+        this -> dut -> cpu_int_external,
+        this -> dut -> cpu_int_ext_cause
+    );
+}

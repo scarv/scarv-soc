@@ -79,9 +79,19 @@ void testbench::drain_dut_trace() {
 
         }
 
-        //if (packet.program_counter >= 0x20000000) {
-        //    printf("%x %x\n", packet.program_counter, packet.instr_word);
-        //}
+        if (packet.program_counter >= 0x20000000) {
+            printf("%x %x\n", packet.program_counter, packet.instr_word);
+
+            if (this -> ethernet_receive -> is_int_ready()) {
+                printf("Interrupting!\n");
+
+                this -> dut -> set_ext_interrupt(4);
+            } else if (packet.program_counter == 0x20000014) {
+                printf("Returning to normal\n");
+
+                this -> dut -> clear_ext_interrupt();
+            }
+        }
 
         dut -> dut_trace.pop();
 

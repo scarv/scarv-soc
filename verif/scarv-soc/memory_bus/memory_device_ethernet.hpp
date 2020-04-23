@@ -51,8 +51,7 @@ public:
 
     int eth_frame_send(
         char *iface, unsigned char dest[ETH_ALEN],
-        unsigned char *data, unsigned short data_len
-    );
+        unsigned char *data, unsigned short proto, unsigned short data_len);
 
 protected:
 
@@ -115,6 +114,12 @@ public:
         uint8_t source[ETH_ALEN], uint8_t dest[ETH_ALEN], uint8_t *data
     );
 
+    bool is_int_ready();
+
+    void set_interrupt_disable();
+
+    int get_control();
+
 protected:
 
     int r_socket;
@@ -125,6 +130,7 @@ protected:
     uint8_t data[1500];
     uint32_t crc;
     uint32_t control;
+    bool interrupt_enable;
 
 };
 

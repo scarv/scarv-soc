@@ -68,6 +68,10 @@ public:
     //! Trace of post-writeback PC and instructions.
     std::queue<dut_trace_pkt_t> dut_trace;
 
+    void set_ext_interrupt(int cause);
+
+    void clear_ext_interrupt();
+
 
 protected:
     
