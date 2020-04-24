@@ -128,7 +128,7 @@ protected:
     uint8_t source_address[6];
     uint16_t type_length;
     uint8_t data[1500];
-    uint32_t crc;
+    uint16_t frame_length;
     uint32_t control;
     bool interrupt_enable;
 

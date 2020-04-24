@@ -183,7 +183,7 @@ bool memory_device_ethernet_receive::write_byte(
         this->data[addr - (this->addr_base + 14)] = data;
     } else if (addr >= this->addr_base + 0x07F4 && addr < this->addr_base + 0x07F8) {
         uint32_t offset = addr - (this->addr_base + 0x07F4);
-        uint8_t *arr = (uint8_t *)&(this->crc);
+        uint8_t *arr = (uint8_t *)&(this->frame_length);
 
         arr[offset] = data;
     } else if (addr >= this->addr_base + 0x07F8 && addr < this->addr_base + 0x07FC) {
@@ -222,7 +222,7 @@ uint8_t memory_device_ethernet_receive::read_byte(
         return this->data[addr - (this->addr_base + 14)];
     } else if (addr >= this->addr_base + 0x07F4 && addr < this->addr_base + 0x07F8) {
         uint32_t offset = addr - (this->addr_base + 0x07F4);
-        uint8_t *arr = (uint8_t *)&(this->crc);
+        uint8_t *arr = (uint8_t *)&(this->frame_length);
 
         return arr[offset];
     } else if (addr >= this->addr_base + 0x07F8 && addr < this->addr_base + 0x07FC) {
@@ -261,6 +261,8 @@ int memory_device_ethernet_receive::eth_frame_recv(
         this->r_socket, frame.buffer, ETH_FRAME_LEN, 0,
         (struct sockaddr *)&saddrll, &sll_len
     );
+
+    printf("recv_result %d\n", recv_result);
     
     if (recv_result > 0) {
         memcpy(data, frame.field.data, ETH_DATA_LEN);
@@ -272,6 +274,7 @@ int memory_device_ethernet_receive::eth_frame_recv(
         printf("DEST %02x:%02x:%02x:%02x:%02x:%02x\n", dest[0], dest[1], dest[2], dest[3], dest[4], dest[5]);
 
         this->type_length = frame.field.header.h_proto;
+        this->frame_length = recv_result;
 
         return 1;
     } else {
