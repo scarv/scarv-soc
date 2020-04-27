@@ -56,6 +56,7 @@ generate
     initial begin
         $display("Loading: %s", MEMH_FILE);
         $readmemh(MEMH_FILE, BRAM, 0, BRAM_DEPTH-1);
+        $display("Loaded");
     end
   end else begin: init_bram_to_zero
     integer ram_index;

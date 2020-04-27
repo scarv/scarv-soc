@@ -29,6 +29,7 @@ $(FSBL_VIVADO_HEX) : $(FSBL_OBJ)
 	$(OBJCOPY) $(OBJCOPY_HEX_ARGS) \
         --reverse-bytes=4 \
         --verilog-data-width=4 \
+        --remove-section=.riscv.attributes \
         --change-address=0xF0000000 \
         -O verilog $< $@
 	$(SOC_HOME)/bin/vl-hex-align.py --scale 4 $@

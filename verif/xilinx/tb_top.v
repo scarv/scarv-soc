@@ -43,7 +43,7 @@ wire [0:0] gpio_trig_tri_o;
 reg         uart_rxd = 1'b1;
 wire        uart_txd;
 
-system_top_wrapper i_dut(
+system_top_wrapper_wrapper i_dut(
 .sys_clk_clk_n(sys_clk_clk_n),
 .sys_clk_clk_p(sys_clk_clk_p),
 .gpio_led_tri_o(gpio_led_tri_o),
