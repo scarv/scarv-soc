@@ -21,6 +21,7 @@ VL_FLAGS    = --cc -CFLAGS "-O2" -O3 -CFLAGS -g\
 
 VL_RTL_MANIFEST = $(SOC_HOME)/flow/verilator/scarv-soc-rtl.manifest
 VL_CPP_MANIFEST = $(SOC_HOME)/flow/verilator/scarv-soc-testbench.manifest
+SCARV_CPU_MANIFEST=$(SCARV_CPU)/flow/verilator/core-rtl.manifest
 
 # Defined in $(SOC_HOME)/src/fsbl/Makefile.in
 BRAM_ROM_MEMH   = $(FSBL_HEX)
@@ -43,7 +44,8 @@ ${1} : $(VL_CSRC)
         -GBRAM_ROM_MEMH_FILE="\"$(strip ${3})\"" \
         -GBRAM_RAM_MEMH_FILE="\"$(strip ${4})\"" \
         -f $(VL_RTL_MANIFEST) \
-        -f $(VL_CPP_MANIFEST)
+        -f $(VL_CPP_MANIFEST) \
+        -f $(SCARV_CPU_MANIFEST)
 	$(MAKE) -C ${2} -f Vscarv_soc.mk
 
 endef

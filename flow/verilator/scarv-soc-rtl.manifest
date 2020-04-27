@@ -18,44 +18,6 @@ $SOC_HOME/rtl/rng/scarv_rng_lfsr.v
 $SOC_HOME/rtl/rng/scarv_rng_top.v
 
 //
-// XCrypto + SCARV CPU sources.
-$SOC_HOME/extern/scarv-cpu/external/xcrypto/rtl/p_addsub/p_addsub.v
-$SOC_HOME/extern/scarv-cpu/external/xcrypto/rtl/p_shfrot/p_shfrot.v
-$SOC_HOME/extern/scarv-cpu/external/xcrypto/rtl/xc_sha3/xc_sha3.v
-$SOC_HOME/extern/scarv-cpu/external/xcrypto/rtl/xc_sha256/xc_sha256.v
-$SOC_HOME/extern/scarv-cpu/external/xcrypto/rtl/xc_aessub/xc_aessub.v
-$SOC_HOME/extern/scarv-cpu/external/xcrypto/rtl/xc_aessub/xc_aessub_sbox.v
-$SOC_HOME/extern/scarv-cpu/external/xcrypto/rtl/xc_aesmix/xc_aesmix.v
-$SOC_HOME/extern/scarv-cpu/external/xcrypto/rtl/xc_malu/xc_malu.v
-$SOC_HOME/extern/scarv-cpu/external/xcrypto/rtl/xc_malu/xc_malu_divrem.v
-$SOC_HOME/extern/scarv-cpu/external/xcrypto/rtl/xc_malu/xc_malu_long.v
-$SOC_HOME/extern/scarv-cpu/external/xcrypto/rtl/xc_malu/xc_malu_mul.v
-$SOC_HOME/extern/scarv-cpu/external/xcrypto/rtl/xc_malu/xc_malu_pmul.v
-$SOC_HOME/extern/scarv-cpu/external/xcrypto/rtl/xc_malu/xc_malu_muldivrem.v
-$SOC_HOME/extern/scarv-cpu/external/xcrypto/rtl/b_bop/b_bop.v
-$SOC_HOME/extern/scarv-cpu/external/xcrypto/rtl/b_lut/b_lut.v
-$SCARV_CPU_RTL_DIR/frv_alu.v
-$SCARV_CPU_RTL_DIR/frv_asi.v
-$SCARV_CPU_RTL_DIR/frv_bitwise.v
-$SCARV_CPU_RTL_DIR/frv_core.v
-$SCARV_CPU_RTL_DIR/frv_core_fetch_buffer.v
-$SCARV_CPU_RTL_DIR/frv_counters.v
-$SCARV_CPU_RTL_DIR/frv_csrs.v
-$SCARV_CPU_RTL_DIR/frv_gprs.v
-$SCARV_CPU_RTL_DIR/frv_interrupts.v
-$SCARV_CPU_RTL_DIR/frv_leak.v
-$SCARV_CPU_RTL_DIR/frv_lsu.v
-$SCARV_CPU_RTL_DIR/frv_pipeline.v
-$SCARV_CPU_RTL_DIR/frv_pipeline_decode.v
-$SCARV_CPU_RTL_DIR/frv_pipeline_execute.v
-$SCARV_CPU_RTL_DIR/frv_pipeline_fetch.v
-$SCARV_CPU_RTL_DIR/frv_pipeline_memory.v
-$SCARV_CPU_RTL_DIR/frv_pipeline_register.v
-$SCARV_CPU_RTL_DIR/frv_pipeline_writeback.v
-$SCARV_CPU_RTL_DIR/frv_rngif.v
-
-
-//
 // Memories
 $SOC_HOME/rtl/mem/scarv_soc_bram_dual_sim.v
 
