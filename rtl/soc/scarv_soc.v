@@ -58,7 +58,7 @@ parameter [255*8:0] BRAM_RAM_MEMH_FILE = "";
 parameter           BRAM_ROM_SIZE      = 1024;
 
 // Size of the RAM memory in bytes.
-parameter           BRAM_RAM_SIZE      = 262144;
+parameter           BRAM_RAM_SIZE      = 'hFFFF;
 
 // Width of ram bus signals.
 localparam          RAM_W              = $clog2(BRAM_RAM_SIZE);

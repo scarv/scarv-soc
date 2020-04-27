@@ -30,25 +30,25 @@ read_verilog $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/xc_malu/
 read_verilog $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/xc_malu/xc_malu_muldivrem.v
 read_verilog $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/b_bop/b_bop.v
 read_verilog $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto-rtl/rtl/b_lut/b_lut.v
-read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_alu.v
-read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_asi.v
-read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_bitwise.v
-read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_core.v
-read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_core_fetch_buffer.v
-read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_counters.v
-read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_csrs.v
-read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_gprs.v
-read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_interrupts.v
-read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_leak.v
-read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_lsu.v
-read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline.v
-read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_decode.v
-read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_execute.v
-read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_fetch.v
-read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_memory.v
-read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_register.v
-read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_writeback.v
-read_verilog $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_rngif.v
+read_verilog $::env(SCARV_CPU_RTL_DIR)/frv_alu.v
+read_verilog $::env(SCARV_CPU_RTL_DIR)/frv_asi.v
+read_verilog $::env(SCARV_CPU_RTL_DIR)/frv_bitwise.v
+read_verilog $::env(SCARV_CPU_RTL_DIR)/frv_core.v
+read_verilog $::env(SCARV_CPU_RTL_DIR)/frv_core_fetch_buffer.v
+read_verilog $::env(SCARV_CPU_RTL_DIR)/frv_counters.v
+read_verilog $::env(SCARV_CPU_RTL_DIR)/frv_csrs.v
+read_verilog $::env(SCARV_CPU_RTL_DIR)/frv_gprs.v
+read_verilog $::env(SCARV_CPU_RTL_DIR)/frv_interrupts.v
+read_verilog $::env(SCARV_CPU_RTL_DIR)/frv_leak.v
+read_verilog $::env(SCARV_CPU_RTL_DIR)/frv_lsu.v
+read_verilog $::env(SCARV_CPU_RTL_DIR)/frv_pipeline.v
+read_verilog $::env(SCARV_CPU_RTL_DIR)/frv_pipeline_decode.v
+read_verilog $::env(SCARV_CPU_RTL_DIR)/frv_pipeline_execute.v
+read_verilog $::env(SCARV_CPU_RTL_DIR)/frv_pipeline_fetch.v
+read_verilog $::env(SCARV_CPU_RTL_DIR)/frv_pipeline_memory.v
+read_verilog $::env(SCARV_CPU_RTL_DIR)/frv_pipeline_register.v
+read_verilog $::env(SCARV_CPU_RTL_DIR)/frv_pipeline_writeback.v
+read_verilog $::env(SCARV_CPU_RTL_DIR)/frv_rngif.v
 
 
 #
