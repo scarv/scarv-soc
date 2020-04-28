@@ -6,6 +6,8 @@
 *.swp
 *.vim
 
+vivado*
+
 *__pycache__*
 
 work/*
