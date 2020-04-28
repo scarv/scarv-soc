@@ -601,6 +601,7 @@ proc cr_bd_system_top_wrapper { parentCell } {
   set_property -dict [ list \
    CONFIG.C_ALL_OUTPUTS {1} \
    CONFIG.C_ALL_OUTPUTS_2 {1} \
+   CONFIG.C_DOUT_DEFAULT_2 {0xFFFFFFFF} \
    CONFIG.C_GPIO2_WIDTH {10} \
    CONFIG.C_GPIO_WIDTH {1} \
    CONFIG.C_IS_DUAL {1} \
@@ -666,6 +667,44 @@ proc cr_bd_system_top_wrapper { parentCell } {
   assign_bd_address -offset 0x40002000 -range 0x00000100 -target_address_space [get_bd_addr_spaces scarv_soc/m0] [get_bd_addr_segs SYS_GPIO/S_AXI/Reg] -force
   assign_bd_address -offset 0x40001000 -range 0x00000100 -target_address_space [get_bd_addr_spaces scarv_soc/m0] [get_bd_addr_segs SYS_UART/S_AXI/Reg] -force
 
+  # Perform GUI Layout
+  regenerate_bd_layout -layout_string {
+   "ActiveEmotionalView":"Default View",
+   "Default View_ScaleFactor":"0.67459",
+   "Default View_TopLeft":"-126,-159",
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.0.21  2019-05-29 bk=1.5064 VDI=41 GEI=36 GUI=JA:9.0 TLS
+#  -string -flagsOSRD
+preplace port gpio_led -pg 1 -lvl 6 -x 1530 -y 240 -defaultsOSRD
+preplace port gpio_trig -pg 1 -lvl 6 -x 1530 -y 220 -defaultsOSRD
+preplace port sys_clk -pg 1 -lvl 0 -x -10 -y 350 -defaultsOSRD
+preplace port uart -pg 1 -lvl 6 -x 1530 -y 360 -defaultsOSRD
+preplace port sys_reset -pg 1 -lvl 0 -x -10 -y 370 -defaultsOSRD
+preplace inst AXI_IC -pg 1 -lvl 4 -x 1100 -y 220 -defaultsOSRD
+preplace inst SYS_CLK -pg 1 -lvl 1 -x 130 -y 360 -defaultsOSRD
+preplace inst SYS_GPIO -pg 1 -lvl 5 -x 1390 -y 230 -defaultsOSRD
+preplace inst SYS_RST_CLK -pg 1 -lvl 2 -x 440 -y 310 -defaultsOSRD
+preplace inst SYS_UART -pg 1 -lvl 5 -x 1390 -y 370 -defaultsOSRD
+preplace inst ZERO_1 -pg 1 -lvl 2 -x 440 -y 70 -defaultsOSRD
+preplace inst ZERO_4 -pg 1 -lvl 2 -x 440 -y 170 -defaultsOSRD
+preplace inst scarv_soc -pg 1 -lvl 3 -x 790 -y 140 -defaultsOSRD
+preplace netloc ZERO_1_dout 1 2 1 620 70n
+preplace netloc ZERO_4_dout 1 2 1 NJ 170
+preplace netloc clk_wiz_0_clk_out1 1 1 4 250 10 640 20 950 360 1270
+preplace netloc clk_wiz_0_locked 1 1 1 260 350n
+preplace netloc reset_rtl_0_1 1 0 2 10 290 NJ
+preplace netloc rst_clk_wiz_0_100M_peripheral_aresetn 1 2 3 630 30 940 370 1260
+preplace netloc scarv_soc_0_m0 1 3 1 N 140
+preplace netloc diff_clock_rtl_0_1 1 0 1 NJ 350
+preplace netloc axi_gpio_0_GPIO 1 5 1 NJ 220
+preplace netloc axi_interconnect_0_M01_AXI 1 4 1 1250 230n
+preplace netloc SYS_GPIO_GPIO2 1 5 1 NJ 240
+preplace netloc axi_interconnect_0_M00_AXI 1 4 1 N 210
+preplace netloc axi_uartlite_0_UART 1 5 1 NJ 360
+levelinfo -pg 1 -10 130 440 790 1100 1390 1530
+pagesize -pg 1 -db -bbox -sgen -130 0 1650 450
+"
+}
 
   # Restore current instance
   current_bd_instance $oldCurInst
