@@ -25,6 +25,9 @@ def getargs():
     
     parser.add_argument("--baud", type=int, default = 115200, 
         help="UART port baud speed")
+
+    parser.add_argument("--goto", type=str,
+        help="For telling the acquisition framework to re-enter the FSBL.")
     
     parser.add_argument("port", type=str,
         help="UART port to program over")
@@ -56,6 +59,16 @@ def main():
         btosend = fh.read()
 
     fsize   = len(btosend)
+
+    if(args.goto):
+
+        target_addr = int(args.goto,0).to_bytes(4, byteorder="little")
+
+        print("Issuing GOTO Command: G %s" % args.goto)
+
+        port.write("G".encode("ascii"))
+        port.write(target_addr)
+        port.flush()
 
     if(not args.no_waiting):
 
