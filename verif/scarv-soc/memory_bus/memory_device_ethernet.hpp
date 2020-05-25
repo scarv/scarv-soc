@@ -50,8 +50,10 @@ public:
     uint8_t read_byte(memory_address addr);
 
     int eth_frame_send(
-        char *iface, unsigned char dest[ETH_ALEN],
+        char *iface, unsigned char dest[ETH_ALEN], unsigned char source[ETH_ALEN],
         unsigned char *data, unsigned short proto, unsigned short data_len);
+
+    uint8_t *get_mac_address();
 
 protected:
 
@@ -65,13 +67,22 @@ protected:
 
 };
 
+typedef struct memory_device_ethernet_frame {
+    uint8_t destination_address[6];
+    uint8_t source_address[6];
+    uint16_t type_length;
+    uint8_t data[1500];
+    uint16_t frame_length;
+} memory_device_ethernet_frame_t;
+
 class memory_device_ethernet_receive : public memory_device {
 
 public:
     
     memory_device_ethernet_receive(
         memory_address base,
-        size_t         range
+        size_t         range,
+        memory_device_ethernet_transmit *transmit_device
     ) : memory_device(base, range) {
         unsigned short proto = 0x1234;
 
@@ -87,6 +98,8 @@ public:
         int flags = fcntl(this->r_socket, F_GETFL);
 
         fcntl(this->r_socket, F_SETFL, flags | O_NONBLOCK);
+
+        this->transmit_device = transmit_device;
     }
 
     ~memory_device_ethernet_receive() {
@@ -109,12 +122,11 @@ public:
         memory_address addr
     );
 
-    int eth_frame_recv(
-        char *iface,
-        uint8_t source[ETH_ALEN], uint8_t dest[ETH_ALEN], uint8_t *data
-    );
+    int eth_frame_recv(char *iface, memory_device_ethernet_frame_t *this_frame);
 
     bool is_int_ready();
+
+    bool is_int_handled();
 
     void set_interrupt_disable();
 
@@ -124,13 +136,10 @@ protected:
 
     int r_socket;
     int ifindex;
-    uint8_t destination_address[6];
-    uint8_t source_address[6];
-    uint16_t type_length;
-    uint8_t data[1500];
-    uint16_t frame_length;
+    std::queue<memory_device_ethernet_frame_t> frames;
     uint32_t control;
     bool interrupt_enable;
+    memory_device_ethernet_transmit *transmit_device;
 
 };
 

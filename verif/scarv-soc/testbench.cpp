@@ -25,7 +25,8 @@ void testbench::build() {
 
     this -> ethernet_receive = new memory_device_ethernet_receive(
         this -> ethernet_receive_base_address,
-        this -> ethernet_range
+        this -> ethernet_range,
+        this -> ethernet_transmit
     );
 
     this -> bus = new memory_bus();
@@ -86,7 +87,9 @@ void testbench::drain_dut_trace() {
                 printf("Interrupting!\n");
 
                 this -> dut -> set_ext_interrupt(4);
-            } else if (packet.program_counter == 0x20000014) {
+            }
+
+            if (this -> ethernet_receive -> is_int_handled()) {
                 printf("Returning to normal\n");
 
                 this -> dut -> clear_ext_interrupt();

@@ -47,7 +47,7 @@ bool memory_device_ethernet_transmit::write_byte(
 
         if (data == 1 && offset == 0) {
             int result = this->eth_frame_send(
-                "eth0", this->destination_address,
+                "eth0", this->destination_address, this->source_address,
                 this->data, this->type_length, this->data_length
             );
 
@@ -99,7 +99,7 @@ uint8_t memory_device_ethernet_transmit::read_byte(
 // code taken from:
 // https://hacked10bits.blogspot.com/2011/12/sending-raw-ethernet-frames-in-6-easy.html
 int memory_device_ethernet_transmit::eth_frame_send(
-    char *iface, unsigned char dest[ETH_ALEN],
+    char *iface, unsigned char dest[ETH_ALEN], unsigned char source[ETH_ALEN],
     unsigned char *data, unsigned short proto, unsigned short data_len)
 {
     printf("proto %d, data_len %d\n", proto, data_len);
@@ -121,14 +121,14 @@ int memory_device_ethernet_transmit::eth_frame_send(
     }
     ifindex = buffer.ifr_ifindex;
     
-    unsigned char source[ETH_ALEN];
+    //unsigned char source[ETH_ALEN];
     if (ioctl(s, SIOCGIFHWADDR, &buffer) < 0) {
         printf("Error: could not get interface address\n");
         close(s);
         return -1;
     }
-    memcpy((void*)source, (void*)(buffer.ifr_hwaddr.sa_data),
-           ETH_ALEN);
+    //memcpy((void*)source, (void*)(buffer.ifr_hwaddr.sa_data),
+    //       ETH_ALEN);
     
     union ethframe frame;
     memcpy(frame.field.header.h_dest, dest, ETH_ALEN);
@@ -157,6 +157,11 @@ int memory_device_ethernet_transmit::eth_frame_send(
     return 0;
 }
 
+uint8_t *memory_device_ethernet_transmit::get_mac_address()
+{
+    return (uint8_t *)this->source_address;
+}
+
 bool memory_device_ethernet_receive::read_word(
     memory_address addr,
     uint32_t     * dout
@@ -172,23 +177,27 @@ bool memory_device_ethernet_receive::write_byte(
 ) {
 
     if (addr >= this->addr_base && addr < this->addr_base + 6) {
-        this->destination_address[addr - this->addr_base] = data;
+        //this->destination_address[addr - this->addr_base] = data;
     } else if (addr >= this->addr_base + 6 && addr < this->addr_base + 12) {
-        this->source_address[addr - (this->addr_base + 6)] = data;
+        //this->source_address[addr - (this->addr_base + 6)] = data;
     } else if (addr >= this->addr_base + 12 && addr < this->addr_base + 14) {
-        uint8_t *arr = (uint8_t *)&this->type_length;
+        //uint8_t *arr = (uint8_t *)&this->type_length;
 
-        arr[addr - (this->addr_base + 12)] = data;
+        //arr[addr - (this->addr_base + 12)] = data;
     } else if (addr >= this->addr_base + 14 && addr < this->addr_base + 1514) {
-        this->data[addr - (this->addr_base + 14)] = data;
+        //this->data[addr - (this->addr_base + 14)] = data;
     } else if (addr >= this->addr_base + 0x07F4 && addr < this->addr_base + 0x07F8) {
-        uint32_t offset = addr - (this->addr_base + 0x07F4);
-        uint8_t *arr = (uint8_t *)&(this->frame_length);
+        //uint32_t offset = addr - (this->addr_base + 0x07F4);
+        //uint8_t *arr = (uint8_t *)&(this->frame_length);
 
-        arr[offset] = data;
+        //arr[offset] = data;
     } else if (addr >= this->addr_base + 0x07F8 && addr < this->addr_base + 0x07FC) {
         uint32_t offset = addr - (this->addr_base + 0x07F8);
         uint8_t *arr = (uint8_t *)&(this->control);
+
+        if (offset == 0 && data == 0 && !this->frames.empty()) {
+            this->frames.pop();
+        }
 
         arr[offset] = data;
     } else if (addr >= this->addr_base + 0x07FC && addr < this->addr_base + 0x0800) {
@@ -209,22 +218,44 @@ uint8_t memory_device_ethernet_receive::read_byte(
     printf("ETH_REC_ADDR %x\n", addr);
 
     if (addr >= this->addr_base && addr < this->addr_base + 6) {
-        return this->destination_address[addr - this->addr_base];
+        if (!this->frames.empty()) {
+            return this->frames.front()
+                .destination_address[addr - this->addr_base];
+        }
+
+        return 0;
     } else if (addr >= this->addr_base + 6 && addr < this->addr_base + 12) {
-        return this->source_address[addr - (this->addr_base + 6)];
+        if (!this->frames.empty()) {
+            return this->frames.front()
+                .source_address[addr - (this->addr_base + 6)];
+        }
+
+        return 0;
     } else if (addr >= this->addr_base + 12 && addr < this->addr_base + 14) {
-        uint8_t *arr = (uint8_t *)&this->type_length;
+        if (!this->frames.empty()) {
+            uint8_t *arr = (uint8_t *)&this->frames.front().type_length;
 
-        printf("TYPE_LENGTH %d o %d", (uint16_t)this->type_length, addr - (this->addr_base + 12));
+            return arr[addr - (this->addr_base + 12)];
+        }
 
-        return arr[addr - (this->addr_base + 12)];
+        return 0;
     } else if (addr >= this->addr_base + 14 && addr < this->addr_base + 1514) {
-        return this->data[addr - (this->addr_base + 14)];
-    } else if (addr >= this->addr_base + 0x07F4 && addr < this->addr_base + 0x07F8) {
-        uint32_t offset = addr - (this->addr_base + 0x07F4);
-        uint8_t *arr = (uint8_t *)&(this->frame_length);
+        if (!this->frames.empty()) {
+            uint8_t *arr = (uint8_t *)&this->frames.front().data;
 
-        return arr[offset];
+            return arr[addr - (this->addr_base + 14)];
+        }
+
+        return 0;
+    } else if (addr >= this->addr_base + 0x07F4 && addr < this->addr_base + 0x07F8) {
+        if (!this->frames.empty()) {
+            uint32_t offset = addr - (this->addr_base + 0x07F4);
+            uint8_t *arr = (uint8_t *)&(this->frames.front().frame_length);
+
+            return arr[offset];
+        }
+
+        return 0;
     } else if (addr >= this->addr_base + 0x07F8 && addr < this->addr_base + 0x07FC) {
         uint32_t offset = addr - (this->addr_base + 0x07F8);
         uint8_t *arr = (uint8_t *)&(this->control);
@@ -245,8 +276,7 @@ uint8_t memory_device_ethernet_receive::read_byte(
 }
 
 int memory_device_ethernet_receive::eth_frame_recv(
-    char *iface,
-    uint8_t source[ETH_ALEN], uint8_t dest[ETH_ALEN], uint8_t *data)
+    char *iface, memory_device_ethernet_frame_t *this_frame)
 {
     printf("Receiving eth_frame_recv\n");
 
@@ -263,50 +293,77 @@ int memory_device_ethernet_receive::eth_frame_recv(
     );
 
     printf("recv_result %d\n", recv_result);
-    
-    if (recv_result > 0) {
-        memcpy(data, frame.field.data, ETH_DATA_LEN);
 
-        memcpy(source, frame.field.header.h_source, ETH_ALEN);
-        memcpy(dest, frame.field.header.h_dest, ETH_ALEN);
+    uint8_t broadcast_address[6] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
 
-        printf("SOURCE %02x:%02x:%02x:%02x:%02x:%02x\n", source[0], source[1], source[2], source[3], source[4], source[5]);
-        printf("DEST %02x:%02x:%02x:%02x:%02x:%02x\n", dest[0], dest[1], dest[2], dest[3], dest[4], dest[5]);
+    uint8_t *mac_address = this->transmit_device->get_mac_address();
 
-        this->type_length = frame.field.header.h_proto;
-        this->frame_length = recv_result;
+    int correct_address = memcmp(frame.field.header.h_dest, mac_address, ETH_ALEN) == 0
+                       || memcmp(frame.field.header.h_dest, broadcast_address, ETH_ALEN) == 0;
+
+    if (recv_result > 0 && correct_address) {
+        memcpy(this_frame->data, frame.field.data, ETH_DATA_LEN);
+
+        memcpy(this_frame->source_address, frame.field.header.h_source, ETH_ALEN);
+        memcpy(this_frame->destination_address, frame.field.header.h_dest, ETH_ALEN);
+
+        printf(
+            "SOURCE %02x:%02x:%02x:%02x:%02x:%02x\n",
+            this_frame->source_address[0], this_frame->source_address[1],
+            this_frame->source_address[2], this_frame->source_address[3],
+            this_frame->source_address[4], this_frame->source_address[5]
+        );
+        printf(
+            "DEST %02x:%02x:%02x:%02x:%02x:%02x\n",
+            this_frame->destination_address[0], this_frame->destination_address[1],
+            this_frame->destination_address[2], this_frame->destination_address[3],
+            this_frame->destination_address[4], this_frame->destination_address[5]
+        );
+
+        this_frame->type_length = frame.field.header.h_proto;
+        this_frame->frame_length = recv_result;
 
         return 1;
     } else {
-        return recv_result;
+        return 0;
     }
 }
 
 int memory_device_ethernet_receive::get_control()
 {
-    if (this->control == 0) {
-        int result = this->eth_frame_recv(
-            "eth0", this->source_address, this->destination_address,
-            this->data
-        );
+    memory_device_ethernet_frame_t this_frame;
 
-        if (result > 0) {
-            this->control = 1;
-        }
+    int result = this->eth_frame_recv("eth0", &this_frame);
 
-        return this->control;
+    if (result > 0) {
+        this->frames.push(this_frame);
+
+        this->control = 1;
     }
+
+    return this->control;
 }
 
 bool memory_device_ethernet_receive::is_int_ready()
 {
-    printf("b: control %d, enable %d\n", this->control, this->interrupt_enable);
+    printf(
+        "b: control %d, enable %d, frames.size() %d\n",
+        this->control, this->interrupt_enable, this->frames.size()
+    );
 
     int control = this->get_control();
 
-    printf("a: control %d, enable %d\n", control, this->interrupt_enable);
+    printf(
+        "a: control %d, enable %d, frames.size() %d\n",
+        control, this->interrupt_enable, this->frames.size()
+    );
 
-    return control == 1 && this->interrupt_enable;
+    return this->interrupt_enable && !this->frames.empty();
+}
+
+bool memory_device_ethernet_receive::is_int_handled()
+{
+    return this->interrupt_enable && this->frames.empty();
 }
 
 void memory_device_ethernet_receive::set_interrupt_disable()
