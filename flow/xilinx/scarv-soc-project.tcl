@@ -291,7 +291,7 @@ add_files -norecurse -fileset $obj $files
 
 # Import local files from the original project
 set files [list \
- [file normalize "$::env(SOC_HOME)/work/scarv-soc-template/tb_top_behav.wcfg" ]\
+ [file normalize "$::env(SOC_HOME)/flow/xilinx/tb_top_behav.wcfg" ]\
 ]
 set imported_files [import_files -fileset sim_1 $files]
 

@@ -29,6 +29,7 @@ $(BSP_INCLUDE)/%.h : $(SOC_HOME)/src/bsp/include/%.h
 bsp-lib    : $(BSP_LIB) $(BSP_HEADERS)
 
 bsp-docs   : $(BSP_SRCS) $(BSP_HEAD_SRC)
+	mkdir -p $(SOC_HOME)/work/bsp/doc
 	doxygen $(SOC_HOME)/src/bsp/bsp.doxyfile
 
 bsp-clean  :

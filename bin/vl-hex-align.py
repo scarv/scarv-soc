@@ -58,6 +58,15 @@ def main():
 
                     tokens[t_i] = "@" + hex(new_addr)[2:]
 
+                else:
+                    newline = "".join(tokens)
+                    newtokens= []
+                    while(newline):
+                        newtokens.append(newline[:8])
+                        newline = newline[8:]
+                    tokens = newtokens
+                    break
+
             lines[l_i] = " ".join(tokens)
 
         towrite = "\n".join(lines)

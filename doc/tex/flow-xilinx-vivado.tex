@@ -67,5 +67,117 @@ Vivado.
   There is also a pre-generated bitfile in 
   {\tt \$SOC\_HOME/flow/xilinx/}.
 
+  Note that running this script will force compilation of
+  the first stage boot loader (FSBL) described in 
+  Section \ref{sec:sw:fsbl}.
+  This is required because the FSBL is automatically pre-loaded
+  into the ROM by Vivado during bitstream creation, so this
+  file must exist.
+
+
 \end{itemize}
+
+
+\subsubsection{Uploading programs to the FPGA}
+\label{sec:hw:fpga:upload}
+
+Once the FPGA is programmed with the bitstream, and assuming that
+the FSBL has been correctly integrated into the ROM, programs can
+be uploaded to the FPGA using the flow described here.
+It is recommended to familiarise oneself with how the FSBL operates
+(Section \ref{sec:sw:fsbl}) and the associated
+code (\SOCDIR{src/fsbl}) before continuing.
+
+\begin{enumerate}
+\item Ensure that the FPGA has been programmed with the
+      generated bitstream using Vivado.
+
+\item Open a terminal, and open the UART port used to communicate with
+      the FPGA. If you are using Ubuntu, and a simple USB-Serial
+      converter, it will appear under {\tt /dev/ttyUSB*}, where {\tt *}
+      will be a number.
+      In this example, we will use the {\tt miniterm.py} terminal
+      application. PuTTy is another good alternative.
+
+\begin{lstlisting}[style=block, language=bash]
+> miniterm.py /dev/ttyUSB0 12800 # Open the terminal connection
+\end{lstlisting}
+
+      Note the Baud rate set to $12800$.
+
+\item Initially the terminal will display nothing.
+      Press the {\em reset} button on the Sasebo FPGA board labelled
+      {\tt SW4} to reset the device.
+      Note that there are two reset buttons, the other is labelled
+      {\tt SW2}, and will reset the entire FPGA (rather than the
+      scarv-soc). If you do this by accident, you will need to re-program
+      the FPGA with the bitstream.
+
+\item After pressing {\tt SW4}, if everything is working, you will see
+      ``{\tt scarv-soc fsbl\textbackslash n}'' printed to the terminal.
+      This indicates that everything is working as expected.
+
+\begin{lstlisting}[style=block,language=bash]
+> miniterm.py /dev/ttyUSB0 128000
+--- Miniterm on /dev/ttyUSB0  128000,8,N,1 ---
+--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H ---
+scarv-soc fsbl
+\end{lstlisting}
+
+\item Close miniterm (by pressing {\tt CTRL+]}).
+
+\item We can upload any program to the FPGA using the script
+    in \SOCDIR{bin/upload-program.py}.
+
+\begin{lstlisting}[style=block,language=bash]
+> ./bin/upload-program.py --help
+usage: upload-program.py [-h] [--no-waiting] [--baud BAUD] [--goto GOTO]
+                         port binary start
+
+positional arguments:
+  port          UART port to program over
+  binary        The binary program to download
+  start         Start address of the program as hex i.e. 0x20000000
+
+optional arguments:
+  -h, --help    show this help message and exit
+  --no-waiting  Don't wait for the FSBL ready string, just send everything.
+  --baud BAUD   UART port baud speed
+  --goto GOTO   For telling the acquisition framework to re-enter the FSBL.
+\end{lstlisting}
+
+    This program will read continually from the specified UART port
+    until it sees the ``{\tt scarv-soc fsbl\textbackslash n}'' message
+    printed.  It then uploads the supplied program, and the CPU will
+    automatically start executing it.
+
+\item An example of this flow can be run using the make command:
+
+\begin{lstlisting}[style=block,language=bash]
+> make xilinx-interract
+----------[Uploading Program]--------------
+- Binary:  /home/work/scarv/scarv-soc-eo/work/examples/uart/uart.bin
+- Address: 0x20000000
+- Port:    /dev/ttyUSB0 & 128000
+/home/work/scarv/scarv-soc-eo/bin/upload-program.py \
+        --baud 128000 \
+        /dev/ttyUSB0 \
+        /home/work/scarv/scarv-soc-eo/work/examples/uart/uart.bin \
+        0x20000000
+Waiting for FSBL, please reset the target...
+Programming /home/work/scarv/scarv-soc-eo/work/examples/uart/uart.bin, size=356, start=0x20000000
+Programming: Done
+-----------------[Done]--------------------
+miniterm.py /dev/ttyUSB0 128000
+--- Miniterm on /dev/ttyUSB0  128000,8,N,1 ---
+--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H ---
+UART Echo Example Program
+hello world
+\end{lstlisting}
+    
+    This example builds the UART example program, uploads it to the
+    FPGA and opens a terminal to talk to the program.
+    Press any key, and the program running on the CPU will echo anything
+    you type. Typing ``{\tt !}'' will quit the program.
+\end{enumerate}
 

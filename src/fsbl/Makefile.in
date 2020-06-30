@@ -28,7 +28,6 @@ $(FSBL_VIVADO_HEX) : $(FSBL_OBJ)
 	@mkdir -p $(dir $@)
 	$(OBJCOPY) $(OBJCOPY_HEX_ARGS) \
         --reverse-bytes=4 \
-        --verilog-data-width=4 \
         --remove-section=.riscv.attributes \
         --change-address=0xF0000000 \
         -O verilog $< $@
