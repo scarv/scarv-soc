@@ -82,7 +82,7 @@ def main():
         else:
             print(line)
             print(type(line))
-            raise Exception("FSBL not ready to recieve data")
+            raise Exception("FSBL not ready to receive data")
 
     print("Programming %s, size=%d, start=%s" % (
         args.binary,fsize,args.start))
