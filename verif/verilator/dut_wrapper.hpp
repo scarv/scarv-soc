@@ -9,14 +9,7 @@
 #include "verilated_vcd_c.h"
 #include "svdpi.h"
 
-#include "memory_bus/memory_bus.hpp"
-
-#include "axi4lite/a4l_txns.hpp"
-#include "axi4lite/a4l_slave_agent.hpp"
-
 #include "Vscarv_soc.h"
-#include "Vscarv_soc_scarv_soc.h"
-#include "Vscarv_soc__Dpi.h"
 
 //! A trace packet emitted by the core post-writeback.
 typedef struct dut_trace_pkt {
@@ -37,12 +30,10 @@ public:
 
     /*!
     @brief Create a new dut_wrapper object
-    @param in bus - Memory bus model for outgoing AXI requests.
     @param in dump_waves - If true, write wave file.
     @oaram in wavefile path to dump waves too.
     */
     dut_wrapper (
-        memory_bus    * bus         ,
         bool            dump_waves  ,
         std::string     wavefile
     );
@@ -71,9 +62,6 @@ public:
 
 protected:
     
-    //! Load a binary file into the RAM or ROM memories.
-    void load_bin_file_to_memory (std::string file_path);
-
     //! Number of model evaluations per clock cycle
     const uint32_t  evals_per_clock = 10;
     
@@ -83,14 +71,8 @@ protected:
     //! The DUT object being wrapped.
     Vscarv_soc * dut;
 
-    //! AXI4Lite slave interface agent.
-    a4l_slave_agent * axi_agent;
-
     //! Called on every rising edge of the main clock.
-    void posedge_gclk();
-        
-    //! Memory bus model for outgoing AXI requests.
-    memory_bus    * bus;
+    void posedge_fclk();
 
 };
 

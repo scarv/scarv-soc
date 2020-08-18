@@ -4,11 +4,6 @@
 
 #include "dut_wrapper.hpp"
 
-#include "memory_bus/memory_bus.hpp"
-#include "memory_bus/memory_device_ram.hpp"
-#include "memory_bus/memory_device_uart.hpp"
-#include "memory_bus/memory_device_gpio.hpp"
-
 class testbench {
 
 public:
@@ -65,16 +60,6 @@ public:
         this -> use_sim_fail_address = true;
     }
 
-    //! Base address of the UART peripheral in the memory space.
-    const uint32_t uart_base_address = 0x40001000;
-    
-    //! Base address of the GPIO peripheral in the memory space.
-    const uint32_t gpio_base_address = 0x40002000;
-
-    //! Base address of the BUS RAM peripheral in the memory space.
-    const uint32_t bus_ram_base_address = 0x40000000;
-    const uint32_t bus_ram_range        = 0x00000FFF;
-
     //! Wait for a keypress after building TB but before running the sim.
     bool           wait_at_start        = false;
 
@@ -113,18 +98,6 @@ protected:
     //! Drain the DUT trace queue from the DUT wrapper and process as needed.
     void        drain_dut_trace();
 
-    //! Simulated AXI memory bus device used to emulate peripheral accesses.
-    memory_bus * bus;
-
-    //! Simulated UART peripheral
-    memory_device_uart * uart;
-
-    //! Simulated memory, accessed via the AXI bus
-    memory_device_ram  * bus_ram;
-
-    //! Simulated GPIO
-    memory_device_gpio * gpio;
-    
 };
 
 #endif
