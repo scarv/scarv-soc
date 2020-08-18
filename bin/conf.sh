@@ -5,12 +5,14 @@ export SOC_WORK=$SOC_HOME/work
 export TEXMFLOCAL="${TEXMFLOCAL}:${SOC_HOME}/extern/texmf"
 
 export SCARV_CPU=$SOC_HOME/extern/scarv-cpu
+export SCARV_SOC=$SOC_HOME
 export FRV_HOME=$SCARV_CPU
 export XCRYPTO_RTL=$SCARV_CPU/external/xcrypto/rtl
 
 
 if [[ -z "$VERILATOR_ROOT" ]]; then
     echo "Warning: No VERILATOR_ROOT environment variable set."
+    export VERILATOR_ROOT=/usr/local
 fi
 
 if [[ -z "$YOSYS_ROOT" ]]; then
