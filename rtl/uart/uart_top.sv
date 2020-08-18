@@ -53,8 +53,8 @@ wire memif_read     = memif.req && memif.gnt && !memif.wen;
 assign        memif.gnt     = 1'b1          ;
 wire        n_memif_error   = reg_invalid   || bad_tx_write;
 wire [31:0] n_memif_rdata   = {24'b0,
-    {8{reg_rx   }} & uart_rx_data  |
-    {8{reg_stat }} & status_rdata  |
+    {8{reg_rx   }} & uart_rx_ff_data |
+    {8{reg_stat }} & status_rdata    |
     {8{reg_ctrl }} & ctrl_rdata     
 };
 
@@ -80,7 +80,7 @@ assign       g_clk_req   = clk_req_rx || clk_req_tx || memif.req ||
 wire        uart_rx_en   ; // Recieve enable
 wire        uart_rx_break; // Did we get a BREAK message?
 wire        uart_rx_valid; // Valid data recieved and available.
-reg  [ 7:0] uart_rx_data ; // The recieved data.
+wire [ 7:0] uart_rx_data ; // The recieved data.
 
 wire        uart_tx_busy ; // Module busy sending previous item.
 wire        uart_tx_en   ; // Send the data on uart_tx_data
@@ -103,11 +103,18 @@ wire        uart_tx_ff_pop  = !uart_tx_busy;
 assign      uart_tx_en      = uart_tx_ff_ready && uart_tx_ff_pop;
 
 //
+// RX Register
+
+wire        uart_rx_ff_valid;
+wire [7:0]  uart_rx_ff_data ;
+wire        read_rx_fifo    = memif_read && reg_rx;
+
+//
 // STAT Register
 
 wire        status_rx_valid = uart_rx_valid;
 wire        status_tx_full  ;
-
+wire        status_rx_full  ;
 reg         status_rx_break ;
 wire        clr_status_break;
 
@@ -118,7 +125,7 @@ wire [ 7:0] status_rdata = {
     1'b0            ,
     status_tx_full  ,
     1'b0            ,
-    1'b0            ,
+    status_rx_full  ,
     status_rx_valid
 };
 
@@ -144,6 +151,21 @@ uart_fifo #(
 .out_valid  (uart_tx_ff_ready   ), // Output word valid.
 .out_data   (uart_tx_data       ), // Output data word.
 .pop        (uart_tx_ff_pop     )  // Extract an output word.
+);
+
+uart_fifo #(
+.DEPTH(FIFO_DEPTH),
+.WIDTH(PAYLOAD_BITS)
+) i_rx_fifo (
+.g_clk      (g_clk              ), // Clock
+.g_clk_req  (clk_req_rx_fifo    ), // Clock request
+.g_resetn   (g_resetn           ), // Reset
+.full       (status_rx_full     ), // Cannot accept any more inputs.
+.push       (uart_rx_valid      ), // Input word valid.
+.in_data    (uart_rx_data       ), // Input word data.
+.out_valid  (uart_rx_ff_valid   ), // Output word valid.
+.out_data   (uart_rx_ff_data    ), // Output data word.
+.pop        (read_rx_fifo       )  // Extract an output word.
 );
 
 uart_rx #(
