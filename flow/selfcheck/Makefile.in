@@ -171,9 +171,12 @@ SELFCHECK_RUN_TARGETS += selfcheck-run-$(call map_selfcheck_test_name,${1})
 
 endef
 
-$(foreach TEST,$(SELFCHECK_TESTS),\
-    $(eval $(call add_target_selfcheck_test,$(TEST)))\
-)
+#
+# TODO: Re-instate the selfchecking tests
+#
+#$(foreach TEST,$(SELFCHECK_TESTS),\
+#    $(eval $(call add_target_selfcheck_test,$(TEST)))\
+#)
 
 selfcheck-run-all: $(SELFCHECK_RUN_TARGETS)
 

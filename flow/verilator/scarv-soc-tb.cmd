@@ -1,0 +1,5 @@
+-I$SCARV_CPU/rtl/core
+--top-module scarv_soc
+-f $SCARV_CPU/flow/verilator/manifest-ccx-rtl.txt
+-f $SCARV_SOC/flow/verilator/manifest-soc-rtl.txt
+-f $SCARV_SOC/flow/verilator/manifest-soc-tb.txt

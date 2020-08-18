@@ -2,31 +2,30 @@
 VERILATOR   = $(VERILATOR_ROOT)/bin/verilator
 
 VL_DIR      = $(SOC_WORK)/verilator
-VL_OUT      = $(SOC_WORK)/verilator/verilated
 
 VL_WAVES    = $(VL_DIR)/waves.vcd
 VL_TIMEOUT  = 10000
 VL_ARGS     = 
 
-VL_CSRC_DIR =$(SOC_HOME)/verif/scarv-soc
-
-VL_CSRC     = $(VL_CSRC_DIR)/main.cpp \
-              $(VL_CSRC_DIR)/dut_wrapper.cpp \
-              $(VL_CSRC_DIR)/testbench.cpp
-
 VL_FLAGS    = --cc -CFLAGS "-O2" -O3 -CFLAGS -g\
-               -I$(SCARV_CPU)/rtl/core \
                --exe --trace \
-               --top-module scarv_soc $(VL_BUILD_FLAGS)
+               $(VL_BUILD_FLAGS)
 
-VL_RTL_MANIFEST = $(SOC_HOME)/flow/verilator/scarv-soc-rtl.manifest
-VL_CPP_MANIFEST = $(SOC_HOME)/flow/verilator/scarv-soc-testbench.manifest
-SCARV_CPU_MANIFEST=$(SCARV_CPU)/flow/verilator/core-rtl.manifest
+VL_SOC_CMD  = $(SOC_HOME)/flow/verilator/scarv-soc-tb.cmd
 
-# Defined in $(SOC_HOME)/src/fsbl/Makefile.in
-BRAM_ROM_MEMH   = $(FSBL_HEX)
+#
+# 1. Build dir
+# 2. Top module name
+define map_vl_makefile
+${1}/V${2}.mk
+endef
 
-.PHONY: $(VL_CSRC)
+#
+# 1. Build dir
+# 2. Top module name
+define map_vl_exe
+${1}/${2}
+endef
 
 #
 # Add a new verilator build
@@ -38,26 +37,28 @@ BRAM_ROM_MEMH   = $(FSBL_HEX)
 #
 define tgt_verilator_build
 
-${1} : $(VL_CSRC)
+$(call map_vl_makefile,${2},${1}) :
 	@mkdir -p ${2}
-	$(VERILATOR) $(VL_FLAGS)  --Mdir ${2} -o ${1} \
-        -GBRAM_ROM_MEMH_FILE="\"$(strip ${3})\"" \
-        -GBRAM_RAM_MEMH_FILE="\"$(strip ${4})\"" \
-        -f $(VL_RTL_MANIFEST) \
-        -f $(VL_CPP_MANIFEST) \
-        -f $(SCARV_CPU_MANIFEST)
+	$(VERILATOR) $(VL_FLAGS)  --Mdir ${2} -o $(call map_vl_exe,${2},${1}) \
+        -GCCX_ROM_INIT_FILE="\"$(strip ${3})\""     \
+        -GCCX_RAM_INIT_FILE="\"$(strip ${4})\""     \
+        -DSCARV_SOC_VERILATOR                       \
+        -f $(VL_SOC_CMD)
+	$(MAKE) -C ${2} -f Vscarv_soc.mk
+
+verilator-build-${1}: $(call map_vl_makefile,${2},${1})
 	$(MAKE) -C ${2} -f Vscarv_soc.mk
 
 endef
 
-$(eval $(call tgt_verilator_build,$(VL_OUT),$(VL_DIR),rom.hex,ram.hex))
+$(eval $(call tgt_verilator_build,scarv-soc,$(VL_DIR),rom.hex,ram.hex))
 
-verilator-build: $(VL_OUT)
-	cp $(FSBL_HEX) $(dir $(VL_OUT))rom.hex
-	cp $(FSBL_HEX) $(dir $(VL_OUT))ram.hex
+VL_SCARV_SOC=$(call map_vl_exe,$(VL_DIR),scarv-soc)
 
-verilator-run-waves: $(VL_OUT) $(FSBL_HEX)
-	cd $(dir $(VL_OUT)) && $(VL_OUT) $(VL_ARGS) \
+verilator-run-waves: $(VL_SCARV_SOC) $(FSBL_HEX)
+	cp $(FSBL_HEX) $(dir $(VL_SCARV_SOC))/rom.hex
+	touch          $(dir $(VL_SCARV_SOC))/ram.hex
+	cd $(dir $(VL_SCARV_SOC)) && $(VL_SCARV_SOC) $(VL_ARGS) \
         +WAVES=$(VL_WAVES) \
         +TIMEOUT=$(VL_TIMEOUT)
 

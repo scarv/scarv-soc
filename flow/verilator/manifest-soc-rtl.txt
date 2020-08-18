@@ -1,0 +1,5 @@
+$SCARV_SOC/rtl/gpio/gpio_top.sv
+$SCARV_SOC/rtl/uart/uart_top.sv
+$SCARV_SOC/rtl/soc/scarv_soc_periph_top.sv
+$SCARV_SOC/rtl/soc/scarv_soc.sv
+
