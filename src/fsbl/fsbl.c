@@ -2,11 +2,11 @@
 #include <stdint.h>
 
 #ifndef UART_BASE
-    #define UART_BASE 0x40001000
+    #define UART_BASE 0x10000000
 #endif
 
 #ifndef GPIO_BASE
-    #define GPIO_BASE 0x40002000
+    #define GPIO_BASE 0x10001000
 #endif
 
 #define GPIO_LEDS 2

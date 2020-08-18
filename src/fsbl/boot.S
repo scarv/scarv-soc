@@ -1,10 +1,10 @@
 
 .text
-.global _start
-_start:
+.global __fsbl_start
+__fsbl_start:
 
     li x1 , 0
-    li x2 , 0
+    la sp, __ccx_stack_start
     li x3 , 0
     li x4 , 0
     li x5 , 0
@@ -35,7 +35,6 @@ _start:
     li x30, 0
     li x31, 0
 
-    li sp, 0x2000FFF0
 
     j       fsbl                    // Jump to the first stage boot loader.
 
