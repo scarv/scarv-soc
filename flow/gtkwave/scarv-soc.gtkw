@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
-[*] Tue Aug 18 11:11:34 2020
+[*] Tue Aug 18 11:52:32 2020
 [*]
 [dumpfile] "/home/work/scarv/skywater/scarv-soc/work/verilator/waves.vcd"
-[dumpfile_mtime] "Tue Aug 18 11:10:16 2020"
-[dumpfile_size] 15639600
+[dumpfile_mtime] "Tue Aug 18 11:51:47 2020"
+[dumpfile_size] 151998436
 [savefile] "/home/work/scarv/skywater/scarv-soc/flow/gtkwave/scarv-soc.gtkw"
 [timestart] 1
 [size] 1920 1025
 [pos] -1 -1
-*-15.432246 100000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-18.641848 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] TOP.
 [treeopen] TOP.scarv_soc.
 [treeopen] TOP.scarv_soc.i_scarv_ccx_top.
@@ -126,12 +126,48 @@ TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.reg_invalid
 TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.reg_rx
 TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.reg_stat
 TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.reg_tx
-@23
+@22
 TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.status_rdata[7:0]
-@29
+@28
 TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.status_rx_break
 TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.status_rx_valid
 TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.status_tx_full
+@800200
+-TX FIFO
+@22
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.elems(0)[7:0]
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.elems(1)[7:0]
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.elems(2)[7:0]
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.elems(3)[7:0]
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.elems(4)[7:0]
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.elems(5)[7:0]
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.elems(6)[7:0]
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.elems(7)[7:0]
+@28
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.full
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.g_clk
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.g_clk_req
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.g_resetn
+@22
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.in_data[7:0]
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.moving[7:0]
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.out_data[7:0]
+@821
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.out_data[7:0]
+@28
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.out_valid
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.pop
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.push
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.valid(0)
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.valid(1)
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.valid(2)
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.valid(3)
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.valid(4)
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.valid(5)
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.valid(6)
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx_fifo.valid(7)
+@1000200
+-TX FIFO
 @800200
 -UART - TX
 @28

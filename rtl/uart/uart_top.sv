@@ -25,6 +25,7 @@ parameter   BIT_RATE        =    256_000; // bits / sec
 parameter   CLK_HZ          = 50_000_000;
 localparam  PAYLOAD_BITS    = 8         ;
 parameter   STOP_BITS       = 1         ;
+parameter   FIFO_DEPTH      = 8         ;
 
 
 //
@@ -71,7 +72,10 @@ end
 
 wire         clk_req_rx  ;
 wire         clk_req_tx  ;
-assign       g_clk_req   = clk_req_rx || clk_req_tx || memif.req;
+wire         clk_req_rx_fifo;
+wire         clk_req_tx_fifo;
+assign       g_clk_req   = clk_req_rx || clk_req_tx || memif.req ||
+                           clk_req_rx_fifo || clk_req_tx_fifo ;
 
 wire        uart_rx_en   ; // Recieve enable
 wire        uart_rx_break; // Did we get a BREAK message?
@@ -89,18 +93,20 @@ wire [ 7:0] uart_tx_data ; // The data to be sent
 //
 // TX Register
 
-assign      uart_tx_en   = !uart_tx_busy && reg_tx && memif_write &&
+wire        uart_tx_push = !status_tx_full && reg_tx && memif_write &&
                             memif.strb[0];
 
-wire        bad_tx_write = reg_tx && memif_write && uart_tx_busy;
+wire        bad_tx_write = reg_tx && memif_write && status_tx_full;
 
-assign      uart_tx_data = memif.wdata[7:0];
+wire        uart_tx_ff_ready;
+wire        uart_tx_ff_pop  = !uart_tx_busy;
+assign      uart_tx_en      = uart_tx_ff_ready && uart_tx_ff_pop;
 
 //
 // STAT Register
 
 wire        status_rx_valid = uart_rx_valid;
-wire        status_tx_full  = uart_tx_busy;
+wire        status_tx_full  ;
 
 reg         status_rx_break ;
 wire        clr_status_break;
@@ -124,6 +130,21 @@ wire [7:0] ctrl_rdata = 8'b0;
 //
 // Submodule instances
 // ------------------------------------------------------------
+
+uart_fifo #(
+.DEPTH(FIFO_DEPTH),
+.WIDTH(PAYLOAD_BITS)
+) i_tx_fifo (
+.g_clk      (g_clk              ), // Clock
+.g_clk_req  (clk_req_tx_fifo    ), // Clock request
+.g_resetn   (g_resetn           ), // Reset
+.full       (status_tx_full     ), // Cannot accept any more inputs.
+.push       (uart_tx_push       ), // Input word valid.
+.in_data    (memif.wdata[7:0]   ), // Input word data.
+.out_valid  (uart_tx_ff_ready   ), // Output word valid.
+.out_data   (uart_tx_data       ), // Output data word.
+.pop        (uart_tx_ff_pop     )  // Extract an output word.
+);
 
 uart_rx #(
 .BIT_RATE       (BIT_RATE       ),
