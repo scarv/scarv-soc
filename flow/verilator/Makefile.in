@@ -9,6 +9,7 @@ VL_ARGS     =
 
 VL_FLAGS    = --cc -CFLAGS "-O2" -O3 -CFLAGS -g\
                --exe --trace \
+               -CFLAGS -I$(SCARV_SOC)/verif/verilator/agent_uart \
                $(VL_BUILD_FLAGS)
 
 VL_SOC_CMD  = $(SOC_HOME)/flow/verilator/scarv-soc-tb.cmd

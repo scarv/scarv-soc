@@ -1,3 +1,4 @@
+$SOC_HOME/verif/verilator/agent_uart/agent_uart.cpp
 $SOC_HOME/verif/verilator/dut_wrapper.cpp
 $SOC_HOME/verif/verilator/testbench.cpp
 $SOC_HOME/verif/verilator/main.cpp

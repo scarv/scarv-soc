@@ -27,6 +27,11 @@ dut_wrapper::dut_wrapper (
 
     this -> sim_time               = 0;
 
+    this -> uart = new agent_uart (
+        &this -> dut -> uart_tx,
+        &this -> dut -> uart_rx
+    );
+
 }
    
 
@@ -36,6 +41,7 @@ void dut_wrapper::dut_set_reset() {
     // Put model in reset.
     this -> dut -> g_resetn     = 0;
     this -> dut -> f_clk        = 0;
+    this -> uart-> on_set_reset();
 
 }
     
@@ -43,6 +49,7 @@ void dut_wrapper::dut_set_reset() {
 void dut_wrapper::dut_clear_reset() {
     
     this -> dut -> g_resetn = 1;
+    this -> uart-> on_clear_reset();
     
 }
 
@@ -81,6 +88,8 @@ void dut_wrapper::dut_step_clk() {
 
 
 void dut_wrapper::posedge_fclk () {
+    
+    this -> uart -> on_posedge_clk();
     
     // Do we need to capture a trace item?
     if(this -> dut -> trs_valid) {

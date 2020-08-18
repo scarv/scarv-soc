@@ -9,6 +9,8 @@
 #include "verilated_vcd_c.h"
 #include "svdpi.h"
 
+#include "agent_uart.hpp"
+
 #include "Vscarv_soc.h"
 
 //! A trace packet emitted by the core post-writeback.
@@ -52,6 +54,9 @@ public:
     uint64_t get_sim_time() {
         return this -> sim_time;
     }
+
+    //! UART Communication agent.
+    agent_uart  * uart;
     
     //! Handle to the VCD file for dumping waveforms.
     VerilatedVcdC* trace_fh;
@@ -59,6 +64,8 @@ public:
     //! Trace of post-writeback PC and instructions.
     std::queue<dut_trace_pkt_t> dut_trace;
 
+    //! The DUT object being wrapped.
+    Vscarv_soc * dut;
 
 protected:
     
@@ -67,9 +74,6 @@ protected:
     
     //! Simulation time, incremented with each tick.
     uint64_t sim_time;
-    
-    //! The DUT object being wrapped.
-    Vscarv_soc * dut;
 
     //! Called on every rising edge of the main clock.
     void posedge_fclk();
