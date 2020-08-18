@@ -56,6 +56,10 @@ localparam  PERIPH_SIZE     = 32'h0FFF;
 parameter  PERIPH_GPIO_NUM = 16;
 localparam GPION           = PERIPH_GPIO_NUM - 1;
 
+parameter   UART_BIT_RATE  =    256_000; // bits / sec
+parameter   UART_CLK_HZ    = 50_000_000;
+parameter   UART_STOP_BITS = 1         ;
+
 //
 // Peripheral device selection
 // ------------------------------------------------------------
@@ -98,7 +102,11 @@ scarv_ccx_ic_router #(
 //
 //  Top level of the UART peripheral
 //
-uart_top i_uart ( 
+uart_top #(
+.BIT_RATE  (UART_BIT_RATE  ),
+.CLK_HZ    (UART_CLK_HZ    ),
+.STOP_BITS (UART_STOP_BITS )
+) i_uart ( 
 .g_clk      (g_clk_uart     ), // Gated clock
 .g_clk_req  (g_clk_req_uart ), // Clock request
 .g_resetn   (g_resetn       ), // Global Active low sync reset.

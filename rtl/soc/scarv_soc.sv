@@ -55,6 +55,10 @@ parameter [255*8-1:0] CCX_ROM_INIT_FILE = "rom.hex";
 parameter [255*8-1:0] CCX_RAM_INIT_FILE = "ram.hex";
 /* verilator lint_on WIDTH */
 
+parameter   UART_BIT_RATE  =    256_000; // bits / sec
+parameter   UART_CLK_HZ    = 50_000_000;
+parameter   UART_STOP_BITS = 1         ;
+
 //
 // Testbench code for Verilator
 // ------------------------------------------------------------
@@ -91,8 +95,8 @@ scarv_ccx_memif #() ccx_memif() ; // Core complex memory interface
 // Clock request and gating.
 // ------------------------------------------------------------
 
-wire        g_clk_uart          ; // UART Clock
-wire        g_clk_gpio          ; // GPIO Clock
+wire        g_clk_uart = f_clk  ; // UART Clock
+wire        g_clk_gpio = f_clk  ; // GPIO Clock
 
 wire        g_clk_req_uart      ; // UART Clock request
 wire        g_clk_req_gpio      ; // GPIO Clock request
@@ -137,7 +141,10 @@ scarv_ccx_top #(
 scarv_soc_periph_top #(
 .BASE_UART       (PERIPH_MEM_UART_BASE  ),
 .BASE_GPIO       (PERIPH_MEM_GPIO_BASE  ),
-.PERIPH_GPIO_NUM (PERIPH_GPIO_NUM       )
+.PERIPH_GPIO_NUM (PERIPH_GPIO_NUM       ),
+.UART_BIT_RATE   (UART_BIT_RATE         ),
+.UART_CLK_HZ     (UART_CLK_HZ           ),
+.UART_STOP_BITS  (UART_STOP_BITS        )
 ) i_scarv_soc_periph_top (
 .f_clk              (f_clk              ), // Free running clock.
 .g_clk_uart         (g_clk_uart         ), // UART Clock

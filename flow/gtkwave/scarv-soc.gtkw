@@ -1,18 +1,20 @@
 [*]
 [*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
-[*] Tue Aug 18 10:14:02 2020
+[*] Tue Aug 18 11:11:34 2020
 [*]
 [dumpfile] "/home/work/scarv/skywater/scarv-soc/work/verilator/waves.vcd"
-[dumpfile_mtime] "Tue Aug 18 10:11:47 2020"
-[dumpfile_size] 15150217
+[dumpfile_mtime] "Tue Aug 18 11:10:16 2020"
+[dumpfile_size] 15639600
 [savefile] "/home/work/scarv/skywater/scarv-soc/flow/gtkwave/scarv-soc.gtkw"
 [timestart] 1
 [size] 1920 1025
 [pos] -1 -1
-*-15.465881 100000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-15.432246 100000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] TOP.
 [treeopen] TOP.scarv_soc.
 [treeopen] TOP.scarv_soc.i_scarv_ccx_top.
+[treeopen] TOP.scarv_soc.i_scarv_soc_periph_top.
+[treeopen] TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.
 [sst_width] 308
 [signals_width] 303
 [sst_expanded] 1
@@ -22,10 +24,10 @@
 @28
 TOP.scarv_soc.f_clk
 TOP.scarv_soc.g_resetn
+TOP.scarv_soc.g_clk_uart
 TOP.scarv_soc.g_clk_gpio
 TOP.scarv_soc.g_clk_req_gpio
 TOP.scarv_soc.g_clk_req_uart
-TOP.scarv_soc.g_clk_uart
 @200
 -
 @22
@@ -37,7 +39,7 @@ TOP.scarv_soc.uart_rx
 TOP.scarv_soc.uart_tx
 @200
 -
-@29
+@28
 TOP.scarv_soc.cpu_int_ext
 @22
 TOP.scarv_soc.cpu_int_ext_cause[31:0]
@@ -62,8 +64,9 @@ TOP.scarv_soc.i_scarv_ccx_top.i_scarv_cpu.i_pipeline.trap_cpu
 TOP.scarv_soc.i_scarv_ccx_top.i_scarv_cpu.i_pipeline.trap_int
 @200
 -
-@800200
+@c00200
 -SCARV_CPU
+@800200
 -Memory - DATA
 @28
 TOP.scarv_soc.i_scarv_ccx_top.i_scarv_cpu.dmem_req
@@ -113,7 +116,51 @@ TOP.scarv_soc.i_scarv_ccx_top.i_interconnect.i_router_imem.rsp_route_d3
 TOP.scarv_soc.i_scarv_ccx_top.i_interconnect.i_router_imem.rsp_route_none
 @1000200
 -Memory - INSTRS
+@1401200
 -SCARV_CPU
+@800200
+-UART
+@28
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.reg_ctrl
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.reg_invalid
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.reg_rx
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.reg_stat
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.reg_tx
+@23
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.status_rdata[7:0]
+@29
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.status_rx_break
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.status_rx_valid
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.status_tx_full
+@800200
+-UART - TX
+@28
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx.clk
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx.clk_req
+@22
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx.bit_counter[3:0]
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx.cycle_counter[8:0]
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx.data_to_send[7:0]
+@28
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx.fsm_state[2:0]
+@22
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx.i[31:0]
+@28
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx.n_fsm_state[2:0]
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx.next_bit
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx.payload_done
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx.resetn
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx.stop_done
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx.txd_reg
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx.uart_tx_busy
+@22
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx.uart_tx_data[7:0]
+@28
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx.uart_tx_en
+TOP.scarv_soc.i_scarv_soc_periph_top.i_uart.i_tx.uart_txd
+@1000200
+-UART - TX
+-UART
 -SCARV_SOC
 [pattern_trace] 1
 [pattern_trace] 0
