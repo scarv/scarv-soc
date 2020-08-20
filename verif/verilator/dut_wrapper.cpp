@@ -82,6 +82,9 @@ void dut_wrapper::dut_step_clk() {
             this -> trace_fh -> dump(this -> sim_time);
         }
 
+        this -> uart -> poll_pseudo_terminal();
+        this -> uart -> empty_rx_queue();
+
     }
 
 }

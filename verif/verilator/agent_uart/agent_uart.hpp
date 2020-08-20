@@ -2,6 +2,12 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <queue>
+#include <cassert>
+#include <iostream>
+
+// For Linux I/O
+#include <unistd.h>
+#include <fcntl.h>
 
 #ifndef __AGENT_UART_HPP__
 #define __AGENT_UART_HPP__
@@ -33,6 +39,12 @@ public:
         uint8_t * rx, // Recive line wrt agent. (input)
         uint8_t * tx  // Transmit line wrt agent. (output)
     );
+    
+    ~agent_uart(){
+        if(this -> pseudo_term_open) {
+            close(pseudo_term_handle);
+        }
+    }
 
     std::queue<uint8_t> rx_q; // Recieved bytes.
     std::queue<uint8_t> tx_q; // Bytes to be sent.
@@ -48,6 +60,9 @@ public:
 
     //! Send the supplied data on the TX line.
     void send(uint8_t * data, size_t len);
+    
+    //! Empty the recieved data queue.
+    void empty_rx_queue();
 
     enum state_rx {
         RX_IDLE, RX_START, RX_RECV, RX_STOP
@@ -56,6 +71,9 @@ public:
     enum state_tx {
         TX_IDLE, TX_START, TX_SEND, TX_STOP
     };
+
+    //! Read any data from the pseudo terminal.
+    void poll_pseudo_terminal();
 
 private:
 
@@ -83,6 +101,18 @@ private:
 
     void handle_rx();
     void handle_tx();
+
+    //! Used to provide a virtual serial port.
+    int pseudo_term_handle;
+
+    //! Did the pseudo terminal open successfully?
+    bool pseudo_term_open = false;
+
+    //! Name of the slave pseudo terminal.
+    char * pseudo_term_slave;
+
+    //! Initialises the pseudo terminal.
+    void setup_pseudo_terminal();
 
 };
 
