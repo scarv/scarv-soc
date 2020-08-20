@@ -1,4 +1,7 @@
 
+.extern fsbl
+.extern panic
+
 .text
 .global __fsbl_start
 __fsbl_start:
@@ -35,9 +38,13 @@ __fsbl_start:
     li x30, 0
     li x31, 0
 
+    la      ra, panic
+    csrw    mtvec, ra
 
     j       fsbl                    // Jump to the first stage boot loader.
 
 .global __fsbl_goto_main
 __fsbl_goto_main:
     jalr    zero, a0                // Jump to pointer value passed in a0.
+
+
