@@ -9,7 +9,7 @@ peripheral, as described in the link below:
 https://www.xilinx.com/support/documentation/ip_documentation/axi_uartlite/v2_0/pg142-axi-uartlite.pdf
 */
 
-scarvsoc_uart_conf  SCARVSOC_UART0= (scarvsoc_uart_conf)0x40001000;
+scarvsoc_uart_conf  SCARVSOC_UART0= (scarvsoc_uart_conf)0x10000000;
 
 //! Recieve data FIFO register index.
 static const uint32_t scarvsoc_uart_reg_rx  = 0x0;

@@ -2,10 +2,10 @@
 #include "scarvsoc_gpio.h"
 
 
-scarvsoc_gpio_conf SCARVSOC_GPIO0 = (scarvsoc_gpio_conf)0x40002000;
+scarvsoc_gpio_conf SCARVSOC_GPIO0 = (scarvsoc_gpio_conf)0x10001000;
 
 
-scarvsoc_gpio_conf SCARVSOC_GPIO1 = (scarvsoc_gpio_conf)0x40002008;
+scarvsoc_gpio_conf SCARVSOC_GPIO1 = (scarvsoc_gpio_conf)0x10001008;
 
 
 void scarvsoc_gpio_wr (
