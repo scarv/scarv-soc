@@ -55,17 +55,14 @@ void fsbl_uart_setup() {
 /*!
 @brief Print the simple welcome message to show we are ready.
 */
-void fsbl_print_welcome() {
+void putstr(char * msg) {
 
-    // Welcome message
-    char * welcome = "scarv-soc fsbl\n";
-
-    for(int i = 0; welcome[i]; i ++) {
+    for(int i = 0; msg[i]; i ++) {
         
         while(uart[UART_ST] & UART_STATUS_TX_FULL) {
             // Do nothing.
         }   
-        uart[UART_TX] = welcome[i];
+        uart[UART_TX] = msg[i];
 
     }
 }
@@ -81,13 +78,14 @@ void fsbl_print_welcome() {
 */
 void fsbl() {
     
+
     gpio[GPIO_LEDS] = 0x1;
 
     fsbl_uart_setup();
     
     gpio[GPIO_LEDS] = 0x2;
 
-    fsbl_print_welcome();
+    putstr("scarv-soc fsbl\n");
     
     gpio[GPIO_LEDS] = 0x4;
     
@@ -130,6 +128,8 @@ void fsbl() {
     }
     
     gpio[GPIO_LEDS] = 0x0;
+    
+    putstr("boot\n");
 
     // Jump to the downloaded program.
     __fsbl_goto_main((uint32_t*)program_dest);

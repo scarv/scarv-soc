@@ -1,8 +1,9 @@
 
-SW_EXAMPLES_LINK    = $(SOC_HOME)/src/examples/share/link.ld
+SW_EXAMPLES_LINK    = $(SCARV_CPU)/src/share/ccx-link-app.ld
 SW_EXAMPLES_DIR     = $(SOC_WORK)/examples
 SW_EXAMPLES_CFLAGS  = -march=rv32imc -mabi=ilp32 -Wall -O2 -nostartfiles \
                       -I$(BSP_INCLUDE) \
+                      -L$(dir $(SW_EXAMPLES_LINK)) \
                       -T$(SW_EXAMPLES_LINK)
 
 define map_sw_example_dir
@@ -44,7 +45,7 @@ $(call map_sw_example_dis,${1}) : $(call map_sw_example_elf,${1})
 
 $(call map_sw_example_hex,${1}) : $(call map_sw_example_elf,${1})
 	@mkdir -p $(dir $(call map_sw_example_hex,${1}))
-	$(OBJCOPY) --change-addresses=0xE0000000 $(OBJCOPY_HEX_ARGS) -O verilog $${<} $${@}
+	$(OBJCOPY) --change-addresses=0xFFFF0000 $(OBJCOPY_HEX_ARGS) -O verilog $${<} $${@}
 
 $(call map_sw_example_bin,${1}) : $(call map_sw_example_elf,${1})
 	@mkdir -p $(dir $(call map_sw_example_hex,${1}))
@@ -56,8 +57,8 @@ example-${1} : $(call map_sw_example_elf,${1}) \
                $(call map_sw_example_bin,${1}) \
                $(VL_OUT)                       \
                $(FSBL_HEX)                     
-	cp $(FSBL_HEX)  $(call map_sw_example_dir,${1})/rom.hex
-	cp $(VL_OUT)    $(call map_sw_example_dir,${1})/verilated
+	cp $(FSBL_HEX)      $(call map_sw_example_dir,${1})/rom.hex
+	cp $(VL_SCARV_SOC)  $(call map_sw_example_dir,${1})/verilated
 
 endef
 
