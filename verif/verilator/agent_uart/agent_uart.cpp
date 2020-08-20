@@ -21,8 +21,11 @@ void agent_uart::on_set_reset() {
     this -> clk_counter_rx  = 0;
     this -> clk_counter_tx  = 0;
     this -> rx_state        = RX_IDLE;
+    this -> tx_state        = TX_IDLE;
     this -> clk_ticks       = 0;
     this -> in_reset        = true;
+
+    *tx = 1;
 }
 
 //! Called by the testbench to take the agent out of reset.
@@ -31,6 +34,8 @@ void agent_uart::on_clear_reset() {
     this -> clk_period      = S_NS / this -> clock_rate;
     this -> clk_per_bit     = this -> bit_period / this -> clk_period;
     this -> in_reset        = false;
+
+    *tx = 1;
 
     //printf(">> UART Baud    : %d\n", this -> baud_rate);
     //printf(">> UART Clk/Bit : %d\n", this -> clk_per_bit);
@@ -47,6 +52,13 @@ void agent_uart::on_posedge_clk() {
 
     this -> clk_ticks ++;
 
+}
+    
+//! Send the supplied data on the TX line.
+void agent_uart::send(uint8_t * data, size_t len){
+    for(size_t i = 0; i < len; i++) {
+        this -> tx_q.push(data[i]);
+    }
 }
     
 void agent_uart::handle_rx() {
@@ -116,8 +128,72 @@ void agent_uart::handle_rx() {
         }
 
     }
+
 }
 
 void agent_uart::handle_tx() {
+    
+    if(this -> tx_state == TX_IDLE) {                       // IDLE
+
+        *tx = 1;
+
+        if(tx_q.empty()) {
+            // Stay Idle.
+            this -> tx_state        = TX_IDLE; 
+        } else {
+            // Start bit seen. Reset counters and move to start state.
+            this -> tx_state        = TX_START;
+            this -> tx_bits         = tx_q.front();
+            tx_q.pop();
+            this -> clk_counter_tx  = 0;
+            this -> bit_counter_tx  = 0;
+        }
+
+    } else if(this -> tx_state == TX_START) {               // START BIT
+        
+        *tx = 0;
+
+        this -> clk_counter_tx ++;
+
+        if(this -> clk_counter_tx >= clk_per_bit) {
+            this -> bit_counter_tx  = 0;
+            this -> clk_counter_tx  = 0;
+            this -> tx_state        = TX_SEND;
+        } else {
+            this -> tx_state        = TX_START;
+        }
+
+    } else if(this -> tx_state == TX_SEND) {                // SEND
+
+        *tx = this -> tx_bits & 0x01;
+    
+        this -> clk_counter_tx ++;
+
+        if(this -> clk_counter_tx >= clk_per_bit) {
+            // Increment bit counter and reset clock counter.
+            this -> clk_counter_tx = 0;
+            this -> bit_counter_tx ++ ;
+            this -> tx_bits >>= 1;
+        }
+
+        if(this -> bit_counter_tx >= payload_size) {
+            // Move to stop bit state
+            this -> tx_state        = TX_STOP;
+            this -> clk_counter_tx  = 0;
+        }
+
+    } else if(this -> tx_state == TX_STOP) {                // STOP BIT
+        
+        *tx = 1;
+        
+        this -> clk_counter_tx ++;
+
+        if(this -> clk_counter_tx == clk_per_bit) {
+            // Return to idle.
+            this -> clk_counter_tx  = 0;
+            this -> tx_state        = TX_IDLE;
+        }
+
+    }
 
 }

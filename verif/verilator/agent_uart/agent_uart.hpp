@@ -46,8 +46,15 @@ public:
     //! Called by the testbench on the rising edge of every clock.
     void on_posedge_clk();
 
+    //! Send the supplied data on the TX line.
+    void send(uint8_t * data, size_t len);
+
     enum state_rx {
         RX_IDLE, RX_START, RX_RECV, RX_STOP
+    };
+    
+    enum state_tx {
+        TX_IDLE, TX_START, TX_SEND, TX_STOP
     };
 
 private:
@@ -68,9 +75,11 @@ private:
 
     uint64_t clk_ticks; //!< Clock ticks since last reset.
 
-    uint8_t  rx_bits       ;
+    uint8_t  rx_bits ; //!< Byte currently being recieved.
+    uint8_t  tx_bits ; //!< Byte currently being transmitted.
 
     agent_uart::state_rx rx_state;
+    agent_uart::state_tx tx_state;
 
     void handle_rx();
     void handle_tx();

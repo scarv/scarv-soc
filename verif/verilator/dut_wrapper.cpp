@@ -28,8 +28,8 @@ dut_wrapper::dut_wrapper (
     this -> sim_time               = 0;
 
     this -> uart = new agent_uart (
-        &this -> dut -> uart_tx,
-        &this -> dut -> uart_rx
+        &this -> dut -> uart_txd,
+        &this -> dut -> uart_rxd
     );
 
 }
