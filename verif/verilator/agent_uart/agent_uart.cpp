@@ -159,7 +159,6 @@ void agent_uart::handle_tx() {
             tx_q.pop();
             this -> clk_counter_tx  = 0;
             this -> bit_counter_tx  = 0;
-            printf("TX Q: %d\n", tx_q.size());
         }
 
     } else if(this -> tx_state == TX_START) {               // START BIT

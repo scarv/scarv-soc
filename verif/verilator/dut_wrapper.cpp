@@ -31,6 +31,7 @@ dut_wrapper::dut_wrapper (
         &this -> dut -> uart_txd,
         &this -> dut -> uart_rxd
     );
+    this -> uart -> print_rx = false;
 
 }
    
