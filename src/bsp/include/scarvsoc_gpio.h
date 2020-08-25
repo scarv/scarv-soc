@@ -13,59 +13,67 @@
 //! Config object for a single GPIO instance.
 typedef volatile uint32_t * scarvsoc_gpio_conf;
 
+#define GPIO_INPUTS    0
+#define GPIO_OUTPUTS   1
+#define GPIO_DIRECTION 2
+#define GPIO_CTRL      3
+
 /*!
 @brief Base config for GPIO bank 0.
 @ingroup driver_gpio
 */
 extern scarvsoc_gpio_conf SCARVSOC_GPIO0;
 
-/*!
-@brief Base config for GPIO bank 1.
-@ingroup driver_gpio
+/*
+@brief Get the word controlling which GPIOs are inputs or outputs.
+@details 1 = output, 0 = input.
 */
-extern scarvsoc_gpio_conf SCARVSOC_GPIO1;
+inline uint32_t scarvsoc_gpio_get_iomask(
+    scarvsoc_gpio_conf conf
+){
+    return conf[GPIO_DIRECTION];
+}
 
-/*!
-@brief Write to a UART bank
-@param[in] conf - The GPIO config object indicating which GPIO bank to write.
-@param[in] data - A 32-bit word indicating the new value to write to the GPIOs.
-@ingroup driver_gpio
+/*
+@brief Set the word controlling which GPIOs are inputs or outputs.
+@details 1 = output, 0 = input.
 */
-void scarvsoc_gpio_wr (
-    scarvsoc_gpio_conf  conf,
-    uint32_t            data
-);
+inline void scarvsoc_gpio_set_iomask(
+    scarvsoc_gpio_conf conf,
+    uint32_t           mask //!< The IO mask.
+){
+    conf[GPIO_DIRECTION] = mask;
+}
 
-/*!
-@brief Read from a UART bank
-@param[in] conf - The GPIO config object indicating which GPIO bank to read.
-@ingroup driver_gpio
-*/
-uint32_t scarvsoc_gpio_rd (
-    scarvsoc_gpio_conf  conf
-);
 
-/*!
-@brief Set a single bit in the supplied GPIO bank
-@param[in] conf - The GPIO bank to alter
-@param[in] bit  - Which bit of the bank to set.
-@ingroup driver_gpio
-*/
-void scarvsoc_gpio_setbit(
-    scarvsoc_gpio_conf  conf,
-    int                 bit
-);
+//! Set the output pin values.
+inline void scarvsoc_gpio_set_outputs(
+    scarvsoc_gpio_conf conf,
+    uint32_t           vals
+){
+    conf[GPIO_OUTPUTS] = vals;
+}
 
-/*!
-@brief Clean a single bit in the supplied GPIO bank
-@param[in] conf - The GPIO bank to alter
-@param[in] bit  - Which bit of the bank to clear.
-@ingroup driver_gpio
-*/
-void scarvsoc_gpio_clrbit(
-    scarvsoc_gpio_conf  conf,
-    int                 bit
-);
+
+//! Get the output pin values.
+inline uint32_t scarvsoc_gpio_get_outputs(
+    scarvsoc_gpio_conf conf
+){
+    return conf[GPIO_OUTPUTS];
+}
+
+
+//! Get the input pin values.
+inline uint32_t scarvsoc_gpio_get_inputs (
+    scarvsoc_gpio_conf conf
+){
+    return conf[GPIO_INPUTS];
+}
+
+#undef GPIO_INPUTS
+#undef GPIO_OUTPUTS
+#undef GPIO_DIRECTION
+#undef GPIO_CTRL
 
 #endif
 
