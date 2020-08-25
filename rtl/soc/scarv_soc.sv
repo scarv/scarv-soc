@@ -12,9 +12,7 @@ input  wire             g_resetn        , // Global Active low sync reset.
 input  wire             uart_rxd        , // UART Recieve
 output wire             uart_txd        , // UART Transmit
 
-output wire [GPION:0]   gpio_io         , // GPIO wire direction. 1=in, 0=out.
-output wire [GPION:0]   gpio_out        , // GPIO outputs.
-input  wire [GPION:0]   gpio_in           // GPIO inputs.
+inout  wire [GPION:0]   gpio              // GPIO in/out wires.
 
 `ifdef SCARV_SOC_VERILATOR              ,
 output wire             trs_valid       , // CPU trace word valid
@@ -154,9 +152,7 @@ scarv_soc_periph_top #(
 .g_resetn           (g_resetn           ), // Global Active low sync reset.
 .uart_rxd           (uart_rxd           ), // UART Recieve
 .uart_txd           (uart_txd           ), // UART Transmit
-.gpio_io            (gpio_io            ), // GPIO wire direction.
-.gpio_out           (gpio_out           ), // GPIO outputs.
-.gpio_in            (gpio_in            ), // GPIO inputs.
+.gpio               (gpio               ), // GPIO wire
 .memif              (ccx_memif          )  // Memory requests.
 );
 

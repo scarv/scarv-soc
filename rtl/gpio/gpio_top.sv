@@ -10,9 +10,7 @@ input  wire          g_clk           , // Gated clock
 output wire          g_clk_req       , // Clock request
 input  wire          g_resetn        , // Global Active low sync reset.
 
-output wire [NP:0]   gpio_io         , // GPIO wire direction. 1=in, 0=out.
-output wire [NP:0]   gpio_out        , // GPIO outputs.
-input  wire [NP:0]   gpio_in         , // GPIO inputs.
+inout  wire [NP:0]   gpio            , // GPIO in/out wires.
 
 scarv_ccx_memif.RSP  memif             // Memory request interface.
 
@@ -93,7 +91,7 @@ reg [NP:0] reg_inputs       ;
 always @(posedge g_clk) begin
     if(!g_resetn) begin
     end else begin
-        reg_inputs_buf <= gpio_in;
+        reg_inputs_buf <= gpio;
         reg_inputs     <= reg_inputs_buf & ~reg_dir;
     end
 end
@@ -131,6 +129,15 @@ always @(posedge g_clk) begin
         reg_ctrl <= memif.wdata[NP:0];
     end
 end
+
+//
+// GPIO Tri-state buffers.
+// ------------------------------------------------------------
+
+genvar i;
+generate for(i = 0; i < PERIPH_GPIO_NUM; i = i +1) begin : gen_tribuf
+    assign gpio[i] = reg_dir[i] ? reg_outputs[i]: 1'bZ;
+end endgenerate
 
 endmodule
 

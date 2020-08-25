@@ -31,9 +31,7 @@ input  wire             g_resetn        , // Global Active low sync reset.
 input  wire             uart_rxd        , // UART Recieve
 output wire             uart_txd        , // UART Transmit
 
-output wire [GPION:0]   gpio_io         , // GPIO wire direction. 1=in, 0=out.
-output wire [GPION:0]   gpio_out        , // GPIO outputs.
-input  wire [GPION:0]   gpio_in         , // GPIO inputs.
+inout  wire [GPION:0]   gpio            , // GPIO wires
 
 scarv_ccx_memif.RSP     memif             // Memory requests.
 
@@ -127,9 +125,7 @@ gpio_top #(
 .g_clk      (g_clk_gpio     ), // Gated clock
 .g_clk_req  (g_clk_req_gpio ), // Clock request
 .g_resetn   (g_resetn       ), // Global Active low sync reset.
-.gpio_io    (gpio_io        ), // GPIO wire direction. 1=in, 0=out.
-.gpio_out   (gpio_out       ), // GPIO outputs.
-.gpio_in    (gpio_in        ), // GPIO inputs.
+.gpio       (gpio           ), // GPIO wires
 .memif      (memif_gpio     )  // Memory request interface.
 );
 
