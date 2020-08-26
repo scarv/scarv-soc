@@ -14,6 +14,7 @@ input  wire       uart_rxd     , // UART Recieve pin.
 input  wire       uart_rx_en   , // Recieve enable
 output wire       uart_rx_break, // Did we get a BREAK message?
 output wire       uart_rx_valid, // Valid data recieved and available.
+output wire       uart_rx_busy , // Are we currently recieving something?
 output reg  [PAYLOAD_BITS-1:0] uart_rx_data   // The recieved data.
 );
 
@@ -84,6 +85,8 @@ reg bit_sample;
 // Current and next states of the internal FSM.
 reg [2:0] fsm_state;
 reg [2:0] n_fsm_state;
+
+assign uart_rx_busy = fsm_state != FSM_IDLE;
 
 localparam FSM_IDLE = 0;
 localparam FSM_START= 1;

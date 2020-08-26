@@ -12,16 +12,32 @@ https://www.xilinx.com/support/documentation/ip_documentation/axi_uartlite/v2_0/
 scarvsoc_uart_conf  SCARVSOC_UART0= (scarvsoc_uart_conf)0x10000000;
 
 //! Recieve data FIFO register index.
-static const uint32_t scarvsoc_uart_reg_rx  = 0x0;
+static const uint32_t scarvsoc_uart_reg_rx          = 0x0;
 
 //! Transmit data FIFO register index.
-static const uint32_t scarvsoc_uart_reg_tx  = 0x1;
+static const uint32_t scarvsoc_uart_reg_tx          = 0x1;
 
 //! Status register index.
-static const uint32_t scarvsoc_uart_reg_stat= 0x2;
+static const uint32_t scarvsoc_uart_reg_stat        = 0x2;
 
-// Control register index.
-//static const uint32_t scarvsoc_uart_reg_ctrl= 0x3;
+//! Control register index.
+static const uint32_t scarvsoc_uart_reg_ctrl        = 0x3;
+
+const uint32_t SCARVSOC_UART_STAT_INT               = 0x1 << 6;
+const uint32_t SCARVSOC_UART_STAT_TX_BUSY           = 0x1 << 5;
+const uint32_t SCARVSOC_UART_STAT_TX_FULL           = 0x1 << 4;
+const uint32_t SCARVSOC_UART_STAT_RX_BREAK          = 0x1 << 3;
+const uint32_t SCARVSOC_UART_STAT_RX_BUSY           = 0x1 << 2;
+const uint32_t SCARVSOC_UART_STAT_RX_FULL           = 0x1 << 1;
+const uint32_t SCARVSOC_UART_STAT_RX_VALID          = 0x1 << 0;
+
+const uint32_t SCARVSOC_UART_CTRL_CLEAR_RX          = 0x1 << 6;
+const uint32_t SCARVSOC_UART_CTRL_CLEAR_TX          = 0x1 << 5;
+const uint32_t SCARVSOC_UART_CTRL_CLEAR_BREAK       = 0x1 << 4;
+const uint32_t SCARVSOC_UART_CTRL_CLEAR_INT         = 0x1 << 3;
+const uint32_t SCARVSOC_UART_CTRL_EN_INT_BREAK      = 0x1 << 2;
+const uint32_t SCARVSOC_UART_CTRL_EN_INT_RX_ANY     = 0x1 << 1;
+const uint32_t SCARVSOC_UART_CTRL_EN_INT_RX_FULL    = 0x1 << 0;
 
 
 /*!

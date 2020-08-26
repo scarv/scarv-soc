@@ -6,6 +6,8 @@ parameter WIDTH = 8  // Width of the elements in the FIFO.
 input  wire             g_clk      , // Clock
 output wire             g_clk_req  , // Clock request
 input  wire             g_resetn   , // Reset
+
+input  wire             clear      , // Empty the FIFO contents.
            
 output wire             full       , // Cannot accept any more inputs.
 input  wire             push       , // Input word valid.
@@ -57,6 +59,8 @@ end
 
 always @(posedge g_clk) begin
     if(!g_resetn) begin
+        valid[i] <= 1'b0;
+    end else if (clear) begin
         valid[i] <= 1'b0;
     end else begin
         valid[i] <= n_valid;

@@ -89,6 +89,9 @@ wire        cpu_trs_valid       ; // CPU Trace output valid.
 
 scarv_ccx_memif #() ccx_memif() ; // Core complex memory interface
 
+
+wire        int_uart            ; // UART raising an interrupt.
+
 //
 // Clock request and gating.
 // ------------------------------------------------------------
@@ -150,6 +153,7 @@ scarv_soc_periph_top #(
 .g_clk_req_uart     (g_clk_req_uart     ), // UART Clock request
 .g_clk_req_gpio     (g_clk_req_gpio     ), // GPIO Clock request
 .g_resetn           (g_resetn           ), // Global Active low sync reset.
+.int_uart           (int_uart           ), // UART raising an interrupt.
 .uart_rxd           (uart_rxd           ), // UART Recieve
 .uart_txd           (uart_txd           ), // UART Transmit
 .gpio               (gpio               ), // GPIO wire
