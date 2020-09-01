@@ -13,12 +13,11 @@
 //! Pointer to the UART register space.
 static volatile uint32_t * uart = (volatile uint32_t*)(UART_BASE);
 
-const uint32_t UART_CTRL_RST_TX_FIFO = 0x00000001;
-const uint32_t UART_CTRL_RST_RX_FIFO = 0x00000002;
-const uint32_t UART_CTRL_INT_ENA     = 0x00000010;
+const uint32_t UART_CTRL_RST_TX_FIFO = 0x1 << 5;
+const uint32_t UART_CTRL_RST_RX_FIFO = 0x1 << 6;
 
-const uint32_t UART_STATUS_RX_VALID  = 0x00000001;
-const uint32_t UART_STATUS_TX_FULL   = 0x00000008;
+const uint32_t UART_STATUS_RX_VALID  = 0x1 << 0;
+const uint32_t UART_STATUS_TX_FULL   = 0x1 << 4;
 
 //! Read a single character from the UART.
 uint8_t uart_rd_char(){

@@ -32,6 +32,7 @@ $(FSBL_VIVADO_HEX) : $(FSBL_OBJ)
 	@mkdir -p $(dir $@)
 	$(OBJCOPY) $(OBJCOPY_HEX_ARGS) \
         --remove-section=.riscv.attributes \
+        --verilog-data-width 4 \
         -O verilog $< $@
 	$(SOC_HOME)/bin/vl-hex-align.py --scale 4 $@
 

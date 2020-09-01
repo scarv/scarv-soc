@@ -59,12 +59,16 @@ def main():
                     tokens[t_i] = "@" + hex(new_addr)[2:]
 
                 else:
-                    newline = "".join(tokens)
-                    newtokens= []
-                    while(newline):
-                        newtokens.append(newline[:8])
-                        newline = newline[8:]
-                    tokens = newtokens
+                    nt = []
+                    for t in tokens:
+                        tx = t
+                        while(len(tx) < 8):
+                            tx = "0" + tx
+                        tx = tx[6:8] + tx[4:6] + tx[2:4] + tx[0:2]
+                        nt.append(tx)
+
+
+                    tokens = nt
                     break
 
             lines[l_i] = " ".join(tokens)
