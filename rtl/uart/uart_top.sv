@@ -63,8 +63,10 @@ wire [31:0] n_memif_rdata   = {24'b0,
 always @(posedge g_clk) begin
     if(!g_resetn) begin
         memif.rdata <= 32'b0;
+        memif.error <= 1'b0;
     end else if(memif_read) begin
         memif.rdata <= n_memif_rdata;
+        memif.error <= n_memif_error;
     end
 end
 

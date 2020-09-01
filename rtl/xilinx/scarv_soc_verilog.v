@@ -23,12 +23,16 @@ parameter   UART_BIT_RATE  =    256_000, // bits / sec
 parameter   UART_CLK_HZ    = 50_000_000,
 parameter   UART_STOP_BITS = 1         ,
 
+//! Is the sys_reset signal active high?
+parameter EXT_RESET_ACTIVE_HIGH = 1,
+
 //! Number of GPIO pins.
 parameter  PERIPH_GPIO_NUM = 16 
 )(
 
 input  wire             f_clk           , // Free running clock.
-input  wire             g_resetn        , // Global Active low sync reset.
+input  wire             f_clk_locked    , // Free running clock PLL locked?
+input  wire             sys_reset       , // Global Active low sync reset.
 
 input  wire             uart_rxd        , // UART Recieve
 output wire             uart_txd        , // UART Transmit
@@ -56,13 +60,15 @@ scarv_soc #(
 .CCX_CPU_PC_RESET        (CCX_CPU_PC_RESET        ),
 .CCX_ROM_INIT_FILE       (CCX_ROM_INIT_FILE       ),
 .CCX_RAM_INIT_FILE       (CCX_RAM_INIT_FILE       ),
+.EXT_RESET_ACTIVE_HIGH   (EXT_RESET_ACTIVE_HIGH   ),
 .UART_BIT_RATE           (UART_BIT_RATE           ),
 .UART_CLK_HZ             (UART_CLK_HZ             ),
 .UART_STOP_BITS          (UART_STOP_BITS          ),
 .PERIPH_GPIO_NUM         (PERIPH_GPIO_NUM         )
 ) i_scarv_soc (
 .f_clk   (f_clk   ), // Free running clock.
-.g_resetn(g_resetn), // Global Active low sync reset.
+.f_clk_locked(f_clk_locked),
+.sys_reset(sys_reset), // Global Active low sync reset.
 .uart_rxd(uart_rxd), // UART Recieve
 .uart_txd(uart_txd), // UART Transmit
 .gpio    (gpio    )  // GPIO wires.

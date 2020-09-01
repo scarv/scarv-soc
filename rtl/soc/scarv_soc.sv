@@ -7,7 +7,8 @@
 module scarv_soc (
 
 input  wire             f_clk           , // Free running clock.
-input  wire             g_resetn        , // Global Active low sync reset.
+input  wire             f_clk_locked    , // f_clk PLL locked.
+input  wire             sys_reset       , // Global synchronous reset.
 
 input  wire             uart_rxd        , // UART Recieve
 output wire             uart_txd        , // UART Transmit
@@ -58,6 +59,29 @@ parameter   UART_CLK_HZ    = 50_000_000;
 parameter   UART_STOP_BITS = 1         ;
 
 //
+// Reset handling
+// ------------------------------------------------------------
+
+//! Is the sys_reset signal active high?
+parameter EXT_RESET_ACTIVE_HIGH = 1;
+
+wire resetn_ccx     ;
+wire resetn_periph  ;
+
+scarv_soc_reset #(
+.EXT_RESET_ACTIVE_HIGH (EXT_RESET_ACTIVE_HIGH), 
+.RESET_CYCLES_BASE     (16),
+.RESET_CYCLES_CCX      (16),
+.RESET_CYCLES_PERIPH   (16) 
+) i_reset (
+.f_clk        (f_clk        ), // Free running clock.
+.f_clk_locked (f_clk_locked ), // Free running clock PLL locked.
+.sys_reset    (sys_reset    ), // System reset. See EXT_RESET_ACTIVE_HIGH
+.resetn_ccx   (resetn_ccx   ), // Core complex active low, synchronous reset
+.resetn_periph(resetn_periph)  // Peripherals  active low, synchronous reset
+);
+
+//
 // Testbench code for Verilator
 // ------------------------------------------------------------
 
@@ -88,7 +112,6 @@ wire [31:0] cpu_trs_instr       ; // CPU Trace instruction.
 wire        cpu_trs_valid       ; // CPU Trace output valid.
 
 scarv_ccx_memif #() ccx_memif() ; // Core complex memory interface
-
 
 wire        int_uart            ; // UART raising an interrupt.
 
@@ -126,7 +149,7 @@ scarv_ccx_top #(
 .RAM_INIT_FILE  (CCX_RAM_INIT_FILE      )
 ) i_scarv_ccx_top (
 .f_clk              (f_clk              ), // Free-running clock.
-.g_resetn           (g_resetn           ), // Synchronous active low reset.
+.g_resetn           (resetn_ccx         ), // Synchronous active low reset.
 .int_ext            (cpu_int_ext        ), // External interrupt.
 .int_ext_cause      (cpu_int_ext_cause  ), // External interrupt cause.
 .cpu_trs_pc         (cpu_trs_pc         ), // Trace program counter.
@@ -152,7 +175,7 @@ scarv_soc_periph_top #(
 .g_clk_gpio         (g_clk_gpio         ), // GPIO Clock
 .g_clk_req_uart     (g_clk_req_uart     ), // UART Clock request
 .g_clk_req_gpio     (g_clk_req_gpio     ), // GPIO Clock request
-.g_resetn           (g_resetn           ), // Global Active low sync reset.
+.g_resetn           (resetn_periph      ), // Global Active low sync reset.
 .int_uart           (int_uart           ), // UART raising an interrupt.
 .uart_rxd           (uart_rxd           ), // UART Recieve
 .uart_txd           (uart_txd           ), // UART Transmit

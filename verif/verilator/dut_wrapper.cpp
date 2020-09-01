@@ -40,7 +40,7 @@ dut_wrapper::dut_wrapper (
 void dut_wrapper::dut_set_reset() {
 
     // Put model in reset.
-    this -> dut -> g_resetn     = 0;
+    this -> dut -> sys_reset    = 1;
     this -> dut -> f_clk        = 0;
     this -> uart-> on_set_reset();
 
@@ -49,7 +49,7 @@ void dut_wrapper::dut_set_reset() {
 //! Take the DUT out of reset.
 void dut_wrapper::dut_clear_reset() {
     
-    this -> dut -> g_resetn = 1;
+    this -> dut -> sys_reset= 0;
     this -> uart-> on_clear_reset();
     
 }
