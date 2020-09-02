@@ -13,11 +13,12 @@
 //! Pointer to the UART register space.
 static volatile uint32_t * uart = (volatile uint32_t*)(UART_BASE);
 
-const uint32_t UART_CTRL_RST_TX_FIFO = 0x1 << 5;
-const uint32_t UART_CTRL_RST_RX_FIFO = 0x1 << 6;
+static const uint32_t UART_CTRL_RST_TX_FIFO = 0x1 << 5;
+static const uint32_t UART_CTRL_RST_RX_FIFO = 0x1 << 6;
 
-const uint32_t UART_STATUS_RX_VALID  = 0x1 << 0;
-const uint32_t UART_STATUS_TX_FULL   = 0x1 << 4;
+static const uint32_t UART_STATUS_TX_BUSY   = 0x1 << 5;
+static const uint32_t UART_STATUS_TX_FULL   = 0x1 << 4;
+static const uint32_t UART_STATUS_RX_VALID  = 0x1 << 0;
 
 //! Read a single character from the UART.
 uint8_t uart_rd_char(){
@@ -55,12 +56,13 @@ void putstr(char * msg) {
     }
 }
 
+static const char lut []= "0123456789ABCDEF";
 
 //! Print a 32-bit number as hex
 void puthex32(uint32_t w) {
-    char lut []= "0123456789ABCDEF";
+    char b[3];
+    b[2]= 0;
     for(int i =  3; i >= 0; i --) {
-        char b[3];
         b[1]= lut[(w >> (8*i    )) & 0xF];
         b[0]= lut[(w >> (8*i + 4)) & 0xF];
         putstr(b);
@@ -114,27 +116,29 @@ void fsbl() {
 @brief FSBL panic handler.
 @details Prints register state, then jumps back to __fsbl_start
 */
-void panic() {
-    putstr("\npanic!\n");
+void __attribute__((noreturn)) panic()  {
     uint32_t mepc, mstatus, mtval, mcause, sp, ra;
     
-    asm volatile("csrr %0, mepc     " : "=r"(mepc   ));
-    puthex32(mepc   );putstr("\n");    
-    
-    asm volatile("csrr %0, mstatus  " : "=r"(mstatus));
-    puthex32(mstatus);putstr("\n");    
-    
-    asm volatile("csrr %0, mtval    " : "=r"(mtval  ));
-    puthex32(mtval  );putstr("\n");    
-    
-    asm volatile("csrr %0, mcause   " : "=r"(mcause ));
-    puthex32(mcause );putstr("\n");    
-    
     asm volatile("mv   %0, sp       " : "=r"(sp     ));
-    puthex32(sp     );putstr("\n");    
-    
     asm volatile("mv   %0, ra       " : "=r"(ra     ));
-    puthex32(ra     );putstr("\n");    
+    asm volatile("csrr %0, mepc     " : "=r"(mepc   ));
+    asm volatile("csrr %0, mstatus  " : "=r"(mstatus));
+    asm volatile("csrr %0, mtval    " : "=r"(mtval  ));
+    asm volatile("csrr %0, mcause   " : "=r"(mcause ));
+    
+    putstr("\npanic!\n");
+    
+    putstr("mepc: "     ); puthex32(mepc   ); putstr("\n");    
+    putstr("mstatus: "  ); puthex32(mstatus); putstr("\n");    
+    putstr("mtval: "    ); puthex32(mtval  ); putstr("\n");    
+    putstr("mcause: "   ); puthex32(mcause ); putstr("\n");    
+    putstr("sp: "       ); puthex32(sp     ); putstr("\n");    
+    putstr("ra: "       ); puthex32(ra     ); putstr("\n");    
+    putstr("\n--------\n");
+
+    while(uart[UART_ST] & UART_STATUS_TX_BUSY) {} // Do Nothing.
 
     __fsbl_start();   
+
+    __builtin_unreachable();
 }

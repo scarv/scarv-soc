@@ -11,7 +11,7 @@ FSBL_VIVADO_HEX = $(SOC_WORK)/fsbl/fsbl-vivado.mem
 
 FSBL_LD     = $(SCARV_CPU)/src/share/ccx-link-fsbl.ld
 
-FSBL_CFLAGS = -nostartfiles -Os -O2 -Wall
+FSBL_CFLAGS = -nostartfiles -Os -Wall
 FSBL_CFLAGS += -L$(dir $(FSBL_LD))  
 FSBL_CFLAGS += -T$(FSBL_LD) 
 FSBL_CFLAGS += -march=rv32imc -mabi=ilp32
