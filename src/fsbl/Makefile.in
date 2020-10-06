@@ -11,7 +11,7 @@ FSBL_VIVADO_HEX = $(SOC_WORK)/fsbl/fsbl-vivado.hex
 
 FSBL_CFLAGS = -nostartfiles -Os -O2 -Wall -fpic -fPIC \
               -T$(SOC_HOME)/src/fsbl/link.ld
-FSBL_CFLAGS += -march=rv32imc -mabi=ilp32
+FSBL_CFLAGS += -march=rv32imc_xcrypto -mabi=ilp32
 
 $(FSBL_OBJ) : $(FSBL_SRC)
 	@mkdir -p $(dir $@)
