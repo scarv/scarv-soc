@@ -1,0 +1,81 @@
+
+= SCARV-SoC Masking ISE Branch Quickstart
+Ben Marshall <ben.marshall@bristol.ac.uk>
+:toc:
+
+== Acquiring the Repository.
+
+Checkout the repository and move to the right branch:
+
+ git clone git@github.com:scarv/scarv-soc.git scarv-soc-masking-ise
+ cd scarv-soc-masking-ise
+ git checkout scarv/xcrypto/masking-ise
+
+Setup the Vivado and project environment variables
+
+ export VIVADO_ROOT=<path to Xilinx Vivado install>
+ source bin/conf.sh
+
+== Re-creating the Bitfile from Scratch.
+
+NOTE: This step can be skipped if you are okay with just using
+the bitfile kept in the repository: `flow/xilinx/scarv-soc-xc7k.bit`.
+
+* Re-create the Vivado project
+
+....
+./bin/create-xilinx-xc7k-project.sh
+....
+
+* Open Xilinx Vivado
+
+* Open the project file `work/vivado/scarv-soc-masking-ise/scarv-soc-masking-ise.xpr`
+
+* Hit "Generate Bitstream".
+
+NOTE: Vivado _may_ complain about mismatched AXI clock speeds. To fix
+this, open the block design, and click on the `m0` interface of the
+`scarv_soc` component. Then under _Block Interface Properties_ -> _Config_,
+set `FREQ_HZ` to `50000`.
+
+* Upload the bitfile to the FPGA.
+
+== Checking the FPGA is programmed correctly.
+
+* Open a terminal, and with your favorite serial app, open the `tty`
+  interface corresponding with the FPGA UART.
+  The baud rate is `128000`.
+
+* With the serial port open, reset the programmed design by pressing
+  `SW4` on the FPGA. You should see `scarv-soc fsbl \\n` appear in the
+  terminal window.
+
+NOTE: Do not press `SW2` or `CONFIG RESET` on the FPGA, or you will need
+to re-program the board.
+
+== Uploading a program to the FPGA.
+
+This is done with the `bin/upload-program.py` script.
+
+ ./bin/upload-program.py --help
+
+Will explain how to use it.
+
+There is an example UART _echo_ program under `src/examples`.
+
+Running `make example-uart` will build the example program.
+
+Running `make xilinx-upload-binary` will automatically upload the
+example UART program to the FPGA. You will need to press `SW4` again,
+as the upload script relies on seing the `scarv-soc fsbl` message.
+Once it is uploaded, re-open your serial terminal app and press any
+key, you should see a welcome message, and anything you type will be
+echoed back. Send a `!` to tell the program to quit.
+
+The following files will explain how this process can be replicated:
+
+* `flow/xilinx/Makefile.in` - Contains parameters and command sequences for
+  uploading any program to the FPGA board.
+
+* `src/examples` - Contains example programs and shared code.
+
