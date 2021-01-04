@@ -183,6 +183,7 @@ set obj [get_filesets sources_1]
 set files [list \
  [file normalize "$::env(SCARV_SOC)/rtl/mem/scarv_soc_bram_dual_synth_xilinx_xc7k.v"] \
  [file normalize "$::env(SCARV_SOC)/rtl/mem/scarv_soc_bram_single_synth_xilinx_xc7k.v"] \
+ [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/peripherals/entropy_source_lfsr.sv"] \
  [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/core/frv_common.svh"] \
  [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/core/frv_alu.sv"] \
  [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/core/frv_core.sv"] \
@@ -237,6 +238,11 @@ set files [list \
 set imported_files [import_files -fileset sources_1 $files]
 
 # Set 'sources_1' fileset file properties for remote files
+set file "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/peripherals/entropy_source_lfsr.sv"
+set file [file normalize $file]
+set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
+
 set file "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/core/frv_common.svh"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
@@ -646,7 +652,7 @@ proc cr_bd_sys_top { parentCell } {
    }
     set_property -dict [ list \
    CONFIG.CCX_RAM_INIT_FILE {} \
-   CONFIG.CCX_ROM_INIT_FILE {/home/work/scarv/skywater/scarv-soc/work/fsbl/fsbl-vivado.mem} \
+   CONFIG.CCX_ROM_INIT_FILE $::env(SCARV_SOC)/work/fsbl/fsbl-vivado.mem \
    CONFIG.PERIPH_GPIO_NUM {9} \
    CONFIG.UART_BIT_RATE {115200} \
  ] $scarv_soc_verilog

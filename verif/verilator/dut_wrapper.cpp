@@ -49,6 +49,7 @@ void dut_wrapper::dut_set_reset() {
 //! Take the DUT out of reset.
 void dut_wrapper::dut_clear_reset() {
     
+    this -> dut -> f_clk_locked = 1;
     this -> dut -> sys_reset= 0;
     this -> uart-> on_clear_reset();
     

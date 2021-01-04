@@ -4,40 +4,30 @@
 /*!
 @ingroup driver_uart
 @file scarvsoc_uart.c
-@note This file implements the UART driver expecting the Xilinx UARTLite
-peripheral, as described in the link below:
-https://www.xilinx.com/support/documentation/ip_documentation/axi_uartlite/v2_0/pg142-axi-uartlite.pdf
 */
 
 scarvsoc_uart_conf  SCARVSOC_UART0= (scarvsoc_uart_conf)0x10000000;
 
-//! Recieve data FIFO register index.
-static const uint32_t scarvsoc_uart_reg_rx          = 0x0;
+#define UART_RX 0
+#define UART_TX 1
+#define UART_ST 2
+#define UART_CT 3
 
-//! Transmit data FIFO register index.
-static const uint32_t scarvsoc_uart_reg_tx          = 0x1;
+#define SCARVSOC_UART_STAT_INT               (0x1 << 6)
+#define SCARVSOC_UART_STAT_TX_BUSY           (0x1 << 5)
+#define SCARVSOC_UART_STAT_TX_FULL           (0x1 << 4)
+#define SCARVSOC_UART_STAT_RX_BREAK          (0x1 << 3)
+#define SCARVSOC_UART_STAT_RX_BUSY           (0x1 << 2)
+#define SCARVSOC_UART_STAT_RX_FULL           (0x1 << 1)
+#define SCARVSOC_UART_STAT_RX_VALID          (0x1 << 0)
 
-//! Status register index.
-static const uint32_t scarvsoc_uart_reg_stat        = 0x2;
-
-//! Control register index.
-static const uint32_t scarvsoc_uart_reg_ctrl        = 0x3;
-
-const uint32_t SCARVSOC_UART_STAT_INT               = 0x1 << 6;
-const uint32_t SCARVSOC_UART_STAT_TX_BUSY           = 0x1 << 5;
-const uint32_t SCARVSOC_UART_STAT_TX_FULL           = 0x1 << 4;
-const uint32_t SCARVSOC_UART_STAT_RX_BREAK          = 0x1 << 3;
-const uint32_t SCARVSOC_UART_STAT_RX_BUSY           = 0x1 << 2;
-const uint32_t SCARVSOC_UART_STAT_RX_FULL           = 0x1 << 1;
-const uint32_t SCARVSOC_UART_STAT_RX_VALID          = 0x1 << 0;
-
-const uint32_t SCARVSOC_UART_CTRL_CLEAR_RX          = 0x1 << 6;
-const uint32_t SCARVSOC_UART_CTRL_CLEAR_TX          = 0x1 << 5;
-const uint32_t SCARVSOC_UART_CTRL_CLEAR_BREAK       = 0x1 << 4;
-const uint32_t SCARVSOC_UART_CTRL_CLEAR_INT         = 0x1 << 3;
-const uint32_t SCARVSOC_UART_CTRL_EN_INT_BREAK      = 0x1 << 2;
-const uint32_t SCARVSOC_UART_CTRL_EN_INT_RX_ANY     = 0x1 << 1;
-const uint32_t SCARVSOC_UART_CTRL_EN_INT_RX_FULL    = 0x1 << 0;
+#define SCARVSOC_UART_CTRL_CLEAR_RX          (0x1 << 6)
+#define SCARVSOC_UART_CTRL_CLEAR_TX          (0x1 << 5)
+#define SCARVSOC_UART_CTRL_CLEAR_BREAK       (0x1 << 4)
+#define SCARVSOC_UART_CTRL_CLEAR_INT         (0x1 << 3)
+#define SCARVSOC_UART_CTRL_EN_INT_BREAK      (0x1 << 2)
+#define SCARVSOC_UART_CTRL_EN_INT_RX_ANY     (0x1 << 1)
+#define SCARVSOC_UART_CTRL_EN_INT_RX_FULL    (0x1 << 0)
 
 
 /*!
@@ -48,7 +38,7 @@ void scarvsoc_uart_putc_nb(
     scarvsoc_uart_conf conf,
     char               tx
 ){
-    conf[scarvsoc_uart_reg_tx] = (uint32_t)tx;
+    conf[UART_TX] = (uint32_t)tx;
 }
 
 
@@ -58,10 +48,10 @@ void scarvsoc_uart_putc_b(
     scarvsoc_uart_conf conf,
     char               tx
 ){
-    while(!scarvsoc_uart_tx_ready(conf)) {
+    while(conf[UART_ST] & SCARVSOC_UART_STAT_TX_FULL) {
         // Do nothing / wait.
     }
-    conf[scarvsoc_uart_reg_tx] = (uint32_t)tx;
+    conf[UART_TX] = (uint32_t)tx;
 }
 
 
@@ -73,7 +63,7 @@ char scarvsoc_uart_getc_b(
     while(!scarvsoc_uart_rx_avail(conf)) {
         // Do nothing / wait.
     }
-    return (char)conf[scarvsoc_uart_reg_rx];
+    return (char)conf[UART_RX];
 }
 
 
@@ -82,7 +72,7 @@ char scarvsoc_uart_getc_b(
 char scarvsoc_uart_rx_avail(
     scarvsoc_uart_conf conf
 ){
-    return (conf[scarvsoc_uart_reg_stat] & 0x01);
+    return (conf[UART_ST] & SCARVSOC_UART_STAT_RX_VALID);
 }
 
 
@@ -91,7 +81,7 @@ char scarvsoc_uart_rx_avail(
 char scarvsoc_uart_tx_ready(
     scarvsoc_uart_conf conf
 ){
-    return !(conf[scarvsoc_uart_reg_stat] & (0x01 << 3));
+    return !(conf[UART_ST] & SCARVSOC_UART_STAT_TX_FULL);
 }
 
 
@@ -101,11 +91,12 @@ void scarvsoc_uart_putstr_b (
     scarvsoc_uart_conf conf,
     char *             str  
 ){
-    while(*str != '\0') {
+    for(int i=0; str[i]; i ++) {
         
-        scarvsoc_uart_putc_b(conf, *str);
-
-        str++;
+        while(conf[UART_ST] & SCARVSOC_UART_STAT_TX_FULL) {
+            // Do nothing.
+        }   
+        conf[UART_TX] = str[i];
 
     }
 }

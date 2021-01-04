@@ -1,6 +1,6 @@
 
 .extern fsbl
-.extern panic
+.extern panic_handler
 
 .text
 .global __fsbl_start
@@ -38,13 +38,27 @@ __fsbl_start:
     li x30, 0
     li x31, 0
 
-    la      ra, panic
+    la      ra, __fsbl_panic
     csrw    mtvec, ra
 
     j       fsbl                    // Jump to the first stage boot loader.
 
 .global __fsbl_goto_main
 __fsbl_goto_main:
-    jalr    zero, a0                // Jump to pointer value passed in a0.
+    jr      a0                      // Jump to pointer value passed in a0.
 
+.balign 4
+__fsbl_panic:
+    csrr a0, mepc                   // Save useful variables.
+    csrr a1, mstatus
+    csrr a2, mtval  
+    csrr a3, mcause 
+    mv   a4, sp     
+    mv   a5, ra     
+    lhu  a6, 0(a0)                  // Load instruction at mepc
+    lhu  a7, 2(a0)
+    slli a7, a7, 16
+    or   a6, a6, a7
+    jal  panic_handler              // Goto the panic handler
+    j    __fsbl_start               // Soft restart.
 

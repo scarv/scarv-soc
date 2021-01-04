@@ -13,7 +13,7 @@ input  wire             sys_reset       , // Global synchronous reset.
 input  wire             uart_rxd        , // UART Recieve
 output wire             uart_txd        , // UART Transmit
 
-inout  wire [GPION:0]   gpio              // GPIO in/out wires.
+output wire [GPION:0]   gpio              // GPIO in/out wires.
 
 `ifdef SCARV_SOC_VERILATOR              ,
 output wire             trs_valid       , // CPU trace word valid
@@ -54,7 +54,7 @@ parameter [255*8-1:0] CCX_ROM_INIT_FILE = "rom.hex";
 parameter [255*8-1:0] CCX_RAM_INIT_FILE = "ram.hex";
 /* verilator lint_on WIDTH */
 
-parameter   UART_BIT_RATE  =    256_000; // bits / sec
+parameter   UART_BIT_RATE  =     115200; // bits / sec
 parameter   UART_CLK_HZ    = 50_000_000;
 parameter   UART_STOP_BITS = 1         ;
 

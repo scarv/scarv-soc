@@ -24,7 +24,7 @@ output reg  [PAYLOAD_BITS-1:0] uart_rx_data   // The recieved data.
 
 //
 // Input bit rate of the UART line.
-parameter   BIT_RATE        = 9600; // bits / sec
+parameter   BIT_RATE        = 115200; // bits / sec
 localparam  BIT_P           = 1_000_000_000 * 1/BIT_RATE; // nanoseconds
 
 //
@@ -62,8 +62,9 @@ assign clk_req = 1'b1;
 //
 // Internally latched value of the uart_rxd line. Helps break long timing
 // paths from input pins into the logic.
-reg rxd_reg;
-reg rxd_reg_0;
+localparam NS=4;
+reg [NS-1:0] rxd_reg;
+wire         rxd    = rxd_reg != 0;
 
 //
 // Storage for the recieved serial data.
@@ -97,7 +98,7 @@ localparam FSM_STOP = 3;
 // Output assignment
 // 
 
-assign uart_rx_break = uart_rx_valid && ~|recieved_data;
+assign uart_rx_break = 1'b0;//uart_rx_valid && ~|recieved_data;
 assign uart_rx_valid = fsm_state == FSM_STOP && n_fsm_state == FSM_IDLE;
 
 always @(posedge clk) begin
@@ -125,7 +126,7 @@ wire payload_done = bit_counter   == PAYLOAD_BITS  ;
 // Handle picking the next state.
 always @(*) begin : p_n_fsm_state
     case(fsm_state)
-        FSM_IDLE : n_fsm_state = rxd_reg      ? FSM_IDLE : FSM_START;
+        FSM_IDLE : n_fsm_state = rxd          ? FSM_IDLE : FSM_START;
         FSM_START: n_fsm_state = next_bit     ? FSM_RECV : FSM_START;
         FSM_RECV : n_fsm_state = payload_done ? FSM_STOP : FSM_RECV ;
         FSM_STOP : n_fsm_state = next_bit     ? FSM_IDLE : FSM_STOP ;
@@ -173,7 +174,7 @@ always @(posedge clk) begin : p_bit_sample
 /* verilator lint_off WIDTH */
     end else if (cycle_counter == CYCLES_PER_BIT/2) begin
 /* verilator lint_on  WIDTH */
-        bit_sample <= rxd_reg;
+        bit_sample <= rxd;
     end
 end
 
@@ -207,12 +208,10 @@ end
 //
 // Responsible for updating the internal value of the rxd_reg.
 always @(posedge clk) begin : p_rxd_reg
-    if(!resetn || !uart_rx_en) begin
-        rxd_reg     <= 1'b1;
-        rxd_reg_0   <= 1'b1;
-    end else if(uart_rx_en) begin
-        rxd_reg     <= rxd_reg_0;
-        rxd_reg_0   <= uart_rxd;
+    if(!resetn) begin
+        rxd_reg     <= {NS{1'b1}};
+    end else begin
+        rxd_reg     <= {rxd_reg[NS-2:0],uart_rxd};
     end
 end
 

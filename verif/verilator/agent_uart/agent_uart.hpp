@@ -20,7 +20,7 @@ class agent_uart {
 public:
     
     //! Bit rate of the UART device.
-    uint32_t    baud_rate = 256000;
+    uint32_t    baud_rate = 115200;
     
     //! Stop bits per packet.
     uint32_t    stop_bits = 1;

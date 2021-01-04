@@ -10,7 +10,7 @@ input  wire          g_clk           , // Gated clock
 output wire          g_clk_req       , // Clock request
 input  wire          g_resetn        , // Global Active low sync reset.
 
-inout  wire [NP:0]   gpio            , // GPIO in/out wires.
+output wire [NP:0]   gpio            , // GPIO in/out wires.
 
 scarv_ccx_memif.RSP  memif             // Memory request interface.
 
@@ -136,7 +136,8 @@ end
 
 genvar i;
 generate for(i = 0; i < PERIPH_GPIO_NUM; i = i +1) begin : gen_tribuf
-    assign gpio[i] = reg_dir[i] ? reg_outputs[i]: 1'bZ;
+    assign gpio[i] = reg_outputs[i];
+    //assign gpio[i] = reg_dir[i] ? reg_outputs[i]: 1'bZ;
 end endgenerate
 
 endmodule

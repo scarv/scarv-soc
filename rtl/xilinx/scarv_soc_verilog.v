@@ -19,7 +19,7 @@ parameter CCX_CPU_PC_RESET   = 32'b0,
 parameter [255*8-1:0] CCX_ROM_INIT_FILE = "rom.hex",
 parameter [255*8-1:0] CCX_RAM_INIT_FILE = "ram.hex",
 
-parameter   UART_BIT_RATE  =    256_000, // bits / sec
+parameter   UART_BIT_RATE  =    115200, // bits / sec
 parameter   UART_CLK_HZ    = 50_000_000,
 parameter   UART_STOP_BITS = 1         ,
 
@@ -37,7 +37,7 @@ input  wire             sys_reset       , // Global Active low sync reset.
 input  wire             uart_rxd        , // UART Recieve
 output wire             uart_txd        , // UART Transmit
 
-inout  wire [PERIPH_GPIO_NUM-1:0]   gpio  // GPIO wires
+output wire [PERIPH_GPIO_NUM-1:0]   gpio  // GPIO wires
 
 );
 

@@ -23,7 +23,7 @@ input  wire [PAYLOAD_BITS-1:0]   uart_tx_data  // The data to be sent
 
 //
 // Input bit rate of the UART line.
-parameter   BIT_RATE        = 9600; // bits / sec
+parameter   BIT_RATE        = 115200; // bits / sec
 localparam  BIT_P           = 1_000_000_000 * 1/BIT_RATE; // nanoseconds
 
 //

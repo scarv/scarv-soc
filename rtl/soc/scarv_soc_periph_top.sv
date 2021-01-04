@@ -56,7 +56,7 @@ localparam  PERIPH_SIZE     = 32'h0FFF;
 parameter  PERIPH_GPIO_NUM = 16;
 localparam GPION           = PERIPH_GPIO_NUM - 1;
 
-parameter   UART_BIT_RATE  =    256_000; // bits / sec
+parameter   UART_BIT_RATE  =     115200; // bits / sec
 parameter   UART_CLK_HZ    = 50_000_000;
 parameter   UART_STOP_BITS = 1         ;
 
