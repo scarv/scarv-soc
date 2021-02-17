@@ -46,8 +46,8 @@ localparam NB_COL          = BRAM_DATA_WIDTH/BRAM_BYTE_WIDTH;
 localparam BRAM_DEPTH      = (DEPTH/4) / NB_COL;
 localparam BRAM_ADDR_WIDTH = $clog2(DEPTH/4);
 
-wire [BRAM_ADDR_WIDTH-1:0] addra_idx = a_addr[BRAM_ADDR_WIDTH-1:2];
-wire [BRAM_ADDR_WIDTH-1:0] addrb_idx = b_addr[BRAM_ADDR_WIDTH-1:2];
+wire [BRAM_ADDR_WIDTH-1:0] addra_idx = a_addr[BRAM_ADDR_WIDTH-1:0];
+wire [BRAM_ADDR_WIDTH-1:0] addrb_idx = b_addr[BRAM_ADDR_WIDTH-1:0];
 
 reg [(NB_COL*BRAM_BYTE_WIDTH)-1:0] BRAM [BRAM_DEPTH-1:0];
 reg [(NB_COL*BRAM_BYTE_WIDTH)-1:0] ram_data_a = {(NB_COL*BRAM_BYTE_WIDTH){1'b0}};

@@ -41,11 +41,11 @@ __fsbl_start:
     la      ra, __fsbl_panic
     csrw    mtvec, ra
 
-    j       fsbl                    // Jump to the first stage boot loader.
+    jal     fsbl                    // Jump to the first stage boot loader.
 
 .global __fsbl_goto_main
 __fsbl_goto_main:
-    jr      a0                      // Jump to pointer value passed in a0.
+    jalr    a0                      // Jump to pointer value passed in a0.
 
 .balign 4
 __fsbl_panic:

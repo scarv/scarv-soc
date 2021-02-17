@@ -36,6 +36,8 @@ parameter CCX_MEM_MMIO_SIZE    = 32'h0000_0100; //! Size in bytes of MMIO
 parameter CCX_MEM_EXT_BASE     = 32'h1000_0000; //! Base address of EXT Mem.
 parameter CCX_MEM_EXT_SIZE     = 32'h1000_0000; //! Size in bytes of EXT Mem.
 
+parameter SME_SMAX             = 3; //! Maximum hardware shares for SME.
+
 //! Base addr of UART.
 parameter PERIPH_MEM_UART_BASE = CCX_MEM_EXT_BASE | 32'h0000_0000;
 
@@ -146,7 +148,8 @@ scarv_ccx_top #(
 .MTIMECMP_RESET (CCX_CPU_MTIMECMP_RESET ),
 .PC_RESET       (CCX_CPU_PC_RESET       ),
 .ROM_INIT_FILE  (CCX_ROM_INIT_FILE      ),
-.RAM_INIT_FILE  (CCX_RAM_INIT_FILE      )
+.RAM_INIT_FILE  (CCX_RAM_INIT_FILE      ),
+.SME_SMAX       (SME_SMAX               )
 ) i_scarv_ccx_top (
 .f_clk              (f_clk              ), // Free-running clock.
 .g_resetn           (resetn_ccx         ), // Synchronous active low reset.

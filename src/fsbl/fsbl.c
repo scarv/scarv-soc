@@ -14,8 +14,8 @@
 #define UART_ST 2
 #define UART_CT 3
 
-#define GPIO_DIR 2
-#define GPIO_OUT 1
+#define GPIO_DIR 1
+#define GPIO_OUT 0
 
 //! Pointer to the UART and GPIO register space.
 static volatile uint32_t * uart = (volatile uint32_t*)(UART_BASE);
@@ -26,8 +26,7 @@ static volatile uint32_t * ram  = (volatile uint32_t*)(0x00010000);
 static const uint32_t UART_CTRL_RST_TX_FIFO = 0x1 << 5;
 static const uint32_t UART_CTRL_RST_RX_FIFO = 0x1 << 6;
 
-static const uint32_t UART_STATUS_TX_BUSY   = 0x1 << 5;
-static const uint32_t UART_STATUS_TX_FULL   = 0x1 << 4;
+static const uint32_t UART_STATUS_TX_FULL   = 0x1 << 3;
 static const uint32_t UART_STATUS_RX_VALID  = 0x1 << 0;
 
 //! Read a single character from the UART.
@@ -92,7 +91,11 @@ void fsbl() {
 
     fsbl_uart_setup();
 
+    gpio[GPIO_OUT] = 0x1;
+
     putstr("scarv-soc fsbl\n");
+    
+    gpio[GPIO_OUT] = 0x2;
     
     // First 4 bytes are the size of the program (in bytes).
     uint32_t    program_size = 0;
@@ -100,6 +103,8 @@ void fsbl() {
     program_size |= ((uint32_t)uart_rd_char() << 16) ;
     program_size |= ((uint32_t)uart_rd_char() <<  8) ;
     program_size |= ((uint32_t)uart_rd_char() <<  0) ;
+    
+    gpio[GPIO_OUT] = 0x4;
 
     // Next 4 bytes are a 32-bit destination address.
     uint32_t    program_dest = 0;
@@ -109,25 +114,15 @@ void fsbl() {
     program_dest |= ((uint32_t)uart_rd_char() <<  0) ;
 
     uint8_t * dest_ptr = (uint8_t*)program_dest;
+    
+    gpio[GPIO_OUT] = 0xFFF;
 
     // Download the program and write it to the destination memory.
     for(int32_t i = 0; i < program_size; i ++) {
         dest_ptr[i] = uart_rd_char();
+        gpio[GPIO_OUT] = i&0xFFF;
     }
-        
-    puthex32(program_size);
-    putstr(", ");
-    puthex32(program_dest);
-    putstr("\n");
-
-    for(int i = 0; i < 1+program_size/4; i ++) {
-        puthex32((uint32_t)dest_ptr);
-        putstr(" ");
-        puthex32(((uint32_t*)dest_ptr)[i]);
-        putstr("\n");
-    }
-    
-    putstr("boot\n");
+    gpio[GPIO_OUT] = 0x0;
         
     while(uart[UART_ST] & UART_STATUS_TX_FULL) {
         // Do nothing. Wait for all UART traffic to finish.
@@ -151,21 +146,17 @@ void panic_handler(
     uint32_t ra     ,
     uint32_t instr
 ){
-    
-    
-    putstr("\npanic!\n");
-    
-    putstr("mepc: "     ); puthex32(mepc   ); putstr("\n");    
-    putstr("inst: "     ); puthex32(instr  ); putstr("\n");    
-    putstr("mstatus: "  ); puthex32(mstatus); putstr("\n");    
-    putstr("mtval: "    ); puthex32(mtval  ); putstr("\n");    
-    putstr("mcause: "   ); puthex32(mcause ); putstr("\n");    
-    putstr("sp: "       ); puthex32(sp     ); putstr("\n");    
-    putstr("ra: "       ); puthex32(ra     ); putstr("\n");    
+    putstr("epc:"     ); puthex32(mepc   ); putstr("\n");    
+    putstr("status:"  ); puthex32(mstatus); putstr("\n");    
+    putstr("tval:"    ); puthex32(mtval  ); putstr("\n");    
+    putstr("cause:"   ); puthex32(mcause ); putstr("\n");    
+    putstr("sp:"      ); puthex32(sp     ); putstr("\n");    
+    putstr("ra:"      ); puthex32(ra     ); putstr("\n");    
+    putstr("inst:"    ); puthex32(instr  ); putstr("\n");    
     putstr("\n--------\n");
 
     // Wait for all UART data to be dumped out.
-    while(uart[UART_ST] & UART_STATUS_TX_BUSY) {}
+    while(uart[UART_ST] & UART_STATUS_TX_FULL) {}
 
     while(1){} // Hang forever until reset.
 

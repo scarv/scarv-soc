@@ -13,11 +13,8 @@ scarvsoc_uart_conf  SCARVSOC_UART0= (scarvsoc_uart_conf)0x10000000;
 #define UART_ST 2
 #define UART_CT 3
 
-#define SCARVSOC_UART_STAT_INT               (0x1 << 6)
-#define SCARVSOC_UART_STAT_TX_BUSY           (0x1 << 5)
-#define SCARVSOC_UART_STAT_TX_FULL           (0x1 << 4)
-#define SCARVSOC_UART_STAT_RX_BREAK          (0x1 << 3)
-#define SCARVSOC_UART_STAT_RX_BUSY           (0x1 << 2)
+#define SCARVSOC_UART_STAT_TX_FULL           (0x1 << 3)
+#define SCARVSOC_UART_STAT_TX_EMPTY          (0x1 << 2)
 #define SCARVSOC_UART_STAT_RX_FULL           (0x1 << 1)
 #define SCARVSOC_UART_STAT_RX_VALID          (0x1 << 0)
 

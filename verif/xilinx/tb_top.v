@@ -19,6 +19,8 @@ initial sys_clk_clk_p = 1'b1;
 always @(sys_clk_clk_p) #(2500) sys_clk_clk_n <= !sys_clk_clk_n;
 always @(sys_clk_clk_p) #(2500) sys_clk_clk_p <= !sys_clk_clk_p;
 
+reg [7:0] ramfile [255:0];
+
 initial #100000 sys_reset = 1'b1;
 initial #200000 sys_reset = 1'b0;
 
@@ -50,26 +52,31 @@ endtask
 wire [8:0] gpio;
 reg [7:0] data;
 
-initial begin
-#BIT_P;
+initial begin : sim_process
+    integer i ; for (i= 0; i <255; i = i+1) ramfile[i]=0;
+    $readmemh("/home/work/scarv/scarv-soc-sme/work/examples/uart/ram.hex", ramfile, 0, 255);
     uart_rxd=1'b1;
-    send_byte(8'h53);
-    send_byte(8'h00);
-    send_byte(8'h00);
-    send_byte(8'h00);
-    send_byte(8'h00);
-    send_byte(8'h00);
-    send_byte(8'h01);
-    send_byte(8'h00);
-    for(data = 0; data < 255; data = data+1) begin
-        #1 send_byte(data);
+#BIT_P;#BIT_P;#BIT_P;#BIT_P;#BIT_P;#BIT_P;
+#BIT_P;#BIT_P;#BIT_P;#BIT_P;#BIT_P;#BIT_P;
+    #1 send_byte(8'h00);
+    #1 send_byte(8'h00);
+    #1 send_byte(8'h00);
+    #1 send_byte(8'h70); //
+    #1 send_byte(8'h00);
+    #1 send_byte(8'h01);
+    #1 send_byte(8'h00);
+    #1 send_byte(8'h00);
+    for(data = 0; data < 'h70; data = data+1) begin
+        #1 send_byte(ramfile[data]);
     end
+#BIT_P;#BIT_P;#BIT_P;#BIT_P;#BIT_P;#BIT_P;
+#BIT_P;#BIT_P;#BIT_P;#BIT_P;#BIT_P;#BIT_P;
 end
 
 sys_top_wrapper i_dut(
 .diff_clk_200mhz_clk_n(sys_clk_clk_n),
 .diff_clk_200mhz_clk_p(sys_clk_clk_p),
-.gpio(gpio),
+.gpio_tri_o(gpio),
 .reset(sys_reset),
 .uart_rxd(uart_rxd),
 .uart_txd(uart_txd)

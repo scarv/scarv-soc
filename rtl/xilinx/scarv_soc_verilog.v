@@ -27,7 +27,9 @@ parameter   UART_STOP_BITS = 1         ,
 parameter EXT_RESET_ACTIVE_HIGH = 1,
 
 //! Number of GPIO pins.
-parameter  PERIPH_GPIO_NUM = 16 
+parameter  PERIPH_GPIO_NUM = 16 ,
+
+parameter SME_SMAX             = 3 //! Maximum hardware shares for SME.
 )(
 
 input  wire             f_clk           , // Free running clock.
@@ -64,7 +66,8 @@ scarv_soc #(
 .UART_BIT_RATE           (UART_BIT_RATE           ),
 .UART_CLK_HZ             (UART_CLK_HZ             ),
 .UART_STOP_BITS          (UART_STOP_BITS          ),
-.PERIPH_GPIO_NUM         (PERIPH_GPIO_NUM         )
+.PERIPH_GPIO_NUM         (PERIPH_GPIO_NUM         ),
+.SME_SMAX                (SME_SMAX                )
 ) i_scarv_soc (
 .f_clk   (f_clk   ), // Free running clock.
 .f_clk_locked(f_clk_locked),

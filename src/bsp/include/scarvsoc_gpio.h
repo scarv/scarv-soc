@@ -14,21 +14,28 @@
 typedef volatile uint32_t * scarvsoc_gpio_conf;
 
 #define GPIO_INPUTS    0
-#define GPIO_OUTPUTS   1
-#define GPIO_DIRECTION 2
-#define GPIO_CTRL      3
+#define GPIO_OUTPUTS   0
+#define GPIO_DIRECTION 1
 
 /*!
 @brief Base config for GPIO bank 0.
+@details Controls the LEDs
 @ingroup driver_gpio
 */
 extern scarvsoc_gpio_conf SCARVSOC_GPIO0;
+
+/*!
+@brief Base config for GPIO bank 1.
+@details Controls the trigger pin.
+@ingroup driver_gpio
+*/
+extern scarvsoc_gpio_conf SCARVSOC_GPIO1;
 
 /*
 @brief Get the word controlling which GPIOs are inputs or outputs.
 @details 1 = output, 0 = input.
 */
-inline uint32_t scarvsoc_gpio_get_iomask(
+inline volatile uint32_t scarvsoc_gpio_get_iomask(
     scarvsoc_gpio_conf conf
 ){
     return conf[GPIO_DIRECTION];
@@ -38,7 +45,7 @@ inline uint32_t scarvsoc_gpio_get_iomask(
 @brief Set the word controlling which GPIOs are inputs or outputs.
 @details 1 = output, 0 = input.
 */
-inline void scarvsoc_gpio_set_iomask(
+inline volatile void scarvsoc_gpio_set_iomask(
     scarvsoc_gpio_conf conf,
     uint32_t           mask //!< The IO mask.
 ){
@@ -47,7 +54,7 @@ inline void scarvsoc_gpio_set_iomask(
 
 
 //! Set the output pin values.
-inline void scarvsoc_gpio_set_outputs(
+inline volatile void scarvsoc_gpio_set_outputs(
     scarvsoc_gpio_conf conf,
     uint32_t           vals
 ){
@@ -56,7 +63,7 @@ inline void scarvsoc_gpio_set_outputs(
 
 
 //! Get the output pin values.
-inline uint32_t scarvsoc_gpio_get_outputs(
+inline volatile uint32_t scarvsoc_gpio_get_outputs(
     scarvsoc_gpio_conf conf
 ){
     return conf[GPIO_OUTPUTS];
@@ -64,7 +71,7 @@ inline uint32_t scarvsoc_gpio_get_outputs(
 
 
 //! Get the input pin values.
-inline uint32_t scarvsoc_gpio_get_inputs (
+inline volatile uint32_t scarvsoc_gpio_get_inputs (
     scarvsoc_gpio_conf conf
 ){
     return conf[GPIO_INPUTS];
@@ -73,7 +80,6 @@ inline uint32_t scarvsoc_gpio_get_inputs (
 #undef GPIO_INPUTS
 #undef GPIO_OUTPUTS
 #undef GPIO_DIRECTION
-#undef GPIO_CTRL
 
 #endif
 

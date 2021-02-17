@@ -8,20 +8,24 @@
             <top_module name="glbl" />
             <top_module name="ipif_pkg" />
             <top_module name="lib_pkg" />
+            <top_module name="sme_pkg" />
             <top_module name="tb_top" />
          </top_modules>
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="76029fs"></ZoomStartTime>
-      <ZoomEndTime time="82676030fs"></ZoomEndTime>
-      <Cursor1Time time="16476029fs"></Cursor1Time>
+      <ZoomStartTime time="5945095000fs"></ZoomStartTime>
+      <ZoomEndTime time="12170095001fs"></ZoomEndTime>
+      <Cursor1Time time="11132595000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="175"></NameColumnWidth>
-      <ValueColumnWidth column_width="142"></ValueColumnWidth>
+      <NameColumnWidth column_width="218"></NameColumnWidth>
+      <ValueColumnWidth column_width="106"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="45" />
+   <WVObjectSize size="29" />
+   <wave_markers>
+      <marker label="" time="10526935000" />
+   </wave_markers>
    <wvobject type="logic" fp_name="/tb_top/sys_clk_clk_n">
       <obj_property name="ElementShortName">sys_clk_clk_n</obj_property>
       <obj_property name="ObjectShortName">sys_clk_clk_n</obj_property>
@@ -34,14 +38,6 @@
       <obj_property name="ElementShortName">sys_reset</obj_property>
       <obj_property name="ObjectShortName">sys_reset</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_top/gpio_led_tri_o">
-      <obj_property name="ElementShortName">gpio_led_tri_o[9:0]</obj_property>
-      <obj_property name="ObjectShortName">gpio_led_tri_o[9:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_top/gpio_trig_tri_o">
-      <obj_property name="ElementShortName">gpio_trig_tri_o[0:0]</obj_property>
-      <obj_property name="ObjectShortName">gpio_trig_tri_o[0:0]</obj_property>
-   </wvobject>
    <wvobject type="logic" fp_name="/tb_top/uart_rxd">
       <obj_property name="ElementShortName">uart_rxd</obj_property>
       <obj_property name="ObjectShortName">uart_rxd</obj_property>
@@ -50,157 +46,631 @@
       <obj_property name="ElementShortName">uart_txd</obj_property>
       <obj_property name="ObjectShortName">uart_txd</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_scarv_cpu/g_clk">
-      <obj_property name="ElementShortName">g_clk</obj_property>
-      <obj_property name="ObjectShortName">g_clk</obj_property>
+   <wvobject type="array" fp_name="/tb_top/gpio">
+      <obj_property name="ElementShortName">gpio[8:0]</obj_property>
+      <obj_property name="ObjectShortName">gpio[8:0]</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_scarv_cpu/g_resetn">
+   <wvobject type="array" fp_name="/tb_top/i_dut/trigger_tri_o">
+      <obj_property name="ElementShortName">trigger_tri_o[0:0]</obj_property>
+      <obj_property name="ObjectShortName">trigger_tri_o[0:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_top/data">
+      <obj_property name="ElementShortName">data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/axi_uartlite_0/U0/UARTLITE_CORE_I/UARTLITE_RX_I/rx_Data_Empty">
+      <obj_property name="ElementShortName">rx_Data_Empty</obj_property>
+      <obj_property name="ObjectShortName">rx_Data_Empty</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/f_clk">
+      <obj_property name="ElementShortName">f_clk</obj_property>
+      <obj_property name="ObjectShortName">f_clk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/g_resetn">
       <obj_property name="ElementShortName">g_resetn</obj_property>
       <obj_property name="ObjectShortName">g_resetn</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_scarv_cpu/trs_pc">
-      <obj_property name="ElementShortName">trs_pc[31:0]</obj_property>
-      <obj_property name="ObjectShortName">trs_pc[31:0]</obj_property>
+   <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/EXT_BASE">
+      <obj_property name="ElementShortName">EXT_BASE[31:0]</obj_property>
+      <obj_property name="ObjectShortName">EXT_BASE[31:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_scarv_cpu/trs_instr">
-      <obj_property name="ElementShortName">trs_instr[31:0]</obj_property>
-      <obj_property name="ObjectShortName">trs_instr[31:0]</obj_property>
+   <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/EXT_SIZE">
+      <obj_property name="ElementShortName">EXT_SIZE[31:0]</obj_property>
+      <obj_property name="ObjectShortName">EXT_SIZE[31:0]</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_scarv_cpu/trs_valid">
-      <obj_property name="ElementShortName">trs_valid</obj_property>
-      <obj_property name="ObjectShortName">trs_valid</obj_property>
+   <wvobject type="group" fp_name="group28">
+      <obj_property name="label">CPU Trace</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/cpu_trs_pc">
+         <obj_property name="ElementShortName">cpu_trs_pc[31:0]</obj_property>
+         <obj_property name="ObjectShortName">cpu_trs_pc[31:0]</obj_property>
+         <obj_property name="WaveformStyle">STYLE_ANALOG</obj_property>
+         <obj_property name="CellHeight">100</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/cpu_trs_pc">
+         <obj_property name="ElementShortName">cpu_trs_pc[31:0]</obj_property>
+         <obj_property name="ObjectShortName">cpu_trs_pc[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/cpu_trs_instr">
+         <obj_property name="ElementShortName">cpu_trs_instr[31:0]</obj_property>
+         <obj_property name="ObjectShortName">cpu_trs_instr[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/cpu_trs_valid">
+         <obj_property name="ElementShortName">cpu_trs_valid</obj_property>
+         <obj_property name="ObjectShortName">cpu_trs_valid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_scarv_cpu/i_pipeline/trap_cpu">
+         <obj_property name="ElementShortName">trap_cpu</obj_property>
+         <obj_property name="ObjectShortName">trap_cpu</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_scarv_cpu/i_pipeline/trap_int">
+         <obj_property name="ElementShortName">trap_int</obj_property>
+         <obj_property name="ObjectShortName">trap_int</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_scarv_cpu/i_pipeline/trap_cause">
+         <obj_property name="ElementShortName">trap_cause[5:0]</obj_property>
+         <obj_property name="ObjectShortName">trap_cause[5:0]</obj_property>
+      </wvobject>
    </wvobject>
-   <wvobject type="logic" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_scarv_cpu/imem_req">
-      <obj_property name="ElementShortName">imem_req</obj_property>
-      <obj_property name="ObjectShortName">imem_req</obj_property>
+   <wvobject type="group" fp_name="group27">
+      <obj_property name="label">Peripherals Mem If</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/if_ext_req">
+         <obj_property name="ElementShortName">if_ext_req</obj_property>
+         <obj_property name="ObjectShortName">if_ext_req</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/if_ext_wen">
+         <obj_property name="ElementShortName">if_ext_wen</obj_property>
+         <obj_property name="ObjectShortName">if_ext_wen</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/if_ext_strb">
+         <obj_property name="ElementShortName">if_ext_strb[3:0]</obj_property>
+         <obj_property name="ObjectShortName">if_ext_strb[3:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/if_ext_addr">
+         <obj_property name="ElementShortName">if_ext_addr[31:0]</obj_property>
+         <obj_property name="ObjectShortName">if_ext_addr[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/if_ext_wdata">
+         <obj_property name="ElementShortName">if_ext_wdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">if_ext_wdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/if_ext_gnt">
+         <obj_property name="ElementShortName">if_ext_gnt</obj_property>
+         <obj_property name="ObjectShortName">if_ext_gnt</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/if_ext_error">
+         <obj_property name="ElementShortName">if_ext_error</obj_property>
+         <obj_property name="ObjectShortName">if_ext_error</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/if_ext_rdata">
+         <obj_property name="ElementShortName">if_ext_rdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">if_ext_rdata[31:0]</obj_property>
+      </wvobject>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_scarv_cpu/imem_addr">
-      <obj_property name="ElementShortName">imem_addr[31:0]</obj_property>
-      <obj_property name="ObjectShortName">imem_addr[31:0]</obj_property>
+   <wvobject type="group" fp_name="group1520">
+      <obj_property name="label">CCX Ext</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ext/req">
+         <obj_property name="ElementShortName">req</obj_property>
+         <obj_property name="ObjectShortName">req</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ext/wen">
+         <obj_property name="ElementShortName">wen</obj_property>
+         <obj_property name="ObjectShortName">wen</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ext/strb">
+         <obj_property name="ElementShortName">strb[3:0]</obj_property>
+         <obj_property name="ObjectShortName">strb[3:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ext/wdata">
+         <obj_property name="ElementShortName">wdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">wdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ext/addr">
+         <obj_property name="ElementShortName">addr[31:0]</obj_property>
+         <obj_property name="ObjectShortName">addr[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ext/gnt">
+         <obj_property name="ElementShortName">gnt</obj_property>
+         <obj_property name="ObjectShortName">gnt</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ext/error">
+         <obj_property name="ElementShortName">error</obj_property>
+         <obj_property name="ObjectShortName">error</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ext/rdata">
+         <obj_property name="ElementShortName">rdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rdata[31:0]</obj_property>
+      </wvobject>
    </wvobject>
-   <wvobject type="logic" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_scarv_cpu/imem_gnt">
-      <obj_property name="ElementShortName">imem_gnt</obj_property>
-      <obj_property name="ObjectShortName">imem_gnt</obj_property>
+   <wvobject type="group" fp_name="group1736">
+      <obj_property name="label">UART AXI</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/axi_uartlite_0/s_axi_awaddr">
+         <obj_property name="ElementShortName">s_axi_awaddr[3:0]</obj_property>
+         <obj_property name="ObjectShortName">s_axi_awaddr[3:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/axi_uartlite_0/s_axi_awvalid">
+         <obj_property name="ElementShortName">s_axi_awvalid</obj_property>
+         <obj_property name="ObjectShortName">s_axi_awvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/axi_uartlite_0/s_axi_awready">
+         <obj_property name="ElementShortName">s_axi_awready</obj_property>
+         <obj_property name="ObjectShortName">s_axi_awready</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/axi_uartlite_0/s_axi_wdata">
+         <obj_property name="ElementShortName">s_axi_wdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">s_axi_wdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/axi_uartlite_0/s_axi_wstrb">
+         <obj_property name="ElementShortName">s_axi_wstrb[3:0]</obj_property>
+         <obj_property name="ObjectShortName">s_axi_wstrb[3:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/axi_uartlite_0/s_axi_wvalid">
+         <obj_property name="ElementShortName">s_axi_wvalid</obj_property>
+         <obj_property name="ObjectShortName">s_axi_wvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/axi_uartlite_0/s_axi_wready">
+         <obj_property name="ElementShortName">s_axi_wready</obj_property>
+         <obj_property name="ObjectShortName">s_axi_wready</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/axi_uartlite_0/s_axi_bresp">
+         <obj_property name="ElementShortName">s_axi_bresp[1:0]</obj_property>
+         <obj_property name="ObjectShortName">s_axi_bresp[1:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/axi_uartlite_0/s_axi_bvalid">
+         <obj_property name="ElementShortName">s_axi_bvalid</obj_property>
+         <obj_property name="ObjectShortName">s_axi_bvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/axi_uartlite_0/s_axi_bready">
+         <obj_property name="ElementShortName">s_axi_bready</obj_property>
+         <obj_property name="ObjectShortName">s_axi_bready</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/axi_uartlite_0/s_axi_araddr">
+         <obj_property name="ElementShortName">s_axi_araddr[3:0]</obj_property>
+         <obj_property name="ObjectShortName">s_axi_araddr[3:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/axi_uartlite_0/s_axi_arvalid">
+         <obj_property name="ElementShortName">s_axi_arvalid</obj_property>
+         <obj_property name="ObjectShortName">s_axi_arvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/axi_uartlite_0/s_axi_arready">
+         <obj_property name="ElementShortName">s_axi_arready</obj_property>
+         <obj_property name="ObjectShortName">s_axi_arready</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/axi_uartlite_0/s_axi_rdata">
+         <obj_property name="ElementShortName">s_axi_rdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">s_axi_rdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/axi_uartlite_0/s_axi_rresp">
+         <obj_property name="ElementShortName">s_axi_rresp[1:0]</obj_property>
+         <obj_property name="ObjectShortName">s_axi_rresp[1:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/axi_uartlite_0/s_axi_rvalid">
+         <obj_property name="ElementShortName">s_axi_rvalid</obj_property>
+         <obj_property name="ObjectShortName">s_axi_rvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/axi_uartlite_0/s_axi_rready">
+         <obj_property name="ElementShortName">s_axi_rready</obj_property>
+         <obj_property name="ObjectShortName">s_axi_rready</obj_property>
+      </wvobject>
    </wvobject>
-   <wvobject type="logic" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_scarv_cpu/imem_recv">
-      <obj_property name="ElementShortName">imem_recv</obj_property>
-      <obj_property name="ObjectShortName">imem_recv</obj_property>
+   <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/axi_uartlite_0/U0/UARTLITE_CORE_I/status_reg">
+      <obj_property name="ElementShortName">status_reg[0:7]</obj_property>
+      <obj_property name="ObjectShortName">status_reg[0:7]</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_scarv_cpu/imem_ack">
-      <obj_property name="ElementShortName">imem_ack</obj_property>
-      <obj_property name="ObjectShortName">imem_ack</obj_property>
+   <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/axi_uartlite_0/U0/UARTLITE_CORE_I/rx_Data">
+      <obj_property name="ElementShortName">rx_Data[0:7]</obj_property>
+      <obj_property name="ObjectShortName">rx_Data[0:7]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_scarv_cpu/imem_rdata">
-      <obj_property name="ElementShortName">imem_rdata[31:0]</obj_property>
-      <obj_property name="ObjectShortName">imem_rdata[31:0]</obj_property>
+   <wvobject type="group" fp_name="group1756">
+      <obj_property name="label">SRAM&lt;-&gt;AXI</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/sram_axi_adapter_0/mem_axi_awvalid">
+         <obj_property name="ElementShortName">mem_axi_awvalid</obj_property>
+         <obj_property name="ObjectShortName">mem_axi_awvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/sram_axi_adapter_0/mem_axi_awready">
+         <obj_property name="ElementShortName">mem_axi_awready</obj_property>
+         <obj_property name="ObjectShortName">mem_axi_awready</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/sram_axi_adapter_0/mem_axi_awaddr">
+         <obj_property name="ElementShortName">mem_axi_awaddr[31:0]</obj_property>
+         <obj_property name="ObjectShortName">mem_axi_awaddr[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/sram_axi_adapter_0/mem_axi_awprot">
+         <obj_property name="ElementShortName">mem_axi_awprot[2:0]</obj_property>
+         <obj_property name="ObjectShortName">mem_axi_awprot[2:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/sram_axi_adapter_0/mem_axi_wvalid">
+         <obj_property name="ElementShortName">mem_axi_wvalid</obj_property>
+         <obj_property name="ObjectShortName">mem_axi_wvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/sram_axi_adapter_0/mem_axi_wready">
+         <obj_property name="ElementShortName">mem_axi_wready</obj_property>
+         <obj_property name="ObjectShortName">mem_axi_wready</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/sram_axi_adapter_0/mem_axi_wdata">
+         <obj_property name="ElementShortName">mem_axi_wdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">mem_axi_wdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/sram_axi_adapter_0/mem_axi_wstrb">
+         <obj_property name="ElementShortName">mem_axi_wstrb[3:0]</obj_property>
+         <obj_property name="ObjectShortName">mem_axi_wstrb[3:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/sram_axi_adapter_0/mem_axi_bvalid">
+         <obj_property name="ElementShortName">mem_axi_bvalid</obj_property>
+         <obj_property name="ObjectShortName">mem_axi_bvalid</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/sram_axi_adapter_0/mem_axi_bresp">
+         <obj_property name="ElementShortName">mem_axi_bresp[1:0]</obj_property>
+         <obj_property name="ObjectShortName">mem_axi_bresp[1:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/sram_axi_adapter_0/mem_axi_bready">
+         <obj_property name="ElementShortName">mem_axi_bready</obj_property>
+         <obj_property name="ObjectShortName">mem_axi_bready</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/sram_axi_adapter_0/mem_axi_arvalid">
+         <obj_property name="ElementShortName">mem_axi_arvalid</obj_property>
+         <obj_property name="ObjectShortName">mem_axi_arvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/sram_axi_adapter_0/mem_axi_arready">
+         <obj_property name="ElementShortName">mem_axi_arready</obj_property>
+         <obj_property name="ObjectShortName">mem_axi_arready</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/sram_axi_adapter_0/mem_axi_araddr">
+         <obj_property name="ElementShortName">mem_axi_araddr[31:0]</obj_property>
+         <obj_property name="ObjectShortName">mem_axi_araddr[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/sram_axi_adapter_0/mem_axi_arprot">
+         <obj_property name="ElementShortName">mem_axi_arprot[2:0]</obj_property>
+         <obj_property name="ObjectShortName">mem_axi_arprot[2:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/sram_axi_adapter_0/mem_axi_rvalid">
+         <obj_property name="ElementShortName">mem_axi_rvalid</obj_property>
+         <obj_property name="ObjectShortName">mem_axi_rvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/sram_axi_adapter_0/mem_axi_rready">
+         <obj_property name="ElementShortName">mem_axi_rready</obj_property>
+         <obj_property name="ObjectShortName">mem_axi_rready</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/sram_axi_adapter_0/mem_axi_rresp">
+         <obj_property name="ElementShortName">mem_axi_rresp[1:0]</obj_property>
+         <obj_property name="ObjectShortName">mem_axi_rresp[1:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/sram_axi_adapter_0/mem_axi_rdata">
+         <obj_property name="ElementShortName">mem_axi_rdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">mem_axi_rdata[31:0]</obj_property>
+      </wvobject>
    </wvobject>
-   <wvobject type="logic" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/clka">
-      <obj_property name="ElementShortName">clka</obj_property>
-      <obj_property name="ObjectShortName">clka</obj_property>
+   <wvobject type="group" fp_name="group40">
+      <obj_property name="label">CPU IMEM</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/cpu_imem/req">
+         <obj_property name="ElementShortName">req</obj_property>
+         <obj_property name="ObjectShortName">req</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/cpu_imem/gnt">
+         <obj_property name="ElementShortName">gnt</obj_property>
+         <obj_property name="ObjectShortName">gnt</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/cpu_imem/addr">
+         <obj_property name="ElementShortName">addr[31:0]</obj_property>
+         <obj_property name="ObjectShortName">addr[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/cpu_imem/error">
+         <obj_property name="ElementShortName">error</obj_property>
+         <obj_property name="ObjectShortName">error</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/cpu_imem/rdata">
+         <obj_property name="ElementShortName">rdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rdata[31:0]</obj_property>
+      </wvobject>
    </wvobject>
-   <wvobject type="logic" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/rsta">
-      <obj_property name="ElementShortName">rsta</obj_property>
-      <obj_property name="ObjectShortName">rsta</obj_property>
+   <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_scarv_cpu/i_pipeline/i_pipeline_s0_fetch/s1_data">
+      <obj_property name="ElementShortName">s1_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">s1_data[31:0]</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/ena">
-      <obj_property name="ElementShortName">ena</obj_property>
-      <obj_property name="ObjectShortName">ena</obj_property>
+   <wvobject type="group" fp_name="group52">
+      <obj_property name="label">CPU DMEM</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/cpu_dmem/req">
+         <obj_property name="ElementShortName">req</obj_property>
+         <obj_property name="ObjectShortName">req</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/cpu_dmem/wen">
+         <obj_property name="ElementShortName">wen</obj_property>
+         <obj_property name="ObjectShortName">wen</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/cpu_dmem/strb">
+         <obj_property name="ElementShortName">strb[3:0]</obj_property>
+         <obj_property name="ObjectShortName">strb[3:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/cpu_dmem/wdata">
+         <obj_property name="ElementShortName">wdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">wdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/cpu_dmem/addr">
+         <obj_property name="ElementShortName">addr[31:0]</obj_property>
+         <obj_property name="ObjectShortName">addr[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/cpu_dmem/gnt">
+         <obj_property name="ElementShortName">gnt</obj_property>
+         <obj_property name="ObjectShortName">gnt</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/cpu_dmem/error">
+         <obj_property name="ElementShortName">error</obj_property>
+         <obj_property name="ObjectShortName">error</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/cpu_dmem/rdata">
+         <obj_property name="ElementShortName">rdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rdata[31:0]</obj_property>
+      </wvobject>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/wea">
-      <obj_property name="ElementShortName">wea[3:0]</obj_property>
-      <obj_property name="ObjectShortName">wea[3:0]</obj_property>
+   <wvobject type="group" fp_name="group64">
+      <obj_property name="label">RAM A</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ram_a/req">
+         <obj_property name="ElementShortName">req</obj_property>
+         <obj_property name="ObjectShortName">req</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ram_a/wen">
+         <obj_property name="ElementShortName">wen</obj_property>
+         <obj_property name="ObjectShortName">wen</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ram_a/strb">
+         <obj_property name="ElementShortName">strb[3:0]</obj_property>
+         <obj_property name="ObjectShortName">strb[3:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ram_a/wdata">
+         <obj_property name="ElementShortName">wdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">wdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ram_a/addr">
+         <obj_property name="ElementShortName">addr[31:0]</obj_property>
+         <obj_property name="ObjectShortName">addr[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ram_a/gnt">
+         <obj_property name="ElementShortName">gnt</obj_property>
+         <obj_property name="ObjectShortName">gnt</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ram_a/error">
+         <obj_property name="ElementShortName">error</obj_property>
+         <obj_property name="ObjectShortName">error</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ram_a/rdata">
+         <obj_property name="ElementShortName">rdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rdata[31:0]</obj_property>
+      </wvobject>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/addra">
-      <obj_property name="ElementShortName">addra[9:0]</obj_property>
-      <obj_property name="ObjectShortName">addra[9:0]</obj_property>
+   <wvobject type="group" fp_name="group76">
+      <obj_property name="label">RAM B</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ram_b/req">
+         <obj_property name="ElementShortName">req</obj_property>
+         <obj_property name="ObjectShortName">req</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ram_b/wen">
+         <obj_property name="ElementShortName">wen</obj_property>
+         <obj_property name="ObjectShortName">wen</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ram_b/strb">
+         <obj_property name="ElementShortName">strb[3:0]</obj_property>
+         <obj_property name="ObjectShortName">strb[3:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ram_b/wdata">
+         <obj_property name="ElementShortName">wdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">wdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ram_b/addr">
+         <obj_property name="ElementShortName">addr[31:0]</obj_property>
+         <obj_property name="ObjectShortName">addr[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ram_b/gnt">
+         <obj_property name="ElementShortName">gnt</obj_property>
+         <obj_property name="ObjectShortName">gnt</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ram_b/error">
+         <obj_property name="ElementShortName">error</obj_property>
+         <obj_property name="ObjectShortName">error</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_ram_b/rdata">
+         <obj_property name="ElementShortName">rdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rdata[31:0]</obj_property>
+      </wvobject>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/dina">
-      <obj_property name="ElementShortName">dina[31:0]</obj_property>
-      <obj_property name="ObjectShortName">dina[31:0]</obj_property>
+   <wvobject type="group" fp_name="group88">
+      <obj_property name="label">ROM</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_rom/req">
+         <obj_property name="ElementShortName">req</obj_property>
+         <obj_property name="ObjectShortName">req</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_rom/wen">
+         <obj_property name="ElementShortName">wen</obj_property>
+         <obj_property name="ObjectShortName">wen</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_rom/strb">
+         <obj_property name="ElementShortName">strb[3:0]</obj_property>
+         <obj_property name="ObjectShortName">strb[3:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_rom/wdata">
+         <obj_property name="ElementShortName">wdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">wdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_rom/addr">
+         <obj_property name="ElementShortName">addr[31:0]</obj_property>
+         <obj_property name="ObjectShortName">addr[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_rom/gnt">
+         <obj_property name="ElementShortName">gnt</obj_property>
+         <obj_property name="ObjectShortName">gnt</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_rom/error">
+         <obj_property name="ElementShortName">error</obj_property>
+         <obj_property name="ObjectShortName">error</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/if_rom/rdata">
+         <obj_property name="ElementShortName">rdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rdata[31:0]</obj_property>
+      </wvobject>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/douta">
-      <obj_property name="ElementShortName">douta[31:0]</obj_property>
-      <obj_property name="ObjectShortName">douta[31:0]</obj_property>
+   <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_scarv_cpu/i_pipeline/i_gprs/gprs">
+      <obj_property name="ElementShortName">gprs[31:0][31:0]</obj_property>
+      <obj_property name="ObjectShortName">gprs[31:0][31:0]</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/enb">
-      <obj_property name="ElementShortName">enb</obj_property>
-      <obj_property name="ObjectShortName">enb</obj_property>
+   <wvobject type="group" fp_name="group529">
+      <obj_property name="label">RAM Interfaces</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/a_cen">
+         <obj_property name="ElementShortName">a_cen</obj_property>
+         <obj_property name="ObjectShortName">a_cen</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/a_wen">
+         <obj_property name="ElementShortName">a_wen</obj_property>
+         <obj_property name="ObjectShortName">a_wen</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/a_strb">
+         <obj_property name="ElementShortName">a_strb[3:0]</obj_property>
+         <obj_property name="ObjectShortName">a_strb[3:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/a_wdata">
+         <obj_property name="ElementShortName">a_wdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">a_wdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/a_addr">
+         <obj_property name="ElementShortName">a_addr[13:0]</obj_property>
+         <obj_property name="ObjectShortName">a_addr[13:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/a_rdata">
+         <obj_property name="ElementShortName">a_rdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">a_rdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/b_cen">
+         <obj_property name="ElementShortName">b_cen</obj_property>
+         <obj_property name="ObjectShortName">b_cen</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/b_wen">
+         <obj_property name="ElementShortName">b_wen</obj_property>
+         <obj_property name="ObjectShortName">b_wen</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/b_strb">
+         <obj_property name="ElementShortName">b_strb[3:0]</obj_property>
+         <obj_property name="ObjectShortName">b_strb[3:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/b_wdata">
+         <obj_property name="ElementShortName">b_wdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">b_wdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/b_addr">
+         <obj_property name="ElementShortName">b_addr[13:0]</obj_property>
+         <obj_property name="ObjectShortName">b_addr[13:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/b_rdata">
+         <obj_property name="ElementShortName">b_rdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">b_rdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/addra_idx">
+         <obj_property name="ElementShortName">addra_idx[11:0]</obj_property>
+         <obj_property name="ObjectShortName">addra_idx[11:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/addrb_idx">
+         <obj_property name="ElementShortName">addrb_idx[11:0]</obj_property>
+         <obj_property name="ObjectShortName">addrb_idx[11:0]</obj_property>
+      </wvobject>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/web">
-      <obj_property name="ElementShortName">web[3:0]</obj_property>
-      <obj_property name="ObjectShortName">web[3:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/addrb">
-      <obj_property name="ElementShortName">addrb[9:0]</obj_property>
-      <obj_property name="ObjectShortName">addrb[9:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/dinb">
-      <obj_property name="ElementShortName">dinb[31:0]</obj_property>
-      <obj_property name="ObjectShortName">dinb[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/doutb">
-      <obj_property name="ElementShortName">doutb[31:0]</obj_property>
-      <obj_property name="ObjectShortName">doutb[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/addra_idx">
-      <obj_property name="ElementShortName">addra_idx[9:0]</obj_property>
-      <obj_property name="ObjectShortName">addra_idx[9:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/addrb_idx">
-      <obj_property name="ElementShortName">addrb_idx[9:0]</obj_property>
-      <obj_property name="ObjectShortName">addrb_idx[9:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/BRAM">
-      <obj_property name="ElementShortName">BRAM[255:0][31:0]</obj_property>
-      <obj_property name="ObjectShortName">BRAM[255:0][31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/ram_data_a">
-      <obj_property name="ElementShortName">ram_data_a[31:0]</obj_property>
-      <obj_property name="ObjectShortName">ram_data_a[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/ram_data_b">
-      <obj_property name="ElementShortName">ram_data_b[31:0]</obj_property>
-      <obj_property name="ObjectShortName">ram_data_b[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/\init_bram_to_zero.ram_index ">
-      <obj_property name="ElementShortName">\init_bram_to_zero.ram_index [31:0]</obj_property>
-      <obj_property name="ObjectShortName">\init_bram_to_zero.ram_index [31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/WRITE_EN">
-      <obj_property name="ElementShortName">WRITE_EN[31:0]</obj_property>
-      <obj_property name="ObjectShortName">WRITE_EN[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/DEPTH">
-      <obj_property name="ElementShortName">DEPTH[31:0]</obj_property>
-      <obj_property name="ObjectShortName">DEPTH[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/LW">
-      <obj_property name="ElementShortName">LW[31:0]</obj_property>
-      <obj_property name="ObjectShortName">LW[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/MEMH_FILE">
-      <obj_property name="ElementShortName">MEMH_FILE[2040:0]</obj_property>
-      <obj_property name="ObjectShortName">MEMH_FILE[2040:0]</obj_property>
-      <obj_property name="Radix">ASCIIRADIX</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/BRAM_DATA_WIDTH">
-      <obj_property name="ElementShortName">BRAM_DATA_WIDTH[31:0]</obj_property>
-      <obj_property name="ObjectShortName">BRAM_DATA_WIDTH[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/BRAM_BYTE_WIDTH">
-      <obj_property name="ElementShortName">BRAM_BYTE_WIDTH[31:0]</obj_property>
-      <obj_property name="ObjectShortName">BRAM_BYTE_WIDTH[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/NB_COL">
-      <obj_property name="ElementShortName">NB_COL[31:0]</obj_property>
-      <obj_property name="ObjectShortName">NB_COL[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/BRAM_DEPTH">
-      <obj_property name="ElementShortName">BRAM_DEPTH[31:0]</obj_property>
-      <obj_property name="ObjectShortName">BRAM_DEPTH[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_top/i_dut/system_top_wrapper_i/scarv_soc/inst/i_rom/BRAM_ADDR_WIDTH">
-      <obj_property name="ElementShortName">BRAM_ADDR_WIDTH[31:0]</obj_property>
-      <obj_property name="ObjectShortName">BRAM_ADDR_WIDTH[31:0]</obj_property>
+   <wvobject type="group" fp_name="group1577">
+      <obj_property name="label">Low words of RAM</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/BRAM[20]">
+         <obj_property name="ElementShortName">[20][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[20][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/BRAM[19]">
+         <obj_property name="ElementShortName">[19][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[19][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/BRAM[18]">
+         <obj_property name="ElementShortName">[18][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[18][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/BRAM[17]">
+         <obj_property name="ElementShortName">[17][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[17][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/BRAM[16]">
+         <obj_property name="ElementShortName">[16][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[16][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/BRAM[15]">
+         <obj_property name="ElementShortName">[15][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[15][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/BRAM[14]">
+         <obj_property name="ElementShortName">[14][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[14][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/BRAM[13]">
+         <obj_property name="ElementShortName">[13][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[13][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/BRAM[12]">
+         <obj_property name="ElementShortName">[12][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[12][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/BRAM[11]">
+         <obj_property name="ElementShortName">[11][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[11][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/BRAM[10]">
+         <obj_property name="ElementShortName">[10][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[10][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/BRAM[9]">
+         <obj_property name="ElementShortName">[9][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[9][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/BRAM[8]">
+         <obj_property name="ElementShortName">[8][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[8][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/BRAM[7]">
+         <obj_property name="ElementShortName">[7][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[7][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/BRAM[6]">
+         <obj_property name="ElementShortName">[6][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[6][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/BRAM[5]">
+         <obj_property name="ElementShortName">[5][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[5][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/BRAM[4]">
+         <obj_property name="ElementShortName">[4][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[4][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/BRAM[3]">
+         <obj_property name="ElementShortName">[3][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[3][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/BRAM[2]">
+         <obj_property name="ElementShortName">[2][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[2][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/BRAM[1]">
+         <obj_property name="ElementShortName">[1][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[1][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_top/i_dut/sys_top_i/scarv_ccx/inst/i_scarv_ccx_top/i_ram/BRAM[0]">
+         <obj_property name="ElementShortName">[0][31:0]</obj_property>
+         <obj_property name="ObjectShortName">[0][31:0]</obj_property>
+      </wvobject>
    </wvobject>
 </wave_config>
