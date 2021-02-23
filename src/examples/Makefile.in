@@ -32,12 +32,13 @@ endef
 # Arguments:
 # 1 - Friendly experiment name
 # 2 - Source files
+# 3 - Extra CFLAGS
 #
 define add_sw_example_target
 
 $(call map_sw_example_elf,${1}) : ${2} $(BSP_LIB)
 	@mkdir -p $(dir $(call map_sw_example_elf,${1}))
-	$(CC) $(SW_EXAMPLES_CFLAGS) -o $${@} $${^}
+	$(CC) $(SW_EXAMPLES_CFLAGS) ${3} -o $${@} $${^}
 
 $(call map_sw_example_dis,${1}) : $(call map_sw_example_elf,${1})
 	@mkdir -p $(dir $(call map_sw_example_dis,${1}))
@@ -55,14 +56,13 @@ example-${1} : $(call map_sw_example_elf,${1}) \
                $(call map_sw_example_dis,${1}) \
                $(call map_sw_example_hex,${1}) \
                $(call map_sw_example_bin,${1}) \
-               $(VL_OUT)                       \
                $(FSBL_HEX)                     
 	cp $(FSBL_HEX)      $(call map_sw_example_dir,${1})/rom.hex
-	cp $(VL_SCARV_SOC)  $(call map_sw_example_dir,${1})/verilated
 
 endef
 
 include $(SOC_HOME)/src/examples/uart/Makefile.in
+include $(SOC_HOME)/src/examples/sme-aes/Makefile.in
 
 run-example-% : example-%
 	cd $(SW_EXAMPLES_DIR)/$* ; ./verilated +TIMEOUT=10000000 +WAIT

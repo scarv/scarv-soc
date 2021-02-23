@@ -1,6 +1,7 @@
 
 EXAMPLE_NAME=uart
 EXAMPLE_SRCS=$(SOC_HOME)/src/examples/uart/example_uart.c
+EXAMPLE_FLAGS=
 
-$(eval $(call add_sw_example_target,$(EXAMPLE_NAME),$(EXAMPLE_SRCS)))
+$(eval $(call add_sw_example_target,$(EXAMPLE_NAME),$(EXAMPLE_SRCS),$(EXAMPLE_FLAGS)))
 

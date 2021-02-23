@@ -146,6 +146,7 @@ void panic_handler(
     uint32_t ra     ,
     uint32_t instr
 ){
+    putstr("\npanic\n");
     putstr("epc:"     ); puthex32(mepc   ); putstr("\n");    
     putstr("status:"  ); puthex32(mstatus); putstr("\n");    
     putstr("tval:"    ); puthex32(mtval  ); putstr("\n");    
