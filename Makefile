@@ -30,3 +30,5 @@ include $(SOC_HOME)/src/examples/Makefile.in
 
 include $(SOC_HOME)/flow/xilinx/Makefile.in
 
+include $(SOC_HOME)/flow/leakage/Makefile.in
+

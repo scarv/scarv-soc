@@ -1,0 +1,39 @@
+
+BINARY = $(SOC_WORK)/examples/sme-aes/sme-aes.bin
+
+SCOPE_CFG     =$(SOC_HOME)/flow/leakage/picoscope5000.cfg
+SCOPE_CHANNEL = B
+TT_CAPTURE    =$(SOC_HOME)/extern/fw-acquisition/bin/ttest_capture.py
+TT_ANALYSE    =$(SOC_HOME)/extern/fw-acquisition/bin/ttest_analyse.py
+
+LKG_WORK      = $(SOC_WORK)/leakage
+
+TRACES_FILE   = $(LKG_WORK)/smax-$(SME_SMAX)-traces.npy
+FIXED_FILE    = $(LKG_WORK)/smax-$(SME_SMAX)-fixed.npy
+LKG_LOG       = $(LKG_WORK)/smax-$(SME_SMAX)-capture.log
+TT_GRAPH      = $(LKG_WORK)/smax-$(SME_SMAX)-ttest.png
+NUM_TRACES    = 10000
+
+.PHONY: lkg-upload
+lkg-upload: $(BINARY)
+	$(MAKE) -C $(SOC_HOME) xilinx-upload-binary BINARY=$<
+
+$(TRACES_FILE) : lkg-upload $(BINARY)
+	@mkdir -p $(LKG_WORK)
+	$(TT_CAPTURE) \
+        $(PORT) \
+        $(SCOPE_CFG) \
+        $(SCOPE_CHANNEL) \
+        $(TRACES_FILE) $(FIXED_FILE) \
+        --baud $(BAUD) \
+        --logfile $(LKG_LOG) \
+        --num-traces $(NUM_TRACES) \
+        --zero-fixed
+
+lkg-capture: $(TRACES_FILE)
+
+lkg-analysis: $(TRACES_FILE)
+	$(TT_ANALYSE) \
+        --avg --abs \
+        --graph-ttest $(TT_GRAPH) \
+        $(FIXED_FILE) $(TRACES_FILE)
