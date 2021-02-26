@@ -12,11 +12,12 @@ export XCRYPTO_RTL=$SCARV_CPU/external/xcrypto/rtl
 
 if [[ -z "$VERILATOR_ROOT" ]]; then
     echo "Warning: No VERILATOR_ROOT environment variable set."
-    export VERILATOR_ROOT=/usr/local
+    export VERILATOR_ROOT=/opt/eda/verilator
 fi
 
 if [[ -z "$YOSYS_ROOT" ]]; then
     echo "Warning: No YOSYS_ROOT environment variable set."
+    export YOSYS_ROOT=/opt/eda/Yosys
 fi
 
 echo "------------------------ SCARV SoC Project Setup ----------------------"

@@ -62,7 +62,10 @@ example-${1} : $(call map_sw_example_elf,${1}) \
 endef
 
 include $(SOC_HOME)/src/examples/uart/Makefile.in
-include $(SOC_HOME)/src/examples/sme-aes/Makefile.in
+include $(SOC_HOME)/src/examples/sme-aes32es/Makefile.in
+include $(SOC_HOME)/src/examples/sme-aes32esm/Makefile.in
+include $(SOC_HOME)/src/examples/sme-aes128-ks/Makefile.in
+include $(SOC_HOME)/src/examples/sme-aes128-enc/Makefile.in
 
 run-example-% : example-%
 	cd $(SW_EXAMPLES_DIR)/$* ; ./verilated +TIMEOUT=10000000 +WAIT

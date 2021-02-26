@@ -1,0 +1,15 @@
+
+EXAMPLE_NAME=sme-aes128-enc
+
+EXAMPLE_SRCS=\
+    $(SOC_HOME)/src/examples/$(EXAMPLE_NAME)/example_sme_aes128_enc.c \
+    $(SOC_HOME)/extern/fw-acquisition/target/scass/scass_target.c \
+    $(SOC_HOME)/extern/scarv-cpu/src/sme/sme_aes.S
+
+EXAMPLE_FLAGS= \
+    -DSME_SMAX=$(SME_SMAX) \
+    -I$(SOC_HOME)/extern/fw-acquisition/target/scass \
+    -I$(SOC_HOME)/extern/scarv-cpu/src/sme
+
+$(eval $(call add_sw_example_target,$(EXAMPLE_NAME),$(EXAMPLE_SRCS),$(EXAMPLE_FLAGS)))
+

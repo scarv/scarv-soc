@@ -4,6 +4,7 @@ PORT          = /dev/ttyUSB0
 BAUD          = 115200
 BINARY       ?= $(SOC_WORK)/examples/uart/uart.bin
 START_ADDR    = 0x00010000
+GOTO         ?= --goto 0x0
 
 SERIAL_TERM   = miniterm.py
 
@@ -14,6 +15,7 @@ xilinx-upload-binary: $(BINARY)
 	@echo "- Port:    $(PORT) & $(BAUD) "
 	$(UPLOAD_SCRIPT) \
         --baud $(BAUD) \
+        $(GOTO) \
         $(PORT) \
         $(BINARY) \
         $(START_ADDR)

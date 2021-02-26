@@ -1,8 +1,9 @@
 
-EXAMPLE_NAME=sme-aes
+EXAMPLE_NAME=sme-aes32es
 
 EXAMPLE_SRCS=\
-    $(SOC_HOME)/src/examples/sme-aes/example_sme_aes.c \
+    $(SOC_HOME)/src/examples/$(EXAMPLE_NAME)/example_sme_aes32es.c \
+    $(SOC_HOME)/src/examples/$(EXAMPLE_NAME)/example_sme_aes32es.S \
     $(SOC_HOME)/extern/fw-acquisition/target/scass/scass_target.c \
     $(SOC_HOME)/extern/scarv-cpu/src/sme/sme_aes.S
 

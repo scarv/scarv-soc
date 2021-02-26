@@ -18,21 +18,14 @@ scass_target_clk_info scass_clk_info = {
     .sys_clk_src  = SCASS_CLK_SRC_INTERNAL
 };
 
-uint32_t ck   [AES_STATE_WORDS] = {
-    0x01234567,0x89abcdef,0x01234567,0x89abcdef
-} ; //!< Cipher key
-
-uint32_t f_pt [AES_STATE_WORDS]; //!< Fixed Plaintext
-uint32_t r_pt [AES_STATE_WORDS]; //!< Random Plaintext
-uint32_t ct   [AES_STATE_WORDS]; //!< Ciphertext 
+uint32_t r_ck [AES_STATE_WORDS];
+uint32_t f_ck [AES_STATE_WORDS];
 
 // The expanded cipher key.
 uint32_t exp_ck [SME_SMAX][AES128_RK_WORDS];
 
 scass_target_var scass_vars [] = {
-    {"ck", sizeof(  ck),   ck,   ck, SCASS_FLAG_INPUT       },  
-    {"pt", sizeof(f_pt), r_pt, f_pt, SCASS_FLAGS_TTEST_IN   },  
-    {"ct", sizeof(  ct),   ct,   ct, SCASS_FLAG_OUTPUT      }  
+    {"ck", sizeof(r_ck), r_ck, f_ck, SCASS_FLAGS_TTEST_IN   },  
 };
 
 /*!
@@ -48,10 +41,6 @@ uint8_t scass_experiment_init(
             exp_ck[s][i] = 0;
         }
     }
-
-    for(int s = 0; s < AES_STATE_WORDS; s ++) {
-        ct[s] = 0;
-    }
     return 0;
 }
     
@@ -66,12 +55,11 @@ uint8_t scass_experiment_run(
     scass_target_cfg * cfg,
     char               fixed
 ){
-    uint32_t * p_pt = fixed ? f_pt : r_pt;
+    uint32_t * p_ck = fixed ? f_ck : r_ck;
 
     scarvsoc_gpio_set_outputs(SCARVSOC_GPIO1, 1);
 
-    sme_aes128_enc_key_exp(exp_ck, ck);
-    sme_aes128_enc_block(ct, p_pt, exp_ck);
+    sme_aes128_enc_key_exp(exp_ck, p_ck);
 
     scarvsoc_gpio_set_outputs(SCARVSOC_GPIO1, 0);
 
@@ -93,7 +81,7 @@ int main(int argc, char ** argv) {
 
     scass_target_cfg scass_cfg;
 
-    scass_cfg.experiment_name   = "sme-aes";
+    scass_cfg.experiment_name   = "sme-aes128-ks";
     scass_cfg.variables         = scass_vars;
     scass_cfg.num_variables     = sizeof(scass_vars)/sizeof(scass_target_var);
     scass_cfg.randomness        = NULL;

@@ -1,6 +1,4 @@
 
-BINARY = $(SOC_WORK)/examples/sme-aes/sme-aes.bin
-
 SCOPE_CFG     =$(SOC_HOME)/flow/leakage/picoscope5000.cfg
 SCOPE_CHANNEL = B
 TT_CAPTURE    =$(SOC_HOME)/extern/fw-acquisition/bin/ttest_capture.py
@@ -8,32 +6,75 @@ TT_ANALYSE    =$(SOC_HOME)/extern/fw-acquisition/bin/ttest_analyse.py
 
 LKG_WORK      = $(SOC_WORK)/leakage
 
-TRACES_FILE   = $(LKG_WORK)/smax-$(SME_SMAX)-traces.npy
-FIXED_FILE    = $(LKG_WORK)/smax-$(SME_SMAX)-fixed.npy
-LKG_LOG       = $(LKG_WORK)/smax-$(SME_SMAX)-capture.log
-TT_GRAPH      = $(LKG_WORK)/smax-$(SME_SMAX)-ttest.png
 NUM_TRACES    = 10000
 
-.PHONY: lkg-upload
-lkg-upload: $(BINARY)
-	$(MAKE) -C $(SOC_HOME) xilinx-upload-binary BINARY=$<
+LKG_TARGETS   =
 
-$(TRACES_FILE) : lkg-upload $(BINARY)
-	@mkdir -p $(LKG_WORK)
+# 1. leakage binary file
+define map_lkg_tgt
+$(notdir $(basename ${1}))
+endef
+
+# 1. leakage binary file
+define map_lkg_dir
+$(LKG_WORK)/$(call map_lkg_tgt,${1})
+endef
+
+# 1. leakage binary file
+define map_lkg_traces
+$(call map_lkg_dir,${1})/$(call map_lkg_tgt,${1})-smax-$(SME_SMAX)-traces.npy
+endef
+
+# 1. leakage binary file
+define map_lkg_fixed
+$(call map_lkg_dir,${1})/$(call map_lkg_tgt,${1})-smax-$(SME_SMAX)-fixed.npy
+endef
+
+# 1. leakage binary file
+define map_lkg_log
+$(call map_lkg_dir,${1})/$(call map_lkg_tgt,${1})-smax-$(SME_SMAX)-capture.log
+endef
+
+# 1. leakage binary file
+define map_lkg_ttest_graph
+$(call map_lkg_dir,${1})/$(call map_lkg_tgt,${1})-smax-$(SME_SMAX)-ttest.png
+endef
+
+#
+# 1. Leakage binary file
+define add_lkg_targets
+
+$(call map_lkg_traces,${1}) : ${1}
+	$(MAKE) -C $(SOC_HOME) xilinx-upload-binary BINARY=$${<}
+	@mkdir -p $(call map_lkg_dir,${1})
 	$(TT_CAPTURE) \
         $(PORT) \
         $(SCOPE_CFG) \
         $(SCOPE_CHANNEL) \
-        $(TRACES_FILE) $(FIXED_FILE) \
+        $(call map_lkg_traces,${1}) \
+        $(call map_lkg_fixed,${1}) \
         --baud $(BAUD) \
-        --logfile $(LKG_LOG) \
+        --logfile $(call map_lkg_log,${1}) \
         --num-traces $(NUM_TRACES) \
         --zero-fixed
 
-lkg-capture: $(TRACES_FILE)
+lkg-capture-$(call map_lkg_tgt,${1}): $(call map_lkg_traces,${1})
 
-lkg-analysis: $(TRACES_FILE)
+lkg-analysis-$(call map_lkg_tgt,${1}): $(call map_lkg_traces,${1})
 	$(TT_ANALYSE) \
         --avg --abs \
-        --graph-ttest $(TT_GRAPH) \
-        $(FIXED_FILE) $(TRACES_FILE)
+        --graph-ttest $(call map_lkg_ttest_graph,${1}) \
+        $(call map_lkg_fixed,${1}) \
+        $(call map_lkg_traces,${1})
+
+LKG_TARGETS  += lkg-analysis-$(call map_lkg_tgt,${1})
+
+endef
+
+$(eval $(call add_lkg_targets,$(call map_sw_example_bin,sme-aes32es)))
+$(eval $(call add_lkg_targets,$(call map_sw_example_bin,sme-aes32esm)))
+$(eval $(call add_lkg_targets,$(call map_sw_example_bin,sme-aes128-ks)))
+$(eval $(call add_lkg_targets,$(call map_sw_example_bin,sme-aes128-enc)))
+
+lkg-analysis-all: $(LKG_TARGETS)
+
