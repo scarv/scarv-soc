@@ -16,12 +16,15 @@
 .func   experiment_payload
 experiment_payload:
 
-    li t0, 0x1E0                // D=max, bank=0
-    csrrw x0, 0x006, t0         // Turn on SME with MAX shares and 0'th bank.
-    mask    x16, a0             // En-mask the input variables.
-    mask    x17, a1
+    mv      x16, a0             // Move input variables to SME registers.
+    mv      x17, a1
     li      a0 , 0              // Destroy the input variables.
     li      a1 , 0
+    li t0, 0x1E0                // D=max, bank=0
+    csrrw x0, 0x006, t0         // Turn on SME with MAX shares and 0'th bank.
+    mask    x16, x16            // En-mask the input variables.
+    mask    x17, x16
+    li      x18, 0
     
     nop; nop; nop; nop; nop;
     nop; nop; nop; nop; nop;

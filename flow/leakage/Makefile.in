@@ -37,7 +37,7 @@ endef
 
 # 1. leakage binary file
 define map_lkg_ttest_graph
-$(call map_lkg_dir,${1})/$(call map_lkg_tgt,${1})-smax-$(SME_SMAX)-ttest.png
+$(call map_lkg_dir,${1})/../$(call map_lkg_tgt,${1})-smax-$(SME_SMAX)-ttest.png
 endef
 
 #
@@ -62,7 +62,7 @@ lkg-capture-$(call map_lkg_tgt,${1}): $(call map_lkg_traces,${1})
 
 lkg-analysis-$(call map_lkg_tgt,${1}): $(call map_lkg_traces,${1})
 	$(TT_ANALYSE) \
-        --avg --abs \
+        --avg --abs  \
         --graph-ttest $(call map_lkg_ttest_graph,${1}) \
         $(call map_lkg_fixed,${1}) \
         $(call map_lkg_traces,${1})
@@ -71,6 +71,8 @@ LKG_TARGETS  += lkg-analysis-$(call map_lkg_tgt,${1})
 
 endef
 
+$(eval $(call add_lkg_targets,$(call map_sw_example_bin,sme-xor)))
+$(eval $(call add_lkg_targets,$(call map_sw_example_bin,sme-and)))
 $(eval $(call add_lkg_targets,$(call map_sw_example_bin,sme-aes32es)))
 $(eval $(call add_lkg_targets,$(call map_sw_example_bin,sme-aes32esm)))
 $(eval $(call add_lkg_targets,$(call map_sw_example_bin,sme-aes128-ks)))

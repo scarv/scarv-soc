@@ -16,6 +16,9 @@
 .func   experiment_payload
 experiment_payload:
 
+    addi    sp, sp, -16
+    sw      x18, 0(sp)
+
     mv      x16, a0             // Move input variables to SME registers.
     mv      x17, a1
     li      a0 , 0              // Destroy the input variables.
@@ -30,10 +33,7 @@ experiment_payload:
     nop; nop; nop; nop; nop;
     nop; nop; nop; nop; nop;
 
-    aes32esmi x16, x17, 0
-    aes32esmi x16, x17, 1
-    aes32esmi x16, x17, 2
-    aes32esmi x16, x17, 3
+    and    x18, x16, x17
     
     nop; nop; nop; nop; nop;
     nop; nop; nop; nop; nop;
@@ -41,6 +41,9 @@ experiment_payload:
 
     unmask  a0, x16             // Unmask the result.
     csrrw x0, 0x006, x0         // Turn off SME
+    
+    lw      x18, 0(sp)
+    addi    sp, sp,  16
 
     ret
 .endfunc
