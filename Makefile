@@ -11,7 +11,7 @@ OBJCOPY         = $(RISCV)/bin/riscv64-unknown-elf-objcopy
 
 OBJCOPY_HEX_ARGS= --gap-fill 0 
 
-export SME_SMAX ?= 3
+export SME_SMAX ?= 2
 
 texdocs-%:
 	$(MAKE) -C $(SOC_HOME)/doc $%
