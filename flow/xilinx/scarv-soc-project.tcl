@@ -31,27 +31,38 @@
 #    "$::env(XCRYPTO_RTL)/b_bop/b_bop.v"
 #    "$::env(XCRYPTO_RTL)/b_lut/b_lut.v"
 #    "$::env(SCARV_CPU)/rtl/core/frv_common.vh"
-#    "$::env(SCARV_CPU)/rtl/core/frv_alu.v"
-#    "$::env(SCARV_CPU)/rtl/core/frv_masked_alu.v"
-#    "$::env(SCARV_CPU)/rtl/core/frv_asi.v"
-#    "$::env(SCARV_CPU)/rtl/core/frv_bitwise.v"
-#    "$::env(SCARV_CPU)/rtl/core/frv_core.v"
-#    "$::env(SCARV_CPU)/rtl/core/frv_core_fetch_buffer.v"
-#    "$::env(SCARV_CPU)/rtl/core/frv_counters.v"
-#    "$::env(SCARV_CPU)/rtl/core/frv_csrs.v"
-#    "$::env(SCARV_CPU)/rtl/core/frv_gprs.v"
-#    "$::env(SCARV_CPU)/rtl/core/frv_interrupts.v"
-#    "$::env(SCARV_CPU)/rtl/core/frv_leak.v"
-#    "$::env(SCARV_CPU)/rtl/core/frv_lsu.v"
-#    "$::env(SCARV_CPU)/rtl/core/frv_pipeline.v"
-#    "$::env(SCARV_CPU)/rtl/core/frv_pipeline_decode.vh"
-#    "$::env(SCARV_CPU)/rtl/core/frv_pipeline_decode.v"
-#    "$::env(SCARV_CPU)/rtl/core/frv_pipeline_execute.v"
-#    "$::env(SCARV_CPU)/rtl/core/frv_pipeline_fetch.v"
-#    "$::env(SCARV_CPU)/rtl/core/frv_pipeline_memory.v"
-#    "$::env(SCARV_CPU)/rtl/core/frv_pipeline_register.v"
-#    "$::env(SCARV_CPU)/rtl/core/frv_pipeline_writeback.v"
-#    "$::env(SCARV_CPU)/rtl/core/frv_rngif.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_alu.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_asi.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_bitwise.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_core.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_core_fetch_buffer.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_counters.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_csrs.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_gf256_aff.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_gf256_mul.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_gprs.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_interrupts.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_leak.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_lfsr32.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_lsu.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_alu.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_arith.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_barith.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_bitwise.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_faff.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_fmul.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_shfrot.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_shuffle.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_decode.vh"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_decode.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_execute.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_fetch.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_memory.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_register.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_writeback.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_rngif.v"
+#    "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_trng.v"
 #    "$::env(SOC_HOME)/rtl/ic/ic_addr_decode.v"
 #    "$::env(SOC_HOME)/rtl/ic/ic_cpu_bus_axi_bridge.v"
 #    "$::env(SOC_HOME)/rtl/ic/ic_cpu_bus_bram_bridge.v"
@@ -187,36 +198,37 @@ set files [list \
  [file normalize "$::env(XCRYPTO_RTL)/b_lut/b_lut.v"] \
  [file normalize "$::env(SCARV_CPU)/rtl/core/frv_common.vh"] \
  [file normalize "$::env(SCARV_CPU)/rtl/core/frv_alu.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_lfsr32.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_gf256_aff.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_gf256_mul.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_masked_alu.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_masked_arith.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_masked_barith.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_masked_bitwise.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_masked_faff.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_masked_fmul.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_masked_shfrot.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_masked_shuffle.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_asi.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_bitwise.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_core.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_core_fetch_buffer.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_counters.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_csrs.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_gprs.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_interrupts.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_leak.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_lsu.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_pipeline.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_pipeline_decode.vh"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_pipeline_decode.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_pipeline_execute.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_pipeline_fetch.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_pipeline_memory.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_pipeline_register.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_pipeline_writeback.v"] \
- [file normalize "$::env(SCARV_CPU)/rtl/core/frv_rngif.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_asi.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_bitwise.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_core.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_core_fetch_buffer.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_counters.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_csrs.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_gf256_aff.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_gf256_mul.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_gprs.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_interrupts.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_leak.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_lfsr32.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_lsu.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_alu.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_arith.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_barith.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_bitwise.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_faff.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_fmul.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_shfrot.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_shuffle.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_decode.vh"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_decode.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_execute.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_fetch.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_memory.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_register.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_writeback.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_rngif.v"] \
+ [file normalize "$::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_trng.v"] \
  [file normalize "$::env(SOC_HOME)/rtl/ic/ic_addr_decode.v"] \
  [file normalize "$::env(SOC_HOME)/rtl/ic/ic_cpu_bus_axi_bridge.v"] \
  [file normalize "$::env(SOC_HOME)/rtl/ic/ic_cpu_bus_bram_bridge.v"] \
@@ -329,106 +341,109 @@ set obj [get_filesets utils_1]
 
 # Adding sources referenced in BDs, if not already added
 if { [get_files b_bop.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(XCRYPTO_RTL)/b_bop/b_bop.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto/rtl/b_bop/b_bop.v
 }
 if { [get_files b_lut.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(XCRYPTO_RTL)/b_lut/b_lut.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto/rtl/b_lut/b_lut.v
 }
 if { [get_files frv_common.vh] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_common.vh
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_common.vh
 }
 if { [get_files frv_alu.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_alu.v
-}
-if { [get_files frv_masked_alu.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_masked_alu.v
-}
-if { [get_files frv_masked_arith.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_masked_arith.v
-}
-if { [get_files frv_masked_barith.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_masked_barith.v
-}
-if { [get_files frv_masked_bitwise.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_masked_bitwise.v
-}
-if { [get_files frv_masked_faff.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_masked_faff.v
-}
-if { [get_files frv_masked_fmul.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_masked_fmul.v
-}
-if { [get_files frv_masked_shfrot.v] == "" } {
-  import_files -quiet -fileset sources_1 /home/work/scarv/scarv-soc-masking-ise/extern/scarv-cpu/rtl/core/frv_masked_shfrot.v
-}
-if { [get_files frv_masked_shuffle.v] == "" } {
-  import_files -quiet -fileset sources_1 /home/work/scarv/scarv-soc-masking-ise/extern/scarv-cpu/rtl/core/frv_masked_shuffle.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_alu.v
 }
 if { [get_files frv_asi.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_asi.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_asi.v
 }
 if { [get_files frv_bitwise.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_bitwise.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_bitwise.v
 }
 if { [get_files frv_core.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_core.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_core.v
 }
 if { [get_files frv_core_fetch_buffer.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_core_fetch_buffer.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_core_fetch_buffer.v
 }
 if { [get_files frv_counters.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_counters.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_counters.v
 }
 if { [get_files frv_csrs.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_csrs.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_csrs.v
 }
 if { [get_files frv_gf256_aff.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_gf256_aff.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_gf256_aff.v
 }
 if { [get_files frv_gf256_mul.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_gf256_mul.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_gf256_mul.v
 }
 if { [get_files frv_gprs.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_gprs.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_gprs.v
 }
 if { [get_files frv_interrupts.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_interrupts.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_interrupts.v
 }
 if { [get_files frv_leak.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_leak.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_leak.v
 }
 if { [get_files frv_lfsr32.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_lfsr32.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_lfsr32.v
 }
 if { [get_files frv_lsu.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_lsu.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_lsu.v
+}
+if { [get_files frv_masked_alu.v] == "" } {
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_alu.v
+}
+if { [get_files frv_masked_arith.v] == "" } {
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_arith.v
+}
+if { [get_files frv_masked_barith.v] == "" } {
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_barith.v
+}
+if { [get_files frv_masked_bitwise.v] == "" } {
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_bitwise.v
+}
+if { [get_files frv_masked_faff.v] == "" } {
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_faff.v
+}
+if { [get_files frv_masked_fmul.v] == "" } {
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_fmul.v
+}
+if { [get_files frv_masked_shfrot.v] == "" } {
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_shfrot.v
+}
+if { [get_files frv_masked_shuffle.v] == "" } {
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_masked_shuffle.v
 }
 if { [get_files frv_pipeline.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_pipeline.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline.v
 }
 if { [get_files frv_pipeline_decode.vh] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_pipeline_decode.vh
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_decode.vh
 }
 if { [get_files frv_pipeline_decode.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_pipeline_decode.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_decode.v
 }
 if { [get_files frv_pipeline_execute.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_pipeline_execute.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_execute.v
 }
 if { [get_files frv_pipeline_fetch.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_pipeline_fetch.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_fetch.v
 }
 if { [get_files frv_pipeline_memory.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_pipeline_memory.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_memory.v
 }
 if { [get_files frv_pipeline_register.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_pipeline_register.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_register.v
 }
 if { [get_files frv_pipeline_writeback.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_pipeline_writeback.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_pipeline_writeback.v
 }
 if { [get_files frv_rngif.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(SCARV_CPU)/rtl/core/frv_rngif.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_rngif.v
+}
+if { [get_files frv_trng.v] == "" } {
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/rtl/core/frv_trng.v
 }
 if { [get_files ic_addr_decode.v] == "" } {
   import_files -quiet -fileset sources_1 $::env(SOC_HOME)/rtl/ic/ic_addr_decode.v
@@ -449,10 +464,10 @@ if { [get_files ic_top.v] == "" } {
   import_files -quiet -fileset sources_1 $::env(SOC_HOME)/rtl/ic/ic_top.v
 }
 if { [get_files p_addsub.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(XCRYPTO_RTL)/p_addsub/p_addsub.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto/rtl/p_addsub/p_addsub.v
 }
 if { [get_files p_shfrot.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(XCRYPTO_RTL)/p_shfrot/p_shfrot.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto/rtl/p_shfrot/p_shfrot.v
 }
 if { [get_files scarv_rng_lfsr.v] == "" } {
   import_files -quiet -fileset sources_1 $::env(SOC_HOME)/rtl/rng/scarv_rng_lfsr.v
@@ -464,37 +479,37 @@ if { [get_files scarv_soc_bram_dual_synth_xilinx_xc7k.v] == "" } {
   import_files -quiet -fileset sources_1 $::env(SOC_HOME)/rtl/mem/scarv_soc_bram_dual_synth_xilinx_xc7k.v
 }
 if { [get_files xc_aesmix.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(XCRYPTO_RTL)/xc_aesmix/xc_aesmix.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto/rtl/xc_aesmix/xc_aesmix.v
 }
 if { [get_files xc_aessub.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(XCRYPTO_RTL)/xc_aessub/xc_aessub.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto/rtl/xc_aessub/xc_aessub.v
 }
 if { [get_files xc_aessub_sbox.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(XCRYPTO_RTL)/xc_aessub/xc_aessub_sbox.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto/rtl/xc_aessub/xc_aessub_sbox.v
 }
 if { [get_files xc_malu.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(XCRYPTO_RTL)/xc_malu/xc_malu.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto/rtl/xc_malu/xc_malu.v
 }
 if { [get_files xc_malu_divrem.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(XCRYPTO_RTL)/xc_malu/xc_malu_divrem.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto/rtl/xc_malu/xc_malu_divrem.v
 }
 if { [get_files xc_malu_long.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(XCRYPTO_RTL)/xc_malu/xc_malu_long.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto/rtl/xc_malu/xc_malu_long.v
 }
 if { [get_files xc_malu_mul.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(XCRYPTO_RTL)/xc_malu/xc_malu_mul.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto/rtl/xc_malu/xc_malu_mul.v
 }
 if { [get_files xc_malu_muldivrem.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(XCRYPTO_RTL)/xc_malu/xc_malu_muldivrem.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto/rtl/xc_malu/xc_malu_muldivrem.v
 }
 if { [get_files xc_malu_pmul.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(XCRYPTO_RTL)/xc_malu/xc_malu_pmul.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto/rtl/xc_malu/xc_malu_pmul.v
 }
 if { [get_files xc_sha256.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(XCRYPTO_RTL)/xc_sha256/xc_sha256.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto/rtl/xc_sha256/xc_sha256.v
 }
 if { [get_files xc_sha3.v] == "" } {
-  import_files -quiet -fileset sources_1 $::env(XCRYPTO_RTL)/xc_sha3/xc_sha3.v
+  import_files -quiet -fileset sources_1 $::env(SOC_HOME)/extern/scarv-cpu/external/xcrypto/rtl/xc_sha3/xc_sha3.v
 }
 if { [get_files scarv_soc.v] == "" } {
   import_files -quiet -fileset sources_1 $::env(SOC_HOME)/rtl/soc/scarv_soc.v
