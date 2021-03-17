@@ -17,7 +17,7 @@ endef
 
 # 1. leakage binary file
 define map_lkg_dir
-$(LKG_WORK)/$(call map_lkg_tgt,${1})
+$(LKG_WORK)/smax-$(SME_SMAX)/$(call map_lkg_tgt,${1})
 endef
 
 # 1. leakage binary file
@@ -62,7 +62,7 @@ lkg-capture-$(call map_lkg_tgt,${1}): $(call map_lkg_traces,${1})
 
 lkg-analysis-$(call map_lkg_tgt,${1}): $(call map_lkg_traces,${1})
 	$(TT_ANALYSE) \
-        --avg --abs  \
+        --avg --abs --high-pass 1000000\
         --graph-ttest $(call map_lkg_ttest_graph,${1}) \
         $(call map_lkg_fixed,${1}) \
         $(call map_lkg_traces,${1})

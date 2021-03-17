@@ -28,54 +28,61 @@
 #
 # 3. The following remote source files that were added to the original project:-
 #
-#    "$SCARV_SOC/rtl/mem/scarv_soc_bram_dual_synth_xilinx_xc7k.v"
-#    "$SCARV_SOC/rtl/mem/scarv_soc_bram_single_synth_xilinx_xc7k.v"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/frv_common.svh"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/frv_alu.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/frv_core.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/frv_core_fetch_buffer.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/frv_csrs.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/frv_gprs.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/frv_interrupts.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/frv_lsu.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/frv_mdu.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/frv_pipeline.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/frv_pipeline_decode.svh"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/frv_pipeline_decode.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/frv_pipeline_execute.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/frv_pipeline_fetch.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/frv_pipeline_memory.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/frv_pipeline_register.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/frv_pipeline_writeback.sv"
-#    "$SCARV_SOC/rtl/gpio/gpio_top.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/riscv_crypto_fu.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/riscv_crypto_fu_lut4.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/riscv_crypto_fu_saes32.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/riscv_crypto_fu_saes32_ssm4.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/riscv_crypto_fu_sboxes.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/riscv_crypto_fu_ssha256.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/riscv_crypto_fu_ssha512.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/riscv_crypto_fu_ssm3.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/riscv_crypto_fu_ssm4.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/ccx/scarv_ccx_ic.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/ccx/scarv_ccx_ic_arbiter.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/ccx/scarv_ccx_ic_router.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/ccx/scarv_ccx_ic_stub.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/ccx/scarv_ccx_memif.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/ccx/scarv_ccx_mmio.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/ccx/scarv_ccx_top.sv"
-#    "$SCARV_SOC/rtl/soc/scarv_soc.sv"
-#    "$SCARV_SOC/rtl/soc/scarv_soc_periph_top.sv"
-#    "$SCARV_SOC/rtl/soc/scarv_soc_reset.sv"
-#    "$SCARV_SOC/rtl/uart/uart_fifo.sv"
-#    "$SCARV_SOC/rtl/uart/uart_rx.sv"
-#    "$SCARV_SOC/rtl/uart/uart_top.sv"
-#    "$SCARV_SOC/rtl/uart/uart_tx.sv"
-#    "$SCARV_SOC/rtl/xilinx/scarv_soc_verilog.v"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/frv_counters.sv"
-#    "$SCARV_SOC/extern/scarv-cpu/rtl/core/riscv_crypto_fu_aes_mix_columns.sv"
-#    "$SCARV_SOC/flow/xilinx/constraints-xc7k.xdc"
-#    "$SCARV_SOC/verif/xilinx/tb_top.v"
+#    "/home/work/scarv/scarv-soc-sme/rtl/mem/scarv_soc_bram_dual_synth_xilinx_xc7k.v"
+#    "/home/work/scarv/scarv-soc-sme/rtl/mem/scarv_soc_bram_single_synth_xilinx_xc7k.v"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/peripherals/entropy_source_lfsr.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/frv_common.svh"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/frv_alu.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/frv_core.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/frv_core_fetch_buffer.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/frv_csrs.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/frv_gprs.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/frv_interrupts.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/frv_lsu.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/frv_mdu.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/sme/sme_pkg.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/frv_pipeline.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/frv_pipeline_decode.svh"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/frv_pipeline_decode.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/frv_pipeline_execute.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/frv_pipeline_fetch.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/frv_pipeline_memory.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/frv_pipeline_register.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/frv_pipeline_writeback.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/riscv_crypto_fu.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/riscv_crypto_fu_lut4.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/riscv_crypto_fu_saes32.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/riscv_crypto_fu_saes32_ssm4.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/riscv_crypto_fu_sboxes.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/riscv_crypto_fu_ssha256.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/riscv_crypto_fu_ssha512.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/riscv_crypto_fu_ssm3.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/riscv_crypto_fu_ssm4.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/ccx/scarv_ccx_ic.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/ccx/scarv_ccx_ic_arbiter.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/ccx/scarv_ccx_ic_router.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/ccx/scarv_ccx_ic_stub.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/ccx/scarv_ccx_memif.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/ccx/scarv_ccx_mmio.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/ccx/scarv_ccx_top.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/sme/sme_alu.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/sme/sme_crypto.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/sme/sme_dom_and.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/sme/sme_keccak.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/sme/sme_ks_adder.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/sme/sme_regfile.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/sme/sme_rng.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/sme/sme_sboxes.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/sme/sme_state.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/sme/sme_trng.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/ccx/scarv_ccx_top_v.v"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/wrapper/sram_axi_adapter.v"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/sme/sme_lfsr32.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/frv_counters.sv"
+#    "/home/work/scarv/scarv-soc-sme/extern/scarv-cpu/rtl/core/riscv_crypto_fu_aes_mix_columns.sv"
+#    "/home/work/scarv/scarv-soc-sme/flow/xilinx/constraints-xc7k.xdc"
+#    "/home/work/scarv/scarv-soc-sme/verif/xilinx/tb_top.v"
+#    "/home/work/scarv/scarv-soc-sme/flow/xilinx/tb_top_behav.wcfg"
 #
 #*****************************************************************************************
 
@@ -154,6 +161,7 @@ set proj_dir [get_property directory [current_project]]
 
 # Set project properties
 set obj [current_project]
+set_property -name "board_part_repo_paths" -value "[file normalize "$origin_dir/../home/work/.Xilinx/Vivado/2019.2/xhub/board_store"]" -objects $obj
 set_property -name "default_lib" -value "xil_defaultlib" -objects $obj
 set_property -name "enable_vhdl_2008" -value "1" -objects $obj
 set_property -name "ip_cache_permissions" -value "read write" -objects $obj
@@ -163,14 +171,14 @@ set_property -name "part" -value "xc7k160tfbg676-3" -objects $obj
 set_property -name "sim.central_dir" -value "$proj_dir/${_xil_proj_name_}.ip_user_files" -objects $obj
 set_property -name "sim.ip.auto_export_scripts" -value "1" -objects $obj
 set_property -name "simulator_language" -value "Mixed" -objects $obj
-set_property -name "webtalk.activehdl_export_sim" -value "14" -objects $obj
-set_property -name "webtalk.ies_export_sim" -value "14" -objects $obj
-set_property -name "webtalk.modelsim_export_sim" -value "14" -objects $obj
-set_property -name "webtalk.questa_export_sim" -value "14" -objects $obj
-set_property -name "webtalk.riviera_export_sim" -value "14" -objects $obj
-set_property -name "webtalk.vcs_export_sim" -value "14" -objects $obj
-set_property -name "webtalk.xsim_export_sim" -value "14" -objects $obj
-set_property -name "webtalk.xsim_launch_sim" -value "72" -objects $obj
+set_property -name "webtalk.activehdl_export_sim" -value "13" -objects $obj
+set_property -name "webtalk.ies_export_sim" -value "13" -objects $obj
+set_property -name "webtalk.modelsim_export_sim" -value "13" -objects $obj
+set_property -name "webtalk.questa_export_sim" -value "13" -objects $obj
+set_property -name "webtalk.riviera_export_sim" -value "13" -objects $obj
+set_property -name "webtalk.vcs_export_sim" -value "13" -objects $obj
+set_property -name "webtalk.xsim_export_sim" -value "13" -objects $obj
+set_property -name "webtalk.xsim_launch_sim" -value "69" -objects $obj
 set_property -name "xpm_libraries" -value "XPM_CDC XPM_MEMORY" -objects $obj
 
 # Create 'sources_1' fileset (if not found)
@@ -193,6 +201,7 @@ set files [list \
  [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/core/frv_interrupts.sv"] \
  [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/core/frv_lsu.sv"] \
  [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/core/frv_mdu.sv"] \
+ [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_pkg.sv"] \
  [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/core/frv_pipeline.sv"] \
  [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/core/frv_pipeline_decode.svh"] \
  [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/core/frv_pipeline_decode.sv"] \
@@ -201,7 +210,6 @@ set files [list \
  [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/core/frv_pipeline_memory.sv"] \
  [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/core/frv_pipeline_register.sv"] \
  [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/core/frv_pipeline_writeback.sv"] \
- [file normalize "$::env(SCARV_SOC)/rtl/gpio/gpio_top.sv"] \
  [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/core/riscv_crypto_fu.sv"] \
  [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/core/riscv_crypto_fu_lut4.sv"] \
  [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/core/riscv_crypto_fu_saes32.sv"] \
@@ -218,14 +226,19 @@ set files [list \
  [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/ccx/scarv_ccx_memif.sv"] \
  [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/ccx/scarv_ccx_mmio.sv"] \
  [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/ccx/scarv_ccx_top.sv"] \
- [file normalize "$::env(SCARV_SOC)/rtl/soc/scarv_soc.sv"] \
- [file normalize "$::env(SCARV_SOC)/rtl/soc/scarv_soc_periph_top.sv"] \
- [file normalize "$::env(SCARV_SOC)/rtl/soc/scarv_soc_reset.sv"] \
- [file normalize "$::env(SCARV_SOC)/rtl/uart/uart_fifo.sv"] \
- [file normalize "$::env(SCARV_SOC)/rtl/uart/uart_rx.sv"] \
- [file normalize "$::env(SCARV_SOC)/rtl/uart/uart_top.sv"] \
- [file normalize "$::env(SCARV_SOC)/rtl/uart/uart_tx.sv"] \
- [file normalize "$::env(SCARV_SOC)/rtl/xilinx/scarv_soc_verilog.v"] \
+ [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_alu.sv"] \
+ [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_crypto.sv"] \
+ [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_dom_and.sv"] \
+ [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_keccak.sv"] \
+ [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_ks_adder.sv"] \
+ [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_regfile.sv"] \
+ [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_rng.sv"] \
+ [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_sboxes.sv"] \
+ [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_state.sv"] \
+ [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_trng.sv"] \
+ [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/ccx/scarv_ccx_top_v.v"] \
+ [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/wrapper/sram_axi_adapter.v"] \
+ [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_lfsr32.sv"] \
  [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/core/frv_counters.sv"] \
  [file normalize "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/core/riscv_crypto_fu_aes_mix_columns.sv"] \
 ]
@@ -233,7 +246,7 @@ add_files -norecurse -fileset $obj $files
 
 # Import local files from the original project
 set files [list \
- [file normalize "$::env(SCARV_SOC)/rtl/xilinx/sys_top_wrapper.v" ]\
+ [file normalize "$::env(SCARV_SOC)/work/vivado/scarv-soc-sme/scarv-soc-sme.srcs/sources_1/bd/sys_top/hdl/sys_top_wrapper.v" ]\
 ]
 set imported_files [import_files -fileset sources_1 $files]
 
@@ -288,6 +301,11 @@ set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
+set file "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_pkg.sv"
+set file [file normalize $file]
+set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
+
 set file "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/core/frv_pipeline.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
@@ -324,11 +342,6 @@ set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
 set file "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/core/frv_pipeline_writeback.sv"
-set file [file normalize $file]
-set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
-set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
-
-set file "$::env(SCARV_SOC)/rtl/gpio/gpio_top.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
@@ -413,37 +426,57 @@ set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
-set file "$::env(SCARV_SOC)/rtl/soc/scarv_soc.sv"
+set file "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_alu.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
-set file "$::env(SCARV_SOC)/rtl/soc/scarv_soc_periph_top.sv"
+set file "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_crypto.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
-set file "$::env(SCARV_SOC)/rtl/soc/scarv_soc_reset.sv"
+set file "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_dom_and.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
-set file "$::env(SCARV_SOC)/rtl/uart/uart_fifo.sv"
+set file "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_keccak.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
-set file "$::env(SCARV_SOC)/rtl/uart/uart_rx.sv"
+set file "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_ks_adder.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
-set file "$::env(SCARV_SOC)/rtl/uart/uart_top.sv"
+set file "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_regfile.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 
-set file "$::env(SCARV_SOC)/rtl/uart/uart_tx.sv"
+set file "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_rng.sv"
+set file [file normalize $file]
+set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
+
+set file "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_sboxes.sv"
+set file [file normalize $file]
+set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
+
+set file "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_state.sv"
+set file [file normalize $file]
+set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
+
+set file "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_trng.sv"
+set file [file normalize $file]
+set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
+set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
+
+set file "$::env(SCARV_SOC)/extern/scarv-cpu/rtl/sme/sme_lfsr32.sv"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
@@ -466,24 +499,24 @@ set_property -name "file_type" -value "SystemVerilog" -objects $file_obj
 set obj [get_filesets sources_1]
 set_property -name "top" -value "sys_top_wrapper" -objects $obj
 
-# Create 'constrs_1' fileset (if not found)
-if {[string equal [get_filesets -quiet constrs_1] ""]} {
-  create_fileset -constrset constrs_1
+# Create 'constr_1' fileset (if not found)
+if {[string equal [get_filesets -quiet constr_1] ""]} {
+  create_fileset -constrset constr_1
 }
 
-# Set 'constrs_1' fileset object
-set obj [get_filesets constrs_1]
+# Set 'constr_1' fileset object
+set obj [get_filesets constr_1]
 
 # Add/Import constrs file and set constrs file properties
 set file "[file normalize "$::env(SCARV_SOC)/flow/xilinx/constraints-xc7k.xdc"]"
 set file_added [add_files -norecurse -fileset $obj [list $file]]
 set file "$::env(SCARV_SOC)/flow/xilinx/constraints-xc7k.xdc"
 set file [file normalize $file]
-set file_obj [get_files -of_objects [get_filesets constrs_1] [list "*$file"]]
+set file_obj [get_files -of_objects [get_filesets constr_1] [list "*$file"]]
 set_property -name "file_type" -value "XDC" -objects $file_obj
 
-# Set 'constrs_1' fileset properties
-set obj [get_filesets constrs_1]
+# Set 'constr_1' fileset properties
+set obj [get_filesets constr_1]
 set_property -name "target_part" -value "xc7k160tfbg676-3" -objects $obj
 
 # Create 'sim_1' fileset (if not found)
@@ -495,14 +528,9 @@ if {[string equal [get_filesets -quiet sim_1] ""]} {
 set obj [get_filesets sim_1]
 set files [list \
  [file normalize "$::env(SCARV_SOC)/verif/xilinx/tb_top.v"] \
+ [file normalize "$::env(SCARV_SOC)/flow/xilinx/tb_top_behav.wcfg"] \
 ]
 add_files -norecurse -fileset $obj $files
-
-# Import local files from the original project
-set files [list \
- [file normalize "$::env(SCARV_SOC)/flow/xilinx/tb_top_behav.wcfg" ]\
-]
-set imported_files [import_files -fileset sim_1 $files]
 
 # Set 'sim_1' fileset file properties for remote files
 # None
@@ -515,20 +543,17 @@ set obj [get_filesets sim_1]
 set_property -name "top" -value "tb_top" -objects $obj
 set_property -name "top_auto_set" -value "0" -objects $obj
 set_property -name "top_lib" -value "xil_defaultlib" -objects $obj
+set_property -name "xsim.simulate.log_all_signals" -value "1" -objects $obj
 
 # Set 'utils_1' fileset object
-set obj [get_filesets utils_1]
-# Empty (no sources present)
 
-# Set 'utils_1' fileset properties
-set obj [get_filesets utils_1]
 
 
 # Proc to create BD sys_top
 proc cr_bd_sys_top { parentCell } {
 # The design that will be created by this Tcl proc contains the following 
 # module references:
-# scarv_soc_verilog
+# scarv_ccx_top_v, sram_axi_adapter
 
 
 
@@ -546,8 +571,11 @@ proc cr_bd_sys_top { parentCell } {
   set bCheckIPs 1
   if { $bCheckIPs == 1 } {
      set list_check_ips "\ 
+  xilinx.com:ip:axi_gpio:2.0\
+  xilinx.com:ip:axi_uartlite:2.0\
   xilinx.com:ip:clk_wiz:6.0\
   xilinx.com:ip:proc_sys_reset:5.0\
+  xilinx.com:ip:xlconstant:1.1\
   "
 
    set list_ips_missing ""
@@ -573,7 +601,8 @@ proc cr_bd_sys_top { parentCell } {
   set bCheckModules 1
   if { $bCheckModules == 1 } {
      set list_check_mods "\ 
-  scarv_soc_verilog\
+  scarv_ccx_top_v\
+  sram_axi_adapter\
   "
 
    set list_mods_missing ""
@@ -630,6 +659,12 @@ proc cr_bd_sys_top { parentCell } {
    CONFIG.FREQ_HZ {200000000} \
    ] $diff_clk_200mhz
 
+  set gpio [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:gpio_rtl:1.0 gpio ]
+
+  set trigger [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:gpio_rtl:1.0 trigger ]
+
+  set uart [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:uart_rtl:1.0 uart ]
+
 
   # Create ports
   set gpio [ create_bd_port -dir IO -from 8 -to 0 gpio ]
@@ -640,23 +675,55 @@ proc cr_bd_sys_top { parentCell } {
   set uart_rxd [ create_bd_port -dir I uart_rxd ]
   set uart_txd [ create_bd_port -dir O uart_txd ]
 
-  # Create instance: scarv_soc_verilog, and set properties
-  set block_name scarv_soc_verilog
-  set block_cell_name scarv_soc_verilog
-  if { [catch {set scarv_soc_verilog [create_bd_cell -type module -reference $block_name $block_cell_name] } errmsg] } {
+  # Create instance: axi_gpio_0, and set properties
+  set axi_gpio_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 axi_gpio_0 ]
+  set_property -dict [ list \
+   CONFIG.C_ALL_OUTPUTS {1} \
+   CONFIG.C_ALL_OUTPUTS_2 {1} \
+   CONFIG.C_DOUT_DEFAULT_2 {0x00000001} \
+   CONFIG.C_GPIO2_WIDTH {1} \
+   CONFIG.C_GPIO_WIDTH {9} \
+   CONFIG.C_IS_DUAL {1} \
+ ] $axi_gpio_0
+
+  # Create instance: axi_interconnect_0, and set properties
+  set axi_interconnect_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_interconnect:2.1 axi_interconnect_0 ]
+
+  # Create instance: axi_uartlite_0, and set properties
+  set axi_uartlite_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_uartlite:2.0 axi_uartlite_0 ]
+  set_property -dict [ list \
+   CONFIG.C_BAUDRATE {128000} \
+ ] $axi_uartlite_0
+
+  # Create instance: scarv_ccx, and set properties
+  set block_name scarv_ccx_top_v
+  set block_cell_name scarv_ccx
+  if { [catch {set scarv_ccx [create_bd_cell -type module -reference $block_name $block_cell_name] } errmsg] } {
      catch {common::send_msg_id "BD_TCL-105" "ERROR" "Unable to add referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
      return 1
-   } elseif { $scarv_soc_verilog eq "" } {
+   } elseif { $scarv_ccx eq "" } {
      catch {common::send_msg_id "BD_TCL-106" "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
      return 1
    }
     set_property -dict [ list \
-   CONFIG.CCX_RAM_INIT_FILE {} \
-   CONFIG.CCX_ROM_INIT_FILE $::env(SCARV_SOC)/work/fsbl/fsbl-vivado.mem \
-   CONFIG.PERIPH_GPIO_NUM {9} \
-   CONFIG.UART_BIT_RATE {115200} \
- ] $scarv_soc_verilog
+   CONFIG.BRAM_REGFILE {0} \
+   CONFIG.EXT_BASE {0x10000000} \
+   CONFIG.RAM_INIT_FILE {} \
+   CONFIG.ROM_INIT_FILE {/home/work/scarv/scarv-soc-sme/work/fsbl/fsbl-vivado.mem} \
+   CONFIG.SME_SMAX {2} \
+ ] $scarv_ccx
 
+  # Create instance: sram_axi_adapter_0, and set properties
+  set block_name sram_axi_adapter
+  set block_cell_name sram_axi_adapter_0
+  if { [catch {set sram_axi_adapter_0 [create_bd_cell -type module -reference $block_name $block_cell_name] } errmsg] } {
+     catch {common::send_msg_id "BD_TCL-105" "ERROR" "Unable to add referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   } elseif { $sram_axi_adapter_0 eq "" } {
+     catch {common::send_msg_id "BD_TCL-106" "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   }
+  
   # Create instance: sys_clk, and set properties
   set sys_clk [ create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz:6.0 sys_clk ]
   set_property -dict [ list \
@@ -676,20 +743,95 @@ proc cr_bd_sys_top { parentCell } {
   # Create instance: sys_reset, and set properties
   set sys_reset [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 sys_reset ]
 
+  # Create instance: zero, and set properties
+  set zero [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 zero ]
+  set_property -dict [ list \
+   CONFIG.CONST_VAL {0} \
+ ] $zero
+
+  # Create instance: zero_32, and set properties
+  set zero_32 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 zero_32 ]
+  set_property -dict [ list \
+   CONFIG.CONST_VAL {0} \
+   CONFIG.CONST_WIDTH {32} \
+ ] $zero_32
+
   # Create interface connections
-  connect_bd_intf_net -intf_net diff_clock_rtl_0_1 [get_bd_intf_ports diff_clk_200mhz] [get_bd_intf_pins sys_clk/CLK_IN1_D]
+  connect_bd_intf_net -intf_net CLK_IN1_D_0_1 [get_bd_intf_ports diff_clk_200mhz] [get_bd_intf_pins sys_clk/CLK_IN1_D]
+  connect_bd_intf_net -intf_net S00_AXI_1 [get_bd_intf_pins axi_interconnect_0/S00_AXI] [get_bd_intf_pins sram_axi_adapter_0/mem_axi]
+  connect_bd_intf_net -intf_net axi_gpio_0_GPIO [get_bd_intf_ports gpio] [get_bd_intf_pins axi_gpio_0/GPIO]
+  connect_bd_intf_net -intf_net axi_gpio_0_GPIO2 [get_bd_intf_ports trigger] [get_bd_intf_pins axi_gpio_0/GPIO2]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M00_AXI [get_bd_intf_pins axi_interconnect_0/M00_AXI] [get_bd_intf_pins axi_uartlite_0/S_AXI]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M01_AXI [get_bd_intf_pins axi_gpio_0/S_AXI] [get_bd_intf_pins axi_interconnect_0/M01_AXI]
+  connect_bd_intf_net -intf_net axi_uartlite_0_UART [get_bd_intf_ports uart] [get_bd_intf_pins axi_uartlite_0/UART]
 
   # Create port connections
-  connect_bd_net -net Net [get_bd_ports gpio] [get_bd_pins scarv_soc_verilog/gpio]
-  connect_bd_net -net proc_sys_reset_0_mb_reset [get_bd_pins scarv_soc_verilog/sys_reset] [get_bd_pins sys_reset/mb_reset]
-  connect_bd_net -net reset_1 [get_bd_ports reset] [get_bd_pins sys_clk/reset] [get_bd_pins sys_reset/ext_reset_in]
-  connect_bd_net -net scarv_soc_verilog_0_uart_txd [get_bd_ports uart_txd] [get_bd_pins scarv_soc_verilog/uart_txd]
-  connect_bd_net -net sys_clk_clk_50mhz [get_bd_pins scarv_soc_verilog/f_clk] [get_bd_pins sys_clk/clk_50mhz] [get_bd_pins sys_reset/slowest_sync_clk]
-  connect_bd_net -net sys_clk_locked [get_bd_pins scarv_soc_verilog/f_clk_locked] [get_bd_pins sys_clk/locked] [get_bd_pins sys_reset/dcm_locked]
-  connect_bd_net -net uart_rxd_1 [get_bd_ports uart_rxd] [get_bd_pins scarv_soc_verilog/uart_rxd]
+  connect_bd_net -net clk_wiz_0_clk_50mhz [get_bd_pins axi_gpio_0/s_axi_aclk] [get_bd_pins axi_interconnect_0/ACLK] [get_bd_pins axi_interconnect_0/M00_ACLK] [get_bd_pins axi_interconnect_0/M01_ACLK] [get_bd_pins axi_interconnect_0/S00_ACLK] [get_bd_pins axi_uartlite_0/s_axi_aclk] [get_bd_pins scarv_ccx/f_clk] [get_bd_pins sram_axi_adapter_0/aclk] [get_bd_pins sram_axi_adapter_0/g_clk] [get_bd_pins sys_clk/clk_50mhz] [get_bd_pins sys_reset/slowest_sync_clk]
+  connect_bd_net -net ext_reset_in_0_1 [get_bd_ports reset] [get_bd_pins sys_reset/ext_reset_in]
+  connect_bd_net -net proc_sys_reset_0_peripheral_aresetn [get_bd_pins axi_gpio_0/s_axi_aresetn] [get_bd_pins axi_interconnect_0/ARESETN] [get_bd_pins axi_interconnect_0/M00_ARESETN] [get_bd_pins axi_interconnect_0/M01_ARESETN] [get_bd_pins axi_interconnect_0/S00_ARESETN] [get_bd_pins axi_uartlite_0/s_axi_aresetn] [get_bd_pins scarv_ccx/g_resetn] [get_bd_pins sram_axi_adapter_0/aresetn] [get_bd_pins sram_axi_adapter_0/g_resetn] [get_bd_pins sys_reset/peripheral_aresetn]
+  connect_bd_net -net scarv_ccx_if_ext_addr [get_bd_pins scarv_ccx/if_ext_addr] [get_bd_pins sram_axi_adapter_0/mem_addr]
+  connect_bd_net -net scarv_ccx_if_ext_req [get_bd_pins scarv_ccx/if_ext_req] [get_bd_pins sram_axi_adapter_0/mem_req]
+  connect_bd_net -net scarv_ccx_if_ext_strb [get_bd_pins scarv_ccx/if_ext_strb] [get_bd_pins sram_axi_adapter_0/mem_wstrb]
+  connect_bd_net -net scarv_ccx_if_ext_wdata [get_bd_pins scarv_ccx/if_ext_wdata] [get_bd_pins sram_axi_adapter_0/mem_wdata]
+  connect_bd_net -net scarv_ccx_if_ext_wen [get_bd_pins scarv_ccx/if_ext_wen] [get_bd_pins sram_axi_adapter_0/mem_wen]
+  connect_bd_net -net sram_axi_adapter_0_mem_error [get_bd_pins scarv_ccx/if_ext_error] [get_bd_pins sram_axi_adapter_0/mem_error]
+  connect_bd_net -net sram_axi_adapter_0_mem_gnt [get_bd_pins scarv_ccx/if_ext_gnt] [get_bd_pins sram_axi_adapter_0/mem_gnt]
+  connect_bd_net -net sram_axi_adapter_0_mem_rdata [get_bd_pins scarv_ccx/if_ext_rdata] [get_bd_pins sram_axi_adapter_0/mem_rdata]
+  connect_bd_net -net sys_clk_locked [get_bd_pins sys_clk/locked] [get_bd_pins sys_reset/dcm_locked]
+  connect_bd_net -net xlconstant_0_dout [get_bd_pins scarv_ccx/int_ext_cause] [get_bd_pins zero_32/dout]
+  connect_bd_net -net zero_dout [get_bd_pins scarv_ccx/int_ext] [get_bd_pins sram_axi_adapter_0/mem_instr] [get_bd_pins zero/dout]
 
   # Create address segments
+  assign_bd_address -offset 0x10001000 -range 0x00001000 -target_address_space [get_bd_addr_spaces sram_axi_adapter_0/mem_axi] [get_bd_addr_segs axi_gpio_0/S_AXI/Reg] -force
+  assign_bd_address -offset 0x10000000 -range 0x00001000 -target_address_space [get_bd_addr_spaces sram_axi_adapter_0/mem_axi] [get_bd_addr_segs axi_uartlite_0/S_AXI/Reg] -force
 
+  # Perform GUI Layout
+  regenerate_bd_layout -layout_string {
+   "ActiveEmotionalView":"Default View",
+   "Default View_ScaleFactor":"0.870296",
+   "Default View_TopLeft":"372,-67",
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.0.21  2019-05-29 bk=1.5064 VDI=41 GEI=36 GUI=JA:9.0 TLS
+#  -string -flagsOSRD
+preplace port diff_clk_200mhz -pg 1 -lvl 0 -x -90 -y 140 -defaultsOSRD
+preplace port uart -pg 1 -lvl 7 -x 1970 -y 210 -defaultsOSRD
+preplace port gpio -pg 1 -lvl 7 -x 1970 -y 350 -defaultsOSRD
+preplace port trigger -pg 1 -lvl 7 -x 1970 -y 370 -defaultsOSRD
+preplace port reset -pg 1 -lvl 0 -x -90 -y 80 -defaultsOSRD
+preplace inst sys_clk -pg 1 -lvl 1 -x 50 -y 150 -defaultsOSRD
+preplace inst sys_reset -pg 1 -lvl 2 -x 360 -y 100 -defaultsOSRD
+preplace inst zero -pg 1 -lvl 2 -x 360 -y 260 -defaultsOSRD
+preplace inst axi_interconnect_0 -pg 1 -lvl 5 -x 1540 -y 330 -defaultsOSRD
+preplace inst axi_gpio_0 -pg 1 -lvl 6 -x 1830 -y 360 -defaultsOSRD
+preplace inst axi_uartlite_0 -pg 1 -lvl 6 -x 1830 -y 220 -defaultsOSRD
+preplace inst zero_32 -pg 1 -lvl 2 -x 360 -y 360 -defaultsOSRD
+preplace inst sram_axi_adapter_0 -pg 1 -lvl 4 -x 1180 -y 280 -defaultsOSRD
+preplace inst scarv_ccx -pg 1 -lvl 3 -x 770 -y 280 -defaultsOSRD
+preplace netloc clk_wiz_0_clk_50mhz 1 1 5 170 420 550 420 970 120 1390 190 1690
+preplace netloc ext_reset_in_0_1 1 0 2 NJ 80 NJ
+preplace netloc proc_sys_reset_0_peripheral_aresetn 1 2 4 560 140 990 130 1380 180 1700
+preplace netloc sys_clk_locked 1 1 1 180 140n
+preplace netloc sram_axi_adapter_0_mem_gnt 1 2 3 590 100 N 100 1350
+preplace netloc sram_axi_adapter_0_mem_error 1 2 3 570 90 NJ 90 1370
+preplace netloc sram_axi_adapter_0_mem_rdata 1 2 3 580 110 NJ 110 1360
+preplace netloc scarv_ccx_if_ext_req 1 3 1 990 270n
+preplace netloc scarv_ccx_if_ext_wen 1 3 1 980 290n
+preplace netloc scarv_ccx_if_ext_strb 1 3 1 960 310n
+preplace netloc scarv_ccx_if_ext_wdata 1 3 1 950 330n
+preplace netloc scarv_ccx_if_ext_addr 1 3 1 1010 330n
+preplace netloc zero_dout 1 2 2 540 410 1000
+preplace netloc xlconstant_0_dout 1 2 1 560 280n
+preplace netloc axi_interconnect_0_M01_AXI 1 5 1 N 340
+preplace netloc axi_uartlite_0_UART 1 6 1 NJ 210
+preplace netloc CLK_IN1_D_0_1 1 0 1 NJ 140
+preplace netloc S00_AXI_1 1 4 1 N 250
+preplace netloc axi_gpio_0_GPIO2 1 6 1 N 370
+preplace netloc axi_interconnect_0_M00_AXI 1 5 1 1710 200n
+preplace netloc axi_gpio_0_GPIO 1 6 1 NJ 350
+levelinfo -pg 1 -90 50 360 770 1180 1540 1830 1970
+pagesize -pg 1 -db -bbox -sgen -260 0 2070 860
+"
+}
 
   # Restore current instance
   current_bd_instance $oldCurInst
@@ -703,250 +845,251 @@ cr_bd_sys_top ""
 set_property REGISTERED_WITH_MANAGER "1" [get_files sys_top.bd ] 
 set_property SYNTH_CHECKPOINT_MODE "Hierarchical" [get_files sys_top.bd ] 
 
-# Create 'synth_1' run (if not found)
-if {[string equal [get_runs -quiet synth_1] ""]} {
-    create_run -name synth_1 -part xc7k160tfbg676-3 -flow {Vivado Synthesis 2019} -strategy "Vivado Synthesis Defaults" -report_strategy {No Reports} -constrset constrs_1
+# Create 'synth' run (if not found)
+if {[string equal [get_runs -quiet synth] ""]} {
+    create_run -name synth -part xc7k160tfbg676-3 -flow {Vivado Synthesis 2019} -strategy "Vivado Synthesis Defaults" -report_strategy {No Reports} -constrset constr_1
 } else {
-  set_property strategy "Vivado Synthesis Defaults" [get_runs synth_1]
-  set_property flow "Vivado Synthesis 2019" [get_runs synth_1]
+  set_property strategy "Vivado Synthesis Defaults" [get_runs synth]
+  set_property flow "Vivado Synthesis 2019" [get_runs synth]
 }
-set obj [get_runs synth_1]
+set obj [get_runs synth]
 set_property set_report_strategy_name 1 $obj
 set_property report_strategy {Vivado Synthesis Default Reports} $obj
 set_property set_report_strategy_name 0 $obj
-# Create 'synth_1_synth_report_utilization_0' report (if not found)
-if { [ string equal [get_report_configs -of_objects [get_runs synth_1] synth_1_synth_report_utilization_0] "" ] } {
-  create_report_config -report_name synth_1_synth_report_utilization_0 -report_type report_utilization:1.0 -steps synth_design -runs synth_1
+# Create 'synth_synth_report_utilization_0' report (if not found)
+if { [ string equal [get_report_configs -of_objects [get_runs synth] synth_synth_report_utilization_0] "" ] } {
+  create_report_config -report_name synth_synth_report_utilization_0 -report_type report_utilization:1.0 -steps synth_design -runs synth
 }
-set obj [get_report_configs -of_objects [get_runs synth_1] synth_1_synth_report_utilization_0]
+set obj [get_report_configs -of_objects [get_runs synth] synth_synth_report_utilization_0]
 if { $obj != "" } {
 
 }
-set obj [get_runs synth_1]
-set_property -name "needs_refresh" -value "1" -objects $obj
+set obj [get_runs synth]
+set_property -name "constrset" -value "constr_1" -objects $obj
 set_property -name "part" -value "xc7k160tfbg676-3" -objects $obj
 set_property -name "strategy" -value "Vivado Synthesis Defaults" -objects $obj
 
 # set the current synth run
-current_run -synthesis [get_runs synth_1]
+current_run -synthesis [get_runs synth]
 
-# Create 'impl_1' run (if not found)
-if {[string equal [get_runs -quiet impl_1] ""]} {
-    create_run -name impl_1 -part xc7k160tfbg676-3 -flow {Vivado Implementation 2019} -strategy "Vivado Implementation Defaults" -report_strategy {No Reports} -constrset constrs_1 -parent_run synth_1
+# Create 'impl' run (if not found)
+if {[string equal [get_runs -quiet impl] ""]} {
+    create_run -name impl -part xc7k160tfbg676-3 -flow {Vivado Implementation 2019} -strategy "Vivado Implementation Defaults" -report_strategy {No Reports} -constrset constr_1 -parent_run synth
 } else {
-  set_property strategy "Vivado Implementation Defaults" [get_runs impl_1]
-  set_property flow "Vivado Implementation 2019" [get_runs impl_1]
+  set_property strategy "Vivado Implementation Defaults" [get_runs impl]
+  set_property flow "Vivado Implementation 2019" [get_runs impl]
 }
-set obj [get_runs impl_1]
+set obj [get_runs impl]
 set_property set_report_strategy_name 1 $obj
 set_property report_strategy {Vivado Implementation Default Reports} $obj
 set_property set_report_strategy_name 0 $obj
-# Create 'impl_1_init_report_timing_summary_0' report (if not found)
-if { [ string equal [get_report_configs -of_objects [get_runs impl_1] impl_1_init_report_timing_summary_0] "" ] } {
-  create_report_config -report_name impl_1_init_report_timing_summary_0 -report_type report_timing_summary:1.0 -steps init_design -runs impl_1
+# Create 'impl_init_report_timing_summary_0' report (if not found)
+if { [ string equal [get_report_configs -of_objects [get_runs impl] impl_init_report_timing_summary_0] "" ] } {
+  create_report_config -report_name impl_init_report_timing_summary_0 -report_type report_timing_summary:1.0 -steps init_design -runs impl
 }
-set obj [get_report_configs -of_objects [get_runs impl_1] impl_1_init_report_timing_summary_0]
+set obj [get_report_configs -of_objects [get_runs impl] impl_init_report_timing_summary_0]
 if { $obj != "" } {
 set_property -name "is_enabled" -value "0" -objects $obj
 set_property -name "options.max_paths" -value "10" -objects $obj
 
 }
-# Create 'impl_1_opt_report_drc_0' report (if not found)
-if { [ string equal [get_report_configs -of_objects [get_runs impl_1] impl_1_opt_report_drc_0] "" ] } {
-  create_report_config -report_name impl_1_opt_report_drc_0 -report_type report_drc:1.0 -steps opt_design -runs impl_1
+# Create 'impl_opt_report_drc_0' report (if not found)
+if { [ string equal [get_report_configs -of_objects [get_runs impl] impl_opt_report_drc_0] "" ] } {
+  create_report_config -report_name impl_opt_report_drc_0 -report_type report_drc:1.0 -steps opt_design -runs impl
 }
-set obj [get_report_configs -of_objects [get_runs impl_1] impl_1_opt_report_drc_0]
+set obj [get_report_configs -of_objects [get_runs impl] impl_opt_report_drc_0]
 if { $obj != "" } {
 
 }
-# Create 'impl_1_opt_report_timing_summary_0' report (if not found)
-if { [ string equal [get_report_configs -of_objects [get_runs impl_1] impl_1_opt_report_timing_summary_0] "" ] } {
-  create_report_config -report_name impl_1_opt_report_timing_summary_0 -report_type report_timing_summary:1.0 -steps opt_design -runs impl_1
+# Create 'impl_opt_report_timing_summary_0' report (if not found)
+if { [ string equal [get_report_configs -of_objects [get_runs impl] impl_opt_report_timing_summary_0] "" ] } {
+  create_report_config -report_name impl_opt_report_timing_summary_0 -report_type report_timing_summary:1.0 -steps opt_design -runs impl
 }
-set obj [get_report_configs -of_objects [get_runs impl_1] impl_1_opt_report_timing_summary_0]
-if { $obj != "" } {
-set_property -name "is_enabled" -value "0" -objects $obj
-set_property -name "options.max_paths" -value "10" -objects $obj
-
-}
-# Create 'impl_1_power_opt_report_timing_summary_0' report (if not found)
-if { [ string equal [get_report_configs -of_objects [get_runs impl_1] impl_1_power_opt_report_timing_summary_0] "" ] } {
-  create_report_config -report_name impl_1_power_opt_report_timing_summary_0 -report_type report_timing_summary:1.0 -steps power_opt_design -runs impl_1
-}
-set obj [get_report_configs -of_objects [get_runs impl_1] impl_1_power_opt_report_timing_summary_0]
+set obj [get_report_configs -of_objects [get_runs impl] impl_opt_report_timing_summary_0]
 if { $obj != "" } {
 set_property -name "is_enabled" -value "0" -objects $obj
 set_property -name "options.max_paths" -value "10" -objects $obj
 
 }
-# Create 'impl_1_place_report_io_0' report (if not found)
-if { [ string equal [get_report_configs -of_objects [get_runs impl_1] impl_1_place_report_io_0] "" ] } {
-  create_report_config -report_name impl_1_place_report_io_0 -report_type report_io:1.0 -steps place_design -runs impl_1
+# Create 'impl_power_opt_report_timing_summary_0' report (if not found)
+if { [ string equal [get_report_configs -of_objects [get_runs impl] impl_power_opt_report_timing_summary_0] "" ] } {
+  create_report_config -report_name impl_power_opt_report_timing_summary_0 -report_type report_timing_summary:1.0 -steps power_opt_design -runs impl
 }
-set obj [get_report_configs -of_objects [get_runs impl_1] impl_1_place_report_io_0]
+set obj [get_report_configs -of_objects [get_runs impl] impl_power_opt_report_timing_summary_0]
+if { $obj != "" } {
+set_property -name "is_enabled" -value "0" -objects $obj
+set_property -name "options.max_paths" -value "10" -objects $obj
+
+}
+# Create 'impl_place_report_io_0' report (if not found)
+if { [ string equal [get_report_configs -of_objects [get_runs impl] impl_place_report_io_0] "" ] } {
+  create_report_config -report_name impl_place_report_io_0 -report_type report_io:1.0 -steps place_design -runs impl
+}
+set obj [get_report_configs -of_objects [get_runs impl] impl_place_report_io_0]
 if { $obj != "" } {
 
 }
-# Create 'impl_1_place_report_utilization_0' report (if not found)
-if { [ string equal [get_report_configs -of_objects [get_runs impl_1] impl_1_place_report_utilization_0] "" ] } {
-  create_report_config -report_name impl_1_place_report_utilization_0 -report_type report_utilization:1.0 -steps place_design -runs impl_1
+# Create 'impl_place_report_utilization_0' report (if not found)
+if { [ string equal [get_report_configs -of_objects [get_runs impl] impl_place_report_utilization_0] "" ] } {
+  create_report_config -report_name impl_place_report_utilization_0 -report_type report_utilization:1.0 -steps place_design -runs impl
 }
-set obj [get_report_configs -of_objects [get_runs impl_1] impl_1_place_report_utilization_0]
+set obj [get_report_configs -of_objects [get_runs impl] impl_place_report_utilization_0]
 if { $obj != "" } {
 
 }
-# Create 'impl_1_place_report_control_sets_0' report (if not found)
-if { [ string equal [get_report_configs -of_objects [get_runs impl_1] impl_1_place_report_control_sets_0] "" ] } {
-  create_report_config -report_name impl_1_place_report_control_sets_0 -report_type report_control_sets:1.0 -steps place_design -runs impl_1
+# Create 'impl_place_report_control_sets_0' report (if not found)
+if { [ string equal [get_report_configs -of_objects [get_runs impl] impl_place_report_control_sets_0] "" ] } {
+  create_report_config -report_name impl_place_report_control_sets_0 -report_type report_control_sets:1.0 -steps place_design -runs impl
 }
-set obj [get_report_configs -of_objects [get_runs impl_1] impl_1_place_report_control_sets_0]
+set obj [get_report_configs -of_objects [get_runs impl] impl_place_report_control_sets_0]
 if { $obj != "" } {
 set_property -name "options.verbose" -value "1" -objects $obj
 
 }
-# Create 'impl_1_place_report_incremental_reuse_0' report (if not found)
-if { [ string equal [get_report_configs -of_objects [get_runs impl_1] impl_1_place_report_incremental_reuse_0] "" ] } {
-  create_report_config -report_name impl_1_place_report_incremental_reuse_0 -report_type report_incremental_reuse:1.0 -steps place_design -runs impl_1
+# Create 'impl_place_report_incremental_reuse_0' report (if not found)
+if { [ string equal [get_report_configs -of_objects [get_runs impl] impl_place_report_incremental_reuse_0] "" ] } {
+  create_report_config -report_name impl_place_report_incremental_reuse_0 -report_type report_incremental_reuse:1.0 -steps place_design -runs impl
 }
-set obj [get_report_configs -of_objects [get_runs impl_1] impl_1_place_report_incremental_reuse_0]
+set obj [get_report_configs -of_objects [get_runs impl] impl_place_report_incremental_reuse_0]
 if { $obj != "" } {
 set_property -name "is_enabled" -value "0" -objects $obj
 
 }
-# Create 'impl_1_place_report_incremental_reuse_1' report (if not found)
-if { [ string equal [get_report_configs -of_objects [get_runs impl_1] impl_1_place_report_incremental_reuse_1] "" ] } {
-  create_report_config -report_name impl_1_place_report_incremental_reuse_1 -report_type report_incremental_reuse:1.0 -steps place_design -runs impl_1
+# Create 'impl_place_report_incremental_reuse_1' report (if not found)
+if { [ string equal [get_report_configs -of_objects [get_runs impl] impl_place_report_incremental_reuse_1] "" ] } {
+  create_report_config -report_name impl_place_report_incremental_reuse_1 -report_type report_incremental_reuse:1.0 -steps place_design -runs impl
 }
-set obj [get_report_configs -of_objects [get_runs impl_1] impl_1_place_report_incremental_reuse_1]
+set obj [get_report_configs -of_objects [get_runs impl] impl_place_report_incremental_reuse_1]
 if { $obj != "" } {
 set_property -name "is_enabled" -value "0" -objects $obj
 
 }
-# Create 'impl_1_place_report_timing_summary_0' report (if not found)
-if { [ string equal [get_report_configs -of_objects [get_runs impl_1] impl_1_place_report_timing_summary_0] "" ] } {
-  create_report_config -report_name impl_1_place_report_timing_summary_0 -report_type report_timing_summary:1.0 -steps place_design -runs impl_1
+# Create 'impl_place_report_timing_summary_0' report (if not found)
+if { [ string equal [get_report_configs -of_objects [get_runs impl] impl_place_report_timing_summary_0] "" ] } {
+  create_report_config -report_name impl_place_report_timing_summary_0 -report_type report_timing_summary:1.0 -steps place_design -runs impl
 }
-set obj [get_report_configs -of_objects [get_runs impl_1] impl_1_place_report_timing_summary_0]
-if { $obj != "" } {
-set_property -name "is_enabled" -value "0" -objects $obj
-set_property -name "options.max_paths" -value "10" -objects $obj
-
-}
-# Create 'impl_1_post_place_power_opt_report_timing_summary_0' report (if not found)
-if { [ string equal [get_report_configs -of_objects [get_runs impl_1] impl_1_post_place_power_opt_report_timing_summary_0] "" ] } {
-  create_report_config -report_name impl_1_post_place_power_opt_report_timing_summary_0 -report_type report_timing_summary:1.0 -steps post_place_power_opt_design -runs impl_1
-}
-set obj [get_report_configs -of_objects [get_runs impl_1] impl_1_post_place_power_opt_report_timing_summary_0]
+set obj [get_report_configs -of_objects [get_runs impl] impl_place_report_timing_summary_0]
 if { $obj != "" } {
 set_property -name "is_enabled" -value "0" -objects $obj
 set_property -name "options.max_paths" -value "10" -objects $obj
 
 }
-# Create 'impl_1_phys_opt_report_timing_summary_0' report (if not found)
-if { [ string equal [get_report_configs -of_objects [get_runs impl_1] impl_1_phys_opt_report_timing_summary_0] "" ] } {
-  create_report_config -report_name impl_1_phys_opt_report_timing_summary_0 -report_type report_timing_summary:1.0 -steps phys_opt_design -runs impl_1
+# Create 'impl_post_place_power_opt_report_timing_summary_0' report (if not found)
+if { [ string equal [get_report_configs -of_objects [get_runs impl] impl_post_place_power_opt_report_timing_summary_0] "" ] } {
+  create_report_config -report_name impl_post_place_power_opt_report_timing_summary_0 -report_type report_timing_summary:1.0 -steps post_place_power_opt_design -runs impl
 }
-set obj [get_report_configs -of_objects [get_runs impl_1] impl_1_phys_opt_report_timing_summary_0]
+set obj [get_report_configs -of_objects [get_runs impl] impl_post_place_power_opt_report_timing_summary_0]
 if { $obj != "" } {
 set_property -name "is_enabled" -value "0" -objects $obj
 set_property -name "options.max_paths" -value "10" -objects $obj
 
 }
-# Create 'impl_1_route_report_drc_0' report (if not found)
-if { [ string equal [get_report_configs -of_objects [get_runs impl_1] impl_1_route_report_drc_0] "" ] } {
-  create_report_config -report_name impl_1_route_report_drc_0 -report_type report_drc:1.0 -steps route_design -runs impl_1
+# Create 'impl_phys_opt_report_timing_summary_0' report (if not found)
+if { [ string equal [get_report_configs -of_objects [get_runs impl] impl_phys_opt_report_timing_summary_0] "" ] } {
+  create_report_config -report_name impl_phys_opt_report_timing_summary_0 -report_type report_timing_summary:1.0 -steps phys_opt_design -runs impl
 }
-set obj [get_report_configs -of_objects [get_runs impl_1] impl_1_route_report_drc_0]
+set obj [get_report_configs -of_objects [get_runs impl] impl_phys_opt_report_timing_summary_0]
+if { $obj != "" } {
+set_property -name "is_enabled" -value "0" -objects $obj
+set_property -name "options.max_paths" -value "10" -objects $obj
+
+}
+# Create 'impl_route_report_drc_0' report (if not found)
+if { [ string equal [get_report_configs -of_objects [get_runs impl] impl_route_report_drc_0] "" ] } {
+  create_report_config -report_name impl_route_report_drc_0 -report_type report_drc:1.0 -steps route_design -runs impl
+}
+set obj [get_report_configs -of_objects [get_runs impl] impl_route_report_drc_0]
 if { $obj != "" } {
 
 }
-# Create 'impl_1_route_report_methodology_0' report (if not found)
-if { [ string equal [get_report_configs -of_objects [get_runs impl_1] impl_1_route_report_methodology_0] "" ] } {
-  create_report_config -report_name impl_1_route_report_methodology_0 -report_type report_methodology:1.0 -steps route_design -runs impl_1
+# Create 'impl_route_report_methodology_0' report (if not found)
+if { [ string equal [get_report_configs -of_objects [get_runs impl] impl_route_report_methodology_0] "" ] } {
+  create_report_config -report_name impl_route_report_methodology_0 -report_type report_methodology:1.0 -steps route_design -runs impl
 }
-set obj [get_report_configs -of_objects [get_runs impl_1] impl_1_route_report_methodology_0]
+set obj [get_report_configs -of_objects [get_runs impl] impl_route_report_methodology_0]
 if { $obj != "" } {
 
 }
-# Create 'impl_1_route_report_power_0' report (if not found)
-if { [ string equal [get_report_configs -of_objects [get_runs impl_1] impl_1_route_report_power_0] "" ] } {
-  create_report_config -report_name impl_1_route_report_power_0 -report_type report_power:1.0 -steps route_design -runs impl_1
+# Create 'impl_route_report_power_0' report (if not found)
+if { [ string equal [get_report_configs -of_objects [get_runs impl] impl_route_report_power_0] "" ] } {
+  create_report_config -report_name impl_route_report_power_0 -report_type report_power:1.0 -steps route_design -runs impl
 }
-set obj [get_report_configs -of_objects [get_runs impl_1] impl_1_route_report_power_0]
+set obj [get_report_configs -of_objects [get_runs impl] impl_route_report_power_0]
 if { $obj != "" } {
 
 }
-# Create 'impl_1_route_report_route_status_0' report (if not found)
-if { [ string equal [get_report_configs -of_objects [get_runs impl_1] impl_1_route_report_route_status_0] "" ] } {
-  create_report_config -report_name impl_1_route_report_route_status_0 -report_type report_route_status:1.0 -steps route_design -runs impl_1
+# Create 'impl_route_report_route_status_0' report (if not found)
+if { [ string equal [get_report_configs -of_objects [get_runs impl] impl_route_report_route_status_0] "" ] } {
+  create_report_config -report_name impl_route_report_route_status_0 -report_type report_route_status:1.0 -steps route_design -runs impl
 }
-set obj [get_report_configs -of_objects [get_runs impl_1] impl_1_route_report_route_status_0]
+set obj [get_report_configs -of_objects [get_runs impl] impl_route_report_route_status_0]
 if { $obj != "" } {
 
 }
-# Create 'impl_1_route_report_timing_summary_0' report (if not found)
-if { [ string equal [get_report_configs -of_objects [get_runs impl_1] impl_1_route_report_timing_summary_0] "" ] } {
-  create_report_config -report_name impl_1_route_report_timing_summary_0 -report_type report_timing_summary:1.0 -steps route_design -runs impl_1
+# Create 'impl_route_report_timing_summary_0' report (if not found)
+if { [ string equal [get_report_configs -of_objects [get_runs impl] impl_route_report_timing_summary_0] "" ] } {
+  create_report_config -report_name impl_route_report_timing_summary_0 -report_type report_timing_summary:1.0 -steps route_design -runs impl
 }
-set obj [get_report_configs -of_objects [get_runs impl_1] impl_1_route_report_timing_summary_0]
+set obj [get_report_configs -of_objects [get_runs impl] impl_route_report_timing_summary_0]
 if { $obj != "" } {
 set_property -name "options.max_paths" -value "10" -objects $obj
 
 }
-# Create 'impl_1_route_report_incremental_reuse_0' report (if not found)
-if { [ string equal [get_report_configs -of_objects [get_runs impl_1] impl_1_route_report_incremental_reuse_0] "" ] } {
-  create_report_config -report_name impl_1_route_report_incremental_reuse_0 -report_type report_incremental_reuse:1.0 -steps route_design -runs impl_1
+# Create 'impl_route_report_incremental_reuse_0' report (if not found)
+if { [ string equal [get_report_configs -of_objects [get_runs impl] impl_route_report_incremental_reuse_0] "" ] } {
+  create_report_config -report_name impl_route_report_incremental_reuse_0 -report_type report_incremental_reuse:1.0 -steps route_design -runs impl
 }
-set obj [get_report_configs -of_objects [get_runs impl_1] impl_1_route_report_incremental_reuse_0]
+set obj [get_report_configs -of_objects [get_runs impl] impl_route_report_incremental_reuse_0]
 if { $obj != "" } {
 
 }
-# Create 'impl_1_route_report_clock_utilization_0' report (if not found)
-if { [ string equal [get_report_configs -of_objects [get_runs impl_1] impl_1_route_report_clock_utilization_0] "" ] } {
-  create_report_config -report_name impl_1_route_report_clock_utilization_0 -report_type report_clock_utilization:1.0 -steps route_design -runs impl_1
+# Create 'impl_route_report_clock_utilization_0' report (if not found)
+if { [ string equal [get_report_configs -of_objects [get_runs impl] impl_route_report_clock_utilization_0] "" ] } {
+  create_report_config -report_name impl_route_report_clock_utilization_0 -report_type report_clock_utilization:1.0 -steps route_design -runs impl
 }
-set obj [get_report_configs -of_objects [get_runs impl_1] impl_1_route_report_clock_utilization_0]
+set obj [get_report_configs -of_objects [get_runs impl] impl_route_report_clock_utilization_0]
 if { $obj != "" } {
 
 }
-# Create 'impl_1_route_report_bus_skew_0' report (if not found)
-if { [ string equal [get_report_configs -of_objects [get_runs impl_1] impl_1_route_report_bus_skew_0] "" ] } {
-  create_report_config -report_name impl_1_route_report_bus_skew_0 -report_type report_bus_skew:1.1 -steps route_design -runs impl_1
+# Create 'impl_route_report_bus_skew_0' report (if not found)
+if { [ string equal [get_report_configs -of_objects [get_runs impl] impl_route_report_bus_skew_0] "" ] } {
+  create_report_config -report_name impl_route_report_bus_skew_0 -report_type report_bus_skew:1.1 -steps route_design -runs impl
 }
-set obj [get_report_configs -of_objects [get_runs impl_1] impl_1_route_report_bus_skew_0]
+set obj [get_report_configs -of_objects [get_runs impl] impl_route_report_bus_skew_0]
 if { $obj != "" } {
 set_property -name "options.warn_on_violation" -value "1" -objects $obj
 
 }
-# Create 'impl_1_post_route_phys_opt_report_timing_summary_0' report (if not found)
-if { [ string equal [get_report_configs -of_objects [get_runs impl_1] impl_1_post_route_phys_opt_report_timing_summary_0] "" ] } {
-  create_report_config -report_name impl_1_post_route_phys_opt_report_timing_summary_0 -report_type report_timing_summary:1.0 -steps post_route_phys_opt_design -runs impl_1
+# Create 'impl_post_route_phys_opt_report_timing_summary_0' report (if not found)
+if { [ string equal [get_report_configs -of_objects [get_runs impl] impl_post_route_phys_opt_report_timing_summary_0] "" ] } {
+  create_report_config -report_name impl_post_route_phys_opt_report_timing_summary_0 -report_type report_timing_summary:1.0 -steps post_route_phys_opt_design -runs impl
 }
-set obj [get_report_configs -of_objects [get_runs impl_1] impl_1_post_route_phys_opt_report_timing_summary_0]
+set obj [get_report_configs -of_objects [get_runs impl] impl_post_route_phys_opt_report_timing_summary_0]
 if { $obj != "" } {
 set_property -name "options.max_paths" -value "10" -objects $obj
 set_property -name "options.warn_on_violation" -value "1" -objects $obj
 
 }
-# Create 'impl_1_post_route_phys_opt_report_bus_skew_0' report (if not found)
-if { [ string equal [get_report_configs -of_objects [get_runs impl_1] impl_1_post_route_phys_opt_report_bus_skew_0] "" ] } {
-  create_report_config -report_name impl_1_post_route_phys_opt_report_bus_skew_0 -report_type report_bus_skew:1.1 -steps post_route_phys_opt_design -runs impl_1
+# Create 'impl_post_route_phys_opt_report_bus_skew_0' report (if not found)
+if { [ string equal [get_report_configs -of_objects [get_runs impl] impl_post_route_phys_opt_report_bus_skew_0] "" ] } {
+  create_report_config -report_name impl_post_route_phys_opt_report_bus_skew_0 -report_type report_bus_skew:1.1 -steps post_route_phys_opt_design -runs impl
 }
-set obj [get_report_configs -of_objects [get_runs impl_1] impl_1_post_route_phys_opt_report_bus_skew_0]
+set obj [get_report_configs -of_objects [get_runs impl] impl_post_route_phys_opt_report_bus_skew_0]
 if { $obj != "" } {
 set_property -name "options.warn_on_violation" -value "1" -objects $obj
 
 }
-set obj [get_runs impl_1]
-set_property -name "needs_refresh" -value "1" -objects $obj
+set obj [get_runs impl]
+set_property -name "constrset" -value "constr_1" -objects $obj
 set_property -name "part" -value "xc7k160tfbg676-3" -objects $obj
 set_property -name "strategy" -value "Vivado Implementation Defaults" -objects $obj
 set_property -name "steps.phys_opt_design.is_enabled" -value "1" -objects $obj
+set_property -name "steps.post_route_phys_opt_design.is_enabled" -value "1" -objects $obj
 set_property -name "steps.write_bitstream.args.readback_file" -value "0" -objects $obj
 set_property -name "steps.write_bitstream.args.verbose" -value "0" -objects $obj
 
 # set the current impl run
-current_run -implementation [get_runs impl_1]
+current_run -implementation [get_runs impl]
 
 puts "INFO: Project created:${_xil_proj_name_}"
 # Create 'drc_1' gadget (if not found)
@@ -954,35 +1097,35 @@ if {[string equal [get_dashboard_gadgets  [ list "drc_1" ] ] ""]} {
 create_dashboard_gadget -name {drc_1} -type drc
 }
 set obj [get_dashboard_gadgets [ list "drc_1" ] ]
-set_property -name "reports" -value "impl_1#impl_1_route_report_drc_0" -objects $obj
+set_property -name "reports" -value "impl#impl_route_report_drc_0" -objects $obj
 
 # Create 'methodology_1' gadget (if not found)
 if {[string equal [get_dashboard_gadgets  [ list "methodology_1" ] ] ""]} {
 create_dashboard_gadget -name {methodology_1} -type methodology
 }
 set obj [get_dashboard_gadgets [ list "methodology_1" ] ]
-set_property -name "reports" -value "impl_1#impl_1_route_report_methodology_0" -objects $obj
+set_property -name "reports" -value "impl#impl_route_report_methodology_0" -objects $obj
 
 # Create 'power_1' gadget (if not found)
 if {[string equal [get_dashboard_gadgets  [ list "power_1" ] ] ""]} {
 create_dashboard_gadget -name {power_1} -type power
 }
 set obj [get_dashboard_gadgets [ list "power_1" ] ]
-set_property -name "reports" -value "impl_1#impl_1_route_report_power_0" -objects $obj
+set_property -name "reports" -value "impl#impl_route_report_power_0" -objects $obj
 
 # Create 'timing_1' gadget (if not found)
 if {[string equal [get_dashboard_gadgets  [ list "timing_1" ] ] ""]} {
 create_dashboard_gadget -name {timing_1} -type timing
 }
 set obj [get_dashboard_gadgets [ list "timing_1" ] ]
-set_property -name "reports" -value "impl_1#impl_1_route_report_timing_summary_0" -objects $obj
+set_property -name "reports" -value "impl#impl_route_report_timing_summary_0" -objects $obj
 
 # Create 'utilization_1' gadget (if not found)
 if {[string equal [get_dashboard_gadgets  [ list "utilization_1" ] ] ""]} {
 create_dashboard_gadget -name {utilization_1} -type utilization
 }
 set obj [get_dashboard_gadgets [ list "utilization_1" ] ]
-set_property -name "reports" -value "synth_1#synth_1_synth_report_utilization_0" -objects $obj
+set_property -name "reports" -value "synth#synth_synth_report_utilization_0" -objects $obj
 set_property -name "run.step" -value "synth_design" -objects $obj
 set_property -name "run.type" -value "synthesis" -objects $obj
 
@@ -991,7 +1134,7 @@ if {[string equal [get_dashboard_gadgets  [ list "utilization_2" ] ] ""]} {
 create_dashboard_gadget -name {utilization_2} -type utilization
 }
 set obj [get_dashboard_gadgets [ list "utilization_2" ] ]
-set_property -name "reports" -value "impl_1#impl_1_place_report_utilization_0" -objects $obj
+set_property -name "reports" -value "impl#impl_place_report_utilization_0" -objects $obj
 
 move_dashboard_gadget -name {utilization_1} -row 0 -col 0
 move_dashboard_gadget -name {power_1} -row 1 -col 0

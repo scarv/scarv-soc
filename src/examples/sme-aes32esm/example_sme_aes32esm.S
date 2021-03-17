@@ -25,6 +25,7 @@ experiment_payload:
     mask    x16, x16            // En-mask the input variables.
     mask    x17, x16
     li      x18, 0
+    xor     x0, x0, x0
     
     nop; nop; nop; nop; nop;
     nop; nop; nop; nop; nop;
