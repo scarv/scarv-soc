@@ -706,7 +706,7 @@ proc cr_bd_sys_top { parentCell } {
      return 1
    }
     set_property -dict [ list \
-   CONFIG.BRAM_REGFILE {0} \
+   CONFIG.BRAM_REGFILE {1} \
    CONFIG.EXT_BASE {0x10000000} \
    CONFIG.RAM_INIT_FILE {} \
    CONFIG.ROM_INIT_FILE {/home/work/scarv/scarv-soc-sme/work/fsbl/fsbl-vivado.mem} \
