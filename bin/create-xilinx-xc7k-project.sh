@@ -14,7 +14,7 @@ set -x
 
 VIVADO=$VIVADO_ROOT/bin/vivado
 PRJ_DIR=$SOC_WORK/vivado
-PRJ_NAME=scarv-soc-xc7k
+PRJ_NAME=scarv-soc-sme
 
 rm -rf $PRJ_DIR/$PRJ_NAME
 mkdir -p $PRJ_DIR/$PRJ_NAME
