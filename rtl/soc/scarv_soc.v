@@ -45,6 +45,10 @@ input  wire [31:0] m0_rdata           //
 // Value taken by the PC on a reset.
 parameter SCARV_CPU_PC_RESET_VALUE = 32'h1000_0000;
 
+parameter XC_CLASS_MASK       = 1'b1;
+parameter XC_CLASS_MASK_FAFF  = 1'b1;
+parameter XC_CLASS_MASK_FMUL  = 1'b1;
+
 //
 // BRAM Parameters
 // ------------------------------------------------------------
@@ -190,7 +194,10 @@ wire [31:0] ram_dmem_rdata       ; // Read data
 frv_core #(
 .FRV_PC_RESET_VALUE (SCARV_CPU_PC_RESET_VALUE   ),
 .TRACE_INSTR_WORD   (1'b1                       ),
-.BRAM_REGFILE       (1'b1                       )
+.BRAM_REGFILE       (1'b1                       ),
+.XC_CLASS_MASK      (XC_CLASS_MASK      ),
+.XC_CLASS_MASK_FAFF (XC_CLASS_MASK_FAFF ),
+.XC_CLASS_MASK_FMUL (XC_CLASS_MASK_FMUL )
 ) i_scarv_cpu(
 .g_clk          (g_clk              ), // global clock
 .g_resetn       (g_resetn           ), // synchronous reset
