@@ -27,18 +27,18 @@ experiment_payload:
     li      x18, 0
     xor     x0, x0, x0
     
-    nop; nop; nop; nop; nop;
-    nop; nop; nop; nop; nop;
-    nop; nop; nop; nop; nop;
+.rept 15
+    xor     x0, x0, x0
+.endr
 
     aes32esmi x16, x17, 0
     aes32esmi x16, x17, 1
     aes32esmi x16, x17, 2
     aes32esmi x16, x17, 3
     
-    nop; nop; nop; nop; nop;
-    nop; nop; nop; nop; nop;
-    nop; nop; nop; nop; nop;
+.rept 15
+    xor     x0, x0, x0
+.endr
 
     unmask  a0, x16             // Unmask the result.
     csrrw x0, 0x006, x0         // Turn off SME

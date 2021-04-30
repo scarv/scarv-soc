@@ -68,6 +68,7 @@ include $(SOC_HOME)/src/examples/sme-aes32es/Makefile.in
 include $(SOC_HOME)/src/examples/sme-aes32esm/Makefile.in
 include $(SOC_HOME)/src/examples/sme-aes128-ks/Makefile.in
 include $(SOC_HOME)/src/examples/sme-aes128-enc/Makefile.in
+include $(SOC_HOME)/src/examples/sme-chacha20/Makefile.in
 
 run-example-% : example-%
 	cd $(SW_EXAMPLES_DIR)/$* ; ./verilated +TIMEOUT=10000000 +WAIT

@@ -62,7 +62,9 @@ lkg-capture-$(call map_lkg_tgt,${1}): $(call map_lkg_traces,${1})
 
 lkg-analysis-$(call map_lkg_tgt,${1}): $(call map_lkg_traces,${1})
 	$(TT_ANALYSE) \
-        --avg --abs --high-pass 1000000\
+        --avg --abs \
+        --high-pass 1000000 \
+        --trim-start 50 \
         --graph-ttest $(call map_lkg_ttest_graph,${1}) \
         $(call map_lkg_fixed,${1}) \
         $(call map_lkg_traces,${1})
@@ -77,6 +79,7 @@ $(eval $(call add_lkg_targets,$(call map_sw_example_bin,sme-aes32es)))
 $(eval $(call add_lkg_targets,$(call map_sw_example_bin,sme-aes32esm)))
 $(eval $(call add_lkg_targets,$(call map_sw_example_bin,sme-aes128-ks)))
 $(eval $(call add_lkg_targets,$(call map_sw_example_bin,sme-aes128-enc)))
+$(eval $(call add_lkg_targets,$(call map_sw_example_bin,sme-chacha20)))
 
 lkg-analysis-all: $(LKG_TARGETS)
 

@@ -25,20 +25,19 @@ experiment_payload:
     mask    x16, x16            // En-mask the input variables.
     mask    x17, x16
     li      x18, 0
+
+.rept 15
     xor     x0, x0, x0
-    
-    nop; nop; nop; nop; nop;
-    nop; nop; nop; nop; nop;
-    nop; nop; nop; nop; nop;
+.endr
 
     aes32esi x16, x17, 0
     aes32esi x16, x17, 1
     aes32esi x16, x17, 2
     aes32esi x16, x17, 3
     
-    nop; nop; nop; nop; nop;
-    nop; nop; nop; nop; nop;
-    nop; nop; nop; nop; nop;
+.rept 15
+    xor     x0, x0, x0
+.endr
 
     unmask  a0, x16             // Unmask the result.
     csrrw x0, 0x006, x0         // Turn off SME
