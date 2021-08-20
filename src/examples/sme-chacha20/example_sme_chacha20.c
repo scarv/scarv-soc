@@ -55,14 +55,28 @@ uint8_t scass_experiment_run(
     uint32_t * blk_i = fixed ? f_blk_i : r_blk_i;
 
     sme_chacha20_mask(blk_i_masked, blk_i);
+    
+    uint32_t cycles_begin, cycles_end;
+    uint32_t instrs_begin, instrs_end;
+
+    asm volatile (
+        "rdcycle %0; rdinstret %1" : "=r"(cycles_begin), "=r"(instrs_begin) :
+    );
 
     scarvsoc_gpio_set_outputs(SCARVSOC_GPIO1, 1);
 
     sme_chacha20_block(blk_o_masked, blk_i_masked);
 
     scarvsoc_gpio_set_outputs(SCARVSOC_GPIO1, 0);
+    
+    asm volatile (
+        "rdcycle %0; rdinstret %1" : "=r"(cycles_end  ), "=r"(instrs_end  ) :
+    );
 
     sme_chacha20_unmask(blk_o, blk_o_masked);
+
+    cfg -> experiment_cycles    = cycles_end - cycles_begin;
+    cfg -> experiment_instrret  = instrs_end - instrs_begin;
 
     return 0;
 }

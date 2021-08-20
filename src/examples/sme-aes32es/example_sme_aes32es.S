@@ -30,10 +30,10 @@ experiment_payload:
     xor     x0, x0, x0
 .endr
 
-    aes32esi x16, x17, 0
-    aes32esi x16, x17, 1
-    aes32esi x16, x17, 2
-    aes32esi x16, x17, 3
+    aes32esi x16, x16, x17, 0
+    aes32esi x16, x16, x17, 1
+    aes32esi x16, x16, x17, 2
+    aes32esi x16, x16, x17, 3
     
 .rept 15
     xor     x0, x0, x0

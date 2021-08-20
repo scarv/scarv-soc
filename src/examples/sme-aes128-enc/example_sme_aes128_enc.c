@@ -69,12 +69,26 @@ uint8_t scass_experiment_run(
     uint32_t * p_pt = fixed ? f_pt : r_pt;
 
     sme_aes128_enc_key_exp(exp_ck, ck);
+    
+    uint32_t cycles_begin, cycles_end;
+    uint32_t instrs_begin, instrs_end;
+
+    asm volatile (
+        "rdcycle %0; rdinstret %1" : "=r"(cycles_begin), "=r"(instrs_begin) :
+    );
 
     scarvsoc_gpio_set_outputs(SCARVSOC_GPIO1, 1);
 
     sme_aes128_enc_block(ct, p_pt, exp_ck);
 
     scarvsoc_gpio_set_outputs(SCARVSOC_GPIO1, 0);
+    
+    asm volatile (
+        "rdcycle %0; rdinstret %1" : "=r"(cycles_end  ), "=r"(instrs_end  ) :
+    );
+    
+    cfg -> experiment_cycles    = cycles_end - cycles_begin;
+    cfg -> experiment_instrret  = instrs_end - instrs_begin;
 
     return 0;
 }
