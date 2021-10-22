@@ -7,6 +7,8 @@ START_ADDR    = 0x20000000
 
 SERIAL_TERM   = miniterm.py
 
+CW305_BITSTREAM = $(SOC_HOME)/work/vivado/scarv-soc-masking-ise-cw305/scarv-soc-masking-ise-cw305.runs/impl_1/system_top_wrapper_wrapper.bit
+
 xilinx-upload-binary:
 	@echo "----------[Uploading Program]--------------"
 	@echo "- Binary:  $(BINARY)"
@@ -21,4 +23,8 @@ xilinx-upload-binary:
 
 xilinx-interact: xilinx-upload-binary
 	$(SERIAL_TERM) $(PORT) $(BAUD)
+
+xilinx-cw305-upload-bitstream:
+	$(SOC_HOME)/flow/xilinx/cw305_program.py \
+        --bitstream $(CW305_BITSTREAM)
 
