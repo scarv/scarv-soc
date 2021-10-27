@@ -9,6 +9,7 @@
     #define GPIO_BASE 0x40002000
 #endif
 
+#define GPIO_TRIG 0
 #define GPIO_LEDS 2
 
 #define UART_RX 0
@@ -81,14 +82,17 @@ void fsbl_print_welcome() {
 */
 void fsbl() {
     
+    gpio[GPIO_TRIG] = 0x1;
     gpio[GPIO_LEDS] = 0x1;
 
     fsbl_uart_setup();
     
+    gpio[GPIO_TRIG] = 0x0;
     gpio[GPIO_LEDS] = 0x2;
 
     fsbl_print_welcome();
     
+    gpio[GPIO_TRIG] = 0x1;
     gpio[GPIO_LEDS] = 0x4;
     
     // First 4 bytes are the size of the program (in bytes).
@@ -130,6 +134,7 @@ void fsbl() {
     }
     
     gpio[GPIO_LEDS] = 0x0;
+    gpio[GPIO_TRIG] = 0x0;
 
     // Jump to the downloaded program.
     __fsbl_goto_main((uint32_t*)program_dest);
