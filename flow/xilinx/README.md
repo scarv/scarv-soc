@@ -49,14 +49,54 @@ optional arguments:
   --verbose
 ```
 
+Note that this script requires the `chipwhisperer` Python package to
+be installed.
+
 To easily upload the bitstream from the generated project, you can
 run:
 
 ```sh
+# See flow/xilinx/Makefile.in
 make xilinx-cw305-upload-bitstream
 ```
 
 NOTE: This _may_ require sudo priviledges.
+
+### CW305 Design information
+
+- The CW305 PLL used to drive the FPGA is `PLL1`.
+  `PLL1` should be set to `100MHz`
+  Other PLLs are disabled.
+
+- The internal FPGA design runs a `50MHz`.
+
+- The FPGA supply voltage VCC should be set to `1.0V`.
+
+- All of this is handled in the `cw305_program.py` script.
+
+Pins (also described in `constraints-cw305.xdc`):
+
+- UART TX from the FPGA: FPGA Pin `P16` / CW305 `IO1`
+- UART RX to   the FPGA: FPGA Pin `R16` / CW305 `IO2`
+- GPIO pins are routed to the CW305 header.
+  Any GPIO may be used as the trigger.
+  - GPIO `0` - FPGA Pin `A12`
+  - GPIO `1` - FPGA Pin `A14`
+  - GPIO `2` - FPGA Pin `A15`
+  - GPIO `3` - FPGA Pin `C12`
+  - GPIO `4` - FPGA Pin `B12`
+  - GPIO `5` - FPGA Pin `A13`
+  - GPIO `6` - FPGA Pin `B15`
+  - GPIO `7` - FPGA Pin `C11`
+  - GPIO `8` - FPGA Pin `B14`
+  - GPIO `9` - FPGA Pin `C14`
+
+Peripheral Addresses:
+
+- GPIO base address `0x40002000`
+ ([Datasheet](https://www.xilinx.com/support/documentation/ip_documentation/axi_gpio/v2_0/pg144-axi-gpio.pdf))
+- UART base address `0x40001000`
+  ([Datasheet](https://www.xilinx.com/support/documentation/ip_documentation/axi_uartlite/v2_0/pg142-axi-uartlite.pdf))
 
 ## Uploading software to a programmed FPGA
 
